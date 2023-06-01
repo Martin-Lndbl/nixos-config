@@ -1,2 +1,3 @@
-# nixos-system-config
-My nixos system configuration.
+# NixOs System Configuration
+
+My WIP configuration for NixOs and HomeManager.
