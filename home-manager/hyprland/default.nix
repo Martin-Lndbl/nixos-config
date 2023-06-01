@@ -5,8 +5,12 @@
 
     waybar = import ./waybar { inherit pkgs; };
 
+    wofi.enable = true;
+
     neovim.baseConfiguration.colorscheme = "spacecamp_transparent";
   };
+
+  services.mako.enable = true;
 
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
