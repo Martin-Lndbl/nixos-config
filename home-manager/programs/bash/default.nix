@@ -11,8 +11,9 @@
     ".." = "cd ..";
     "..." = ".. && ..";
     "...." = "... && ..";
-    "hm" = "cd ~/.config/home-manager";
+    "cfg" = "cd ~/.config/nixos-system-config";
     c = "clear";
-    switch = "home-manager switch --flake ~/.config/home-manager#mrtn";
+    switch = "home-manager switch --flake ~/.config/nixos-system-config#mrtn";
+    rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos-system-config#nix-nb";
   };
 }
