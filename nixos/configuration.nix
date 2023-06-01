@@ -31,6 +31,7 @@
 
   networking.hostName = "nix-nb";
   networking.networkmanager.enable = true;
+  networking.firewall.enable = true;
 
   time.timeZone = "Europe/Berlin";
 
