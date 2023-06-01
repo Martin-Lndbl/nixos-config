@@ -36,10 +36,6 @@
 
       overlays = import ./overlays { inherit inputs; };
 
-      nixosModules = import ./modules/nixos;
-
-      homeManagerModules = import ./modules/home-manager;
-
       nixosConfigurations = {
         nix-nb = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
