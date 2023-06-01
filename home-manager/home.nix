@@ -1,63 +1,85 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-
 { inputs, outputs, lib, config, pkgs, ... }: {
-  # You can import other home-manager modules here
-  imports = [
-    # If you want to use modules your own flake exports (from modules/home-manager):
-    # outputs.homeManagerModules.example
+  imports = [ ];
 
-    # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-  ];
+  home.username = "mrtn";
+  home.homeDirectory = "/home/mrtn";
 
   nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
+    overlays = outputs.overlays.modifications ;
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = (_: true);
     };
   };
+  home.packages = with pkgs; [
+    unzip
+    calc
+    universal-ctags
+    fd
+    xclip
+    acpi
+    swaybg
+    brightnessctl
 
-  # TODO: Set your username
-  home = {
-    username = "your-username";
-    homeDirectory = "/home/your-username";
+    # JSTech
+    slack
+
+    # communication
+    whatsapp-for-linux
+    spotifywm
+    discord
+    zoom-us
+
+    # eyecandy
+    neofetch
+    cava
+
+    # games
+    vitetris
+
+    # PDF stuff
+    texlive.combined.scheme-full
+    lilypond-with-fonts
+  ];
+
+  home.sessionVariables = {
+    _JAVA_AWT_WM_NONREPARENTING = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+    QT_QPA_PLATFORM = "wayland";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+    SDL_VIDEODRIVER = "wayland";
+    XDG_SESSION_TYPE = "wayland";
   };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
+  services = {
+    gammastep = {
+      enable = true;
+      provider = "geoclue2";
+    };
+  };
 
-  # Enable home-manager and git
-  programs.home-manager.enable = true;
-  programs.git.enable = true;
+  wayland.windowManager.hyprland.enable = true;
+  xdg.configFile."hypr/hyprland.conf".source = ./hyprland/hyprland.conf;
 
-  # Nicely reload system units when changing configs
+  xdg.configFile."wofi/style.css".source = ./hyprland/wofi.css;
+  xdg.configFile."cava/config".source = ./programs/cava;
+
+  xdg.userDirs = {
+    download = "${config.home.homeDirectory}/downloads";
+    pictures = "${config.home.homeDirectory}/downloads";
+    desktop = config.home.homeDirectory;
+    music = config.home.homeDirectory;
+    videos = config.home.homeDirectory;
+    templates = config.home.homeDirectory;
+    publicShare = config.home.homeDirectory;
+  };
+
+  # Programs
+  programs = import ./programs {
+    inherit pkgs config;
+  };
+
   systemd.user.startServices = "sd-switch";
 
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "22.11";
 }
