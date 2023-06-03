@@ -36,7 +36,7 @@
 
       overlays = import ./overlays { inherit inputs; };
 
-      nixosConfigurations = import ./nixos/nixosConfigurations.nix { inherit inputs outputs; };
+      nixosConfigurations = import ./nixos { inherit inputs outputs; };
 
       homeConfigurations = {
         mrtn = home-manager.lib.homeManagerConfiguration {
