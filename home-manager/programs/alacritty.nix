@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   programs.alacritty =
@@ -33,7 +33,7 @@
             family = "Noto Sans";
             style = "Bold Italic";
           };
-          size = 14.00;
+          size = config.appearance.fontSize;
         };
         colors = {
           primary = {
