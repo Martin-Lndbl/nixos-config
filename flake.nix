@@ -39,13 +39,28 @@
       nixosConfigurations = import ./nixos { inherit inputs outputs; };
 
       homeConfigurations = {
-        mrtn = home-manager.lib.homeManagerConfiguration {
+        "mrtn@nix-nb" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             hyprland.homeManagerModules.default
             neovim.homeManagerModules.default
             ./home-manager/home.nix
+            ./home-manager/hyprland
+          ] ++ import ./modules;
+        };
+      };
+      homeConfigurations = {
+        "mrtn@nix-gt" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            neovim.homeManagerModules.default
+            ./home-manager/home.nix
+            ./home-manager/i3
+            {
+              config.appearance.fontSize = 12;
+            }
           ] ++ import ./modules;
         };
       };

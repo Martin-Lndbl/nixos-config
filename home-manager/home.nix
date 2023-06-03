@@ -1,7 +1,5 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
-    # (if config.services.xserver.windowManager.i3.enable then ./i3 else ./hyprland)
-    ./i3
     ./programs
   ];
 

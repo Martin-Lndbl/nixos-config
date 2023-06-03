@@ -4,7 +4,6 @@
     modules = [
       ./base.nix
       ./machines/nix-nb.nix
-      ../modules
 
       # Choose any display / window - Manager
       ./display-manager/hyprland.nix
