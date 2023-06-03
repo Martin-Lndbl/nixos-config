@@ -8,7 +8,7 @@
 
       # Choose any display / window - Manager
       ./display-manager/hyprland.nix
-    ];
+    ] ++ import ../modules;
   };
 
   nix-gt = nixpkgs.lib.nixosSystem {
