@@ -46,7 +46,7 @@
             hyprland.homeManagerModules.default
             neovim.homeManagerModules.default
             ./home-manager/home.nix
-          ];
+          ] ++ import ./modules;
         };
       };
     };

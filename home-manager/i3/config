@@ -7,8 +7,8 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
@@ -16,9 +16,10 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec termite
+bindsym $mod+Return exec alacritty
 
 # start browser session
+bindsym $mod+F2 exec google-chrome-stable
 bindsym $mod+g exec firefox
 
 # kill focused window
@@ -98,15 +99,15 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1 workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2 workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3 workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4 workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5 workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6 workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7 workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8 workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9 workspace number $ws9
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -148,7 +149,7 @@ new_float normal
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 bar {
-  font pango:monospace 10.000000
+  font pango:monospace 14.000000
   mode dock
   hidden_state hide
   position bottom
