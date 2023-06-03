@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{ inputs, outputs, ... }: with inputs; {
   nix-nb = nixpkgs.lib.nixosSystem {
     specialArgs = { inherit inputs outputs; };
     modules = [
