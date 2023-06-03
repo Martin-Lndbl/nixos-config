@@ -12,6 +12,7 @@
     home-manager.enable = true;
 
     neovim.baseConfiguration.enable = true;
+    neovim.baseConfiguration.colorscheme = "spacecamp_transparent";
 
     direnv.enable = true;
   };

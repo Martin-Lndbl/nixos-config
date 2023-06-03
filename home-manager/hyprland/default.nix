@@ -6,8 +6,6 @@
     waybar = import ./waybar { inherit pkgs; };
 
     wofi.enable = true;
-
-    neovim.baseConfiguration.colorscheme = "spacecamp_transparent";
   };
 
   services.mako.enable = true;
