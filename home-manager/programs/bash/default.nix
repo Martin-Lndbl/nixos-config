@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   programs.bash = {
@@ -15,7 +15,7 @@
       "cfg" = "cd ~/.config/nixos-system-config";
       c = "clear";
       switch = "home-manager switch --flake ~/.config/nixos-system-config#mrtn";
-      rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos-system-config#nix-nb";
+      rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos-system-config#$(hostname)";
     };
   };
 }

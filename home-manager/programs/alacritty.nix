@@ -33,7 +33,7 @@
             family = "Noto Sans";
             style = "Bold Italic";
           };
-          size = 14.00;
+          size = if "${builtins.getEnv "(hostname)"}" == "nix-gt" then 12.00 else 14.00;
         };
         colors = {
           primary = {
