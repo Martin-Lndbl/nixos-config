@@ -95,6 +95,10 @@
             neovim.homeManagerModules.default
             ./home-manager/home.nix
             ./home-manager/hyprland
+            {
+              config.monitors.center = "eDP-1";
+              config.monitors.left = "DP-1";
+            }
           ] ++ import ./modules/home-manager;
         };
       };
