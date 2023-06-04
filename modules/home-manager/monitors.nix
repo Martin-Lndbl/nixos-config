@@ -11,11 +11,11 @@ with lib;
       type = types.str;
     };
     center = mkOption {
-      description = "ID of left monitor";
+      description = "ID of center monitor";
       type = types.str;
     };
     right = mkOption {
-      description = "ID of left monitor";
+      description = "ID of right monitor";
       type = types.str;
     };
   };

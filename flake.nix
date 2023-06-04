@@ -25,9 +25,6 @@
       ];
     in
     rec {
-
-      imports = [];
-
       packages = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
         in import ./pkgs { inherit pkgs; }
@@ -42,7 +39,6 @@
       # -----------------------------------------------
       #                   nix-gt 
       # -----------------------------------------------
-
       nixosConfigurations.nix-gt = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [
@@ -53,7 +49,6 @@
           ./nixos/display-manager/hyprland.nix
         ] ++ import ./modules/nixos;
       };
-
       homeConfigurations = {
         "mrtn@nix-gt" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -85,7 +80,6 @@
           ./nixos/display-manager/hyprland.nix
         ] ++ import ./modules/nixos;
       };
-
       homeConfigurations = {
         "mrtn@nix-nb" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -97,7 +91,7 @@
             ./home-manager/hyprland
             {
               config.monitors.center = "eDP-1";
-              config.monitors.left = "DP-1";
+              config.monitors.right = "DP-1";
             }
           ] ++ import ./modules/home-manager;
         };
