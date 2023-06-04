@@ -25,6 +25,9 @@
       ];
     in
     rec {
+
+      imports = [];
+
       packages = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
         in import ./pkgs { inherit pkgs; }
@@ -36,7 +39,52 @@
 
       overlays = import ./overlays { inherit inputs; };
 
-      nixosConfigurations = import ./nixos { inherit inputs outputs; };
+      # -----------------------------------------------
+      #                   nix-gt 
+      # -----------------------------------------------
+
+      nixosConfigurations.nix-gt = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
+        modules = [
+          ./nixos/base.nix
+          ./nixos/machines/nix-gt.nix
+
+          # Choose any display / window - Manager
+          ./nixos/display-manager/hyprland.nix
+        ] ++ import ./modules/nixos;
+      };
+
+      homeConfigurations = {
+        "mrtn@nix-gt" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            neovim.homeManagerModules.default
+            hyprland.homeManagerModules.default
+            ./home-manager/home.nix
+            ./home-manager/hyprland
+            {
+              config.appearance.fontSize = 18;
+              config.monitors.center = "DP-2";
+              config.monitors.right = "DP-3";
+            }
+          ] ++ import ./modules/home-manager;
+        };
+      };
+
+      # -----------------------------------------------
+      #                   nix-nb 
+      # -----------------------------------------------
+      nixosConfigurations.nix-nb = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
+        modules = [
+          ./nixos/base.nix
+          ./nixos/machines/nix-nb.nix
+
+          # Choose any display / window - Manager
+          ./nixos/display-manager/hyprland.nix
+        ] ++ import ./modules/nixos;
+      };
 
       homeConfigurations = {
         "mrtn@nix-nb" = home-manager.lib.homeManagerConfiguration {
@@ -47,21 +95,7 @@
             neovim.homeManagerModules.default
             ./home-manager/home.nix
             ./home-manager/hyprland
-          ] ++ import ./modules;
-        };
-      };
-      homeConfigurations = {
-        "mrtn@nix-gt" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            neovim.homeManagerModules.default
-            ./home-manager/home.nix
-            ./home-manager/i3
-            {
-              config.appearance.fontSize = 12;
-            }
-          ] ++ import ./modules;
+          ] ++ import ./modules/home-manager;
         };
       };
     };

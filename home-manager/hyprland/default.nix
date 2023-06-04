@@ -20,7 +20,7 @@
   };
 
   wayland.windowManager.hyprland.enable = true;
-  xdg.configFile."hypr/hyprland.conf".source = ./hyprland.conf;
+  xdg.configFile."hypr/hyprland.conf".source = import ./hyprland.nix { inherit pkgs config; };
 
   xdg.configFile."wofi/style.css".source = ./wofi.css;
 }
