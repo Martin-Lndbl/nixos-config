@@ -1,3 +1,4 @@
 [
   ./appearance.nix
+  ./monitors.nix
 ]

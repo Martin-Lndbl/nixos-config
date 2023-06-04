@@ -1,3 +1,7 @@
+{ pkgs, config, ... }:
+
+pkgs.writeText "hyprland.conf" ''
+
 # Variables
 
 $wallpaper = /home/mrtn/downloads/nix.png
@@ -181,11 +185,11 @@ bindm=SUPER, mouse:272, movewindow
 # wsbind = 8, DP-1
 # wsbind = 9, DP-1
 
-workspace=1, monitor:eDP-1, default:true
-workspace=2, monitor:eDP-1
-workspace=3, monitor:eDP-1
-workspace=8, monitor:DP-1
-workspace=9, monitor:DP-1, default:true
+workspace=1, monitor:${config.monitors.center}, default:true
+workspace=2, monitor:${config.monitors.center}
+workspace=3, monitor:${config.monitors.center}
+workspace=8, monitor:${config.monitors.right}
+workspace=9, monitor:${config.monitors.right}, default:true
 
 bind=SUPER, 1, workspace, 1
 bind=SUPER, 2, workspace, 2
@@ -221,3 +225,4 @@ binde=, XF86MonBrightnessUp, exec, brightnessctl set +2%
 binde=, XF86MonBrightnessDown, exec, brightnessctl set 2%- -n 100
 
 bind=, XF86Calculator, exec, alacritty  -t popup -e calc
+''
