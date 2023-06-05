@@ -26,11 +26,11 @@
             style = "Bold";
           };
           italic = {
-            family = "Noto Sans";
+            family = "Noto Sans Mono";
             style = "Italic";
           };
           bold_italic = {
-            family = "Noto Sans";
+            family = "Noto Sans Mono";
             style = "Bold Italic";
           };
           size = config.appearance.fontSize;
