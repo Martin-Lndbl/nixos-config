@@ -23,6 +23,27 @@
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
+
+      # -----------------------------------------------
+      #                   options
+      # -----------------------------------------------
+      #   Choose a display-manager for every machine
+      # -----------------------------------------------
+      machines =  {
+        nix-gt = ./nixos/machines/nix-gt.nix;
+        nix-nb = ./nixos/machines/nix-nb.nix;
+      };
+      display-manager = {
+        hyprland = {
+          hm = ./home-manager/hyprland;
+          nixos = ./nixos/display-manager/hyprland.nix;
+        };
+        i3 = {
+          hm = ./home-manager/i3;
+          nixos = ./nixos/display-manager/i3.nix;
+        };
+      };
+
     in
     rec {
       packages = forAllSystems (system:
@@ -43,10 +64,12 @@
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./nixos/base.nix
-          ./nixos/machines/nix-gt.nix
+
+          # Select your machine-config (including hardware-configuraiton)
+          machines.nix-gt
 
           # Choose any display / window - Manager
-          ./nixos/display-manager/hyprland.nix
+          display-manager.hyprland.nixos
         ] ++ import ./modules/nixos;
       };
       homeConfigurations = {
@@ -57,7 +80,11 @@
             neovim.homeManagerModules.default
             hyprland.homeManagerModules.default
             ./home-manager/home.nix
-            ./home-manager/hyprland
+
+            # You have to select your display /window - Manager again. WIP
+            display-manager.hyprland.hm
+
+            # Additional configuration
             {
               config.appearance.fontSize = 18;
               config.monitors.center = "DP-2";
@@ -74,10 +101,12 @@
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./nixos/base.nix
-          ./nixos/machines/nix-nb.nix
+
+          # Select your machine-config (including hardware-configuraiton)
+          machines.nix-nb
 
           # Choose any display / window - Manager
-          ./nixos/display-manager/hyprland.nix
+          display-manager.hyprland.nixos
         ] ++ import ./modules/nixos;
       };
       homeConfigurations = {
@@ -88,7 +117,11 @@
             hyprland.homeManagerModules.default
             neovim.homeManagerModules.default
             ./home-manager/home.nix
-            ./home-manager/hyprland
+
+            # You have to select your display /window - Manager again. WIP
+            display-manager.hyprland.hm
+
+            # Additional configuration
             {
               config.appearance.fontSize = 14;
               config.monitors.center = "eDP-1";
