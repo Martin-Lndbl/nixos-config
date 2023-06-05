@@ -3,13 +3,10 @@
 
   imports = [
     ./waybar
+    ./swaylock.nix
   ];
 
-  programs = {
-    swaylock = import ./swaylock.nix { inherit pkgs; };
-
-    wofi.enable = true;
-  };
+  programs.wofi.enable = true;
 
   services.mako.enable = true;
 
