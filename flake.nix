@@ -90,6 +90,7 @@
             ./home-manager/home.nix
             ./home-manager/hyprland
             {
+              config.appearance.fontSize = 14;
               config.monitors.center = "eDP-1";
               config.monitors.right = "DP-1";
             }

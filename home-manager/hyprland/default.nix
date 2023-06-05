@@ -1,9 +1,12 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 {
+
+  imports = [
+    ./waybar
+  ];
+
   programs = {
     swaylock = import ./swaylock.nix { inherit pkgs; };
-
-    waybar = import ./waybar { inherit pkgs; };
 
     wofi.enable = true;
   };
