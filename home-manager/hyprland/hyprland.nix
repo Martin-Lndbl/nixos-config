@@ -2,10 +2,6 @@
 
 pkgs.writeText "hyprland.conf" ''
 
-# Variables
-
-$wallpaper = /home/mrtn/downloads/nix.png
-
 # Colors
 
 $white = 0xffffffff
@@ -14,8 +10,7 @@ $active_blue = 0x9912A3E3
 $inactive_blue = 0x99164650
 
 # Startup
-exec-once = swaylock -fel
-exec-once = swaybg -i $wallpaper
+exec-once = swaybg -i ${config.appearance.wallpaper}
 exec-once = waybar
 exec-once = systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
 
@@ -29,7 +24,7 @@ exec-once = [workspace 1; noanim] alacritty
 
 # Monitors
 monitor = eDP-1, 1920x1080@60,0x0,1
-monitor DP-1, 1920x1080@60,1920x0,1
+monitor = DP-1, 1920x1080@60,1920x0,1
 monitor=,highres,auto,1
 
 general {
