@@ -4,7 +4,7 @@
     border: none;
     border-radius: 0;
     font-family: "Noto Sans Mono";
-    font-size: ${builtins.toString (config.appearance.fontSize + 2)}px;
+    font-size: ${builtins.toString config.appearance.fontSize}px;
   }
 
   window .modules-left,
