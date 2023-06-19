@@ -45,6 +45,7 @@
     vitetris
 
     # PDF stuff
+    zathura
     texlive.combined.scheme-full
   ];
 
