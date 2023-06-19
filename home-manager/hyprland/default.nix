@@ -4,6 +4,7 @@
   imports = [
     ./waybar
     ./swaylock.nix
+    ./xdg.nix
   ];
 
   programs.wofi.enable = true;

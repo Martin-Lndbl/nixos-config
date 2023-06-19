@@ -58,5 +58,4 @@
     # disable Ethernet Wake-on-LAN
     ''ACTION=="add", SUBSYSTEM=="net", NAME=="enp*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol d"''
   ];
-
 }
