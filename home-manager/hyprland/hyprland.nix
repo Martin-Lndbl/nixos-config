@@ -22,9 +22,7 @@ exec-once = [workspace 1; noanim] alacritty
 exec-once = [workspace 1; noanim] alacritty
 exec-once = [workspace 1; noanim] alacritty
 
-# Monitors
-monitor = eDP-1, 1920x1080@60,0x0,1
-monitor = DP-1, 1920x1080@60,1920x0,1
+monitor= eDP-1, 1920x1080@60,0x0,1
 monitor=,highres,auto,1
 
 general {
@@ -130,7 +128,6 @@ windowrulev2 = rounding 0, xwayland:1, floating:1
 windowrulev2 = size 578 187, title:^((?!Save)(?!Mozilla firefox).)*$,floating:1,class:^(firefox)$
 #	Downloads 
 windowrulev2 = size 800 400, title:^(Save)(.*)$, floating:1
-windowrulev2 = center, title:^((?!Mozilla firefox).)*$, floating:1
 
 # Color
 windowrulev2 = size 488 316, title:^(Choose a color)$, floating:1, class:^(firefox)$
