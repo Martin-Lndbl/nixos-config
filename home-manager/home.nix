@@ -32,6 +32,11 @@
     discord
     zoom-us
 
+    # Notes
+    trilium-desktop
+    vpnc
+    vpnc-scripts
+
     # eyecandy
     neofetch
     cava
@@ -40,6 +45,7 @@
     vitetris
 
     # PDF stuff
+    zathura
     texlive.combined.scheme-full
   ];
 
