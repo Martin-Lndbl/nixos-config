@@ -14,6 +14,10 @@
       "/D/docs/uni/ASP/task5-memory-Martin-Lndbl"
       "/D/docs/uni/ASP/task6-sockets-Martin-Lndbl"
       "/D/docs/uni/ASP/task7-performance-Martin-Lndbl"
+      "/D/docs/uni/ASP/task8-container-Martin-Lndbl"
+      "/D/docs/uni/ASP/task9-llvm-Martin-Lndbl"
+
+      "/D/docs/github/nix-neovim-module"
     ];
   };
 }

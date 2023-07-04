@@ -33,7 +33,9 @@
     useXkbConfig = true;
   };
 
-  virtualisation.docker.enable = true;
+  # virtualisation.docker.enable = true;
+  security.allowUserNamespaces = true;
+  security.unprivilegedUsernsClone = true;
 
   # Sound 
   sound.enable = true;
