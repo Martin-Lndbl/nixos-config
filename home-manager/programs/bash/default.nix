@@ -16,6 +16,7 @@
       c = "clear";
       switch = "home-manager switch --flake ~/.config/nixos-system-config#mrtn@$(hostname)";
       rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos-system-config#$(hostname)";
+      rebuild-boot = "sudo nixos-rebuild boot --flake ~/.config/nixos-system-config#$(hostname)";
     };
   };
 }
