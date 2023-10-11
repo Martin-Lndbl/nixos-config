@@ -34,8 +34,6 @@
 
     # Notes
     trilium-desktop
-    # vpnc
-    # vpnc-scripts
 
     # eyecandy
     neofetch
