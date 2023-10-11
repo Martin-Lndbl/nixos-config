@@ -9,14 +9,15 @@
         mainBar = {
           layer = "top";
           position = "bottom";
-          height = config.appearance.fontSize*3;
+          height = config.appearance.fontSize * 3;
           output = lib.attrValues config.monitors;
 
           modules-left = [
-            "wlr/workspaces"
+            "hyprland/workspaces"
+            # "hyprland/window"
+            # "wlr/taskbar"
           ];
           modules-center = [
-            /* "wlr/taskbar" */
             "clock"
           ];
 
@@ -27,9 +28,10 @@
             "memory"
             "disk"
             "battery"
+            # "temperature"
           ];
 
-          "wlr/workspaces" = {
+          "hyprland/workspaces" = {
             disable-scroll = true;
             all-outputs = true;
             on-click = "activate";
@@ -49,6 +51,15 @@
           };
           "wlr/mode" = {
             format = "<span style=\"italic\">{}</span>";
+          };
+
+          "wlr/taskbar" = {
+            format = "{icon}";
+            icon-size = 24;
+            icon-theme = "Fluent";
+            tooltip-format = "{title}";
+            on-click = "activate";
+            on-click-middle = "close";
           };
 
           "pulseaudio" = {
