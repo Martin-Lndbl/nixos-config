@@ -74,6 +74,7 @@
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./nixos/base.nix
+          ./nixos/wireguard.nix
           ./nixos/machines/nix-nb.nix
 
           # Choose any display / window - Manager

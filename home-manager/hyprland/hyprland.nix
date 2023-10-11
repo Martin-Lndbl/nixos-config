@@ -29,16 +29,21 @@ general {
 	gaps_out = 10
 	col.active_border = $white
 	col.inactive_border = $gray
-	col.group_border = $inactive_blue
-	col.group_border_active = $active_blue
 	resize_on_border = true
+}
+
+group {
+	col.border_active = $active_blue
+	col.border_inactive = $inactive_blue
 }
 
 decoration {
     rounding=5
-    blur=1
-    blur_size=3 # minimum 1
-    blur_passes=2 # minimum 1, more passes = more resource intensive.
+    blur {
+      enabled = true
+      size=3 # minimum 1
+      passes=2 # minimum 1, more passes = more resource intensive.
+    }
 
 	drop_shadow = true
 	shadow_range = 4
