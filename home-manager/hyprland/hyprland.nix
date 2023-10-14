@@ -1,5 +1,9 @@
 { pkgs, config, ... }:
 
+let
+  workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
+in
+
 pkgs.writeText "hyprland.conf" ''
 
 # Colors
@@ -11,7 +15,7 @@ $inactive_blue = 0x99164650
 
 # Startup
 exec-once = swaybg -i ${config.appearance.wallpaper}
-exec-once = waybar
+exec-once = eww open bar
 exec-once = systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
 
 exec-once = [workspace 9; noanim; fakefullscreen] firefox https://outlook.live.com/calendar/0/view/week
@@ -175,40 +179,29 @@ bindm=SUPER, mouse:272, movewindow
 
 # Workspaces
 
-# wsbind = 1, eDP-1
-# wsbind = 2, eDP-1
-# wsbind = 3, eDP-1
-# wsbind = 8, DP-1
-# wsbind = 9, DP-1
-
 workspace=1, monitor:${config.monitors.center}, default:true
 workspace=2, monitor:${config.monitors.center}
 workspace=3, monitor:${config.monitors.center}
 workspace=8, monitor:${config.monitors.right}
 workspace=9, monitor:${config.monitors.right}, default:true
 
-bind=SUPER, 1, workspace, 1
-bind=SUPER, 2, workspace, 2
-bind=SUPER, 3, workspace, 3
-bind=SUPER, 4, workspace, 4
-bind=SUPER, 5, workspace, 5
-bind=SUPER, 6, workspace, 6
-bind=SUPER, 7, workspace, 7
-bind=SUPER, 8, workspace, 8
-bind=SUPER, 9, workspace, 9
+${builtins.foldl'
+    (acc: new:
+      acc + "\nbind=SUPER, ${new}, workspace, ${new}") "" workspaces}
 
-bind=SUPER_SHIFT, 1, movetoworkspace, 1
-bind=SUPER_SHIFT, 2, movetoworkspace, 2
-bind=SUPER_SHIFT, 3, movetoworkspace, 3
-bind=SUPER_SHIFT, 4, movetoworkspace, 4
-bind=SUPER_SHIFT, 5, movetoworkspace, 5
-bind=SUPER_SHIFT, 6, movetoworkspace, 5
-bind=SUPER_SHIFT, 7, movetoworkspace, 7
-bind=SUPER_SHIFT, 8, movetoworkspace, 8
-bind=SUPER_SHIFT, 9, movetoworkspace, 9
+${builtins.foldl'
+    (acc: new:
+      acc + "\nbind=SUPER_SHIFT, ${new}, movetoworkspace, ${new}") "" workspaces}
 
-# workspace = eDP-1, 1
-# workspace DP-1, 9
+${builtins.foldl'
+    (acc: new:
+      acc + "\nbind=SUPER, ${new}, exec, ${config.programs.eww.configDir}/scripts/workspaces ${new}") "" workspaces}
+
+${builtins.foldl'
+    (acc: new:
+      acc + "\nbind=SUPER_SHIFT, ${new}, exec, ${config.programs.eww.configDir}/scripts/workspaces ${new}") "" workspaces}
+
+
 # Audio
 bind=, XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 bind=, XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle

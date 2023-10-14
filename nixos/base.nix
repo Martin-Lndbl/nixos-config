@@ -46,18 +46,21 @@
 
   fonts = {
     fontDir.enable = true;
-    enableDefaultFonts = false;
-    fonts = with pkgs; [
+    enableDefaultPackages = true;
+    packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
+      font-awesome
+      comic-mono
+      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
-    fontconfig.defaultFonts = {
-      serif = [ "Noto Serif" "Noto Color Emoji" ];
-      sansSerif = [ "Noto Sans" "Noto Color Emoji" ];
-      monospace = [ "Noto Sans Mono" "Noto Color Emoji" ];
-      emoji = [ "Noto Color Emoji" ];
-    };
+    # fontconfig.defaultFonts = {
+    #   serif = [ "Noto Serif" "Noto Color Emoji" ];
+    #   sansSerif = [ "Noto Sans" "Noto Color Emoji" ];
+    #   monospace = [ "Noto Sans Mono" "Noto Color Emoji" ];
+    #   emoji = [ "Noto Color Emoji" ];
+    # };
   };
 
   environment.systemPackages = with pkgs; [

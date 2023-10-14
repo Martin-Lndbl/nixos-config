@@ -1,0 +1,143 @@
+(defpoll time :interval "5s"
+  :initial `date +'{"hour":"%H", "min":"%M"}'`
+  `date +'{"hour":"%H","min":"%M"}'`)
+(defpoll net :interval "100s"
+  :initial `N/A`
+  `nmcli -t -f SIGNAL,ACTIVE device wifi \
+    | awk -F':' '{if($2=="yes")print$1}'`)
+
+(defpoll ws_init 
+  :interval "1h"
+  "scripts/workspaces"
+)
+
+(defvar battery_hover "false")
+(defvar ws_active "1")
+(defvar ws_1 "true")
+(defvar ws_2 "false")
+(defvar ws_3 "false")
+(defvar ws_4 "false")
+(defvar ws_5 "false")
+(defvar ws_6 "false")
+(defvar ws_7 "false")
+(defvar ws_8 "false")
+(defvar ws_9 "true")
+
+(defwidget barmenu_layout []
+  (box :class "layout-box" 
+    (box 
+      :orientation "h"
+      (left)
+      (middle)
+      (right)
+    )
+  )
+)
+
+(defwidget left []
+  (box
+    :space-evenly false
+    :halign "start"
+    :orientation "h"
+    (_dashboard)
+    (_workspaces)
+  )
+)
+
+(defwidget middle []
+  (box
+    :space-evenly false
+    :halign "center"
+    (button :class "time"
+      (label 
+        :class "ws-lbl"
+        :text "${time.hour}:${time.min}"
+      )
+    )
+  )
+)
+
+(defwidget right []
+  (box
+    :space-evenly false
+    :halign "end"
+    (_battery :status {EWW_BATTERY.BAT0.status}
+      :battery {EWW_BATTERY.BAT0.capacity}
+      :hover {battery_hover}
+      :charge "" :full "" :three "" :half "" :quater "" :empty ""
+    )
+  )
+)
+
+(defwidget _dashboard []
+  (box
+    (button
+      (label
+        :class "home-sym"
+        :text ""
+      )
+    )
+  )
+)
+
+(defwidget _workspaces []
+  (box
+    :class "ws-box"
+    (__workspace :nr 1 :exists ws_1)
+    (__workspace :nr 2 :exists ws_2)
+    (__workspace :nr 3 :exists ws_3)
+    (__workspace :nr 4 :exists ws_4)
+    (__workspace :nr 5 :exists ws_5)
+    (__workspace :nr 6 :exists ws_6)
+    (__workspace :nr 7 :exists ws_7)
+    (__workspace :nr 8 :exists ws_8)
+    (__workspace :nr 9 :exists ws_9)
+  )
+)
+
+(defwidget __workspace [ nr exists ]
+  (button :class "workspace 
+                  ${ws_active == nr ? "ws_active" : ""} 
+                  ${exists == 'true' ? "ws_exists" : ""}"
+    (label 
+      :class "ws-lbl"
+      :text nr
+    )
+  )
+)
+
+(defwidget _battery [battery status hover empty quater half three full charge]
+  (eventbox :class "bat-box" 
+    :onhover "eww update battery_hover=true"
+    :onhoverlost "eww update battery_hover=false"
+    (box :class "bat-box" (label 
+        :class {
+          hover == 'true' ? "bat-txt" : "bat-sym"
+        }
+        :text {
+          hover == 'true' ? "${battery}%"
+          :status == 'Charging' ? charge
+          :battery < 20 ? empty
+          :battery < 40 ? quater
+          :battery < 60 ? half
+          :battery < 80 ? three
+          :full 
+        }
+      ))
+  )
+)
+
+(defwindow bar
+  :exclusive true
+  :monitor 0
+  :windowtype "dock"
+	:focusable false
+  :stacking "fg"
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "2%"
+                      :anchor "bottom center")
+  :reserve (struts :side "bottom" :distance "4%")
+  (barmenu_layout)
+)
