@@ -7,8 +7,9 @@ Currently I am using
 * [Eww](https://github.com/elkowar/eww) for my status bar etc.
 * [Neovim](https://github.com/neovim/neovim) as editor.
 
-![](./image/wallpaper.png)
-![](./images/terminal.png)
+Feel free to browse!
+
+![](./images/wallpaper.png)
 
 ## Further reading
 * [Misterio77](https://github.com/Misterio77)
