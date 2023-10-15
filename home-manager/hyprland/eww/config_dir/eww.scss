@@ -4,6 +4,9 @@ $surface-lightgrey: #3d464e;
 $surface-grey: #2b3238;
 $surface-red: #f87070;
 
+$background: #1A1B26;
+$foreground: #A9B1D6;
+
 $black: #24283B;
 $gray: #565F89;
 $red: #F7768E;
@@ -28,11 +31,13 @@ tooltip label {
 
 .layout-box {
   // font-family: Phosphor, Koulen;
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-bottom: 10px;
-  // color: rgba($surface-fg, 0.8);
-  background-color: rgba(0, 0, 0, 0)
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 1.5rem;
+  color: rgba($foreground, 1);
+  background-color: rgba($background, 1)
 }
 
 .bat-box {
@@ -42,20 +47,21 @@ tooltip label {
 .bat-sym {
   font-size: 1.5em;
   padding-right: 2rem;
-  color: $blue;
 }
 
 .home-sym {
   padding-left: .2em;
   font-size: 2em;
-  color: $blue;
 }
 
 .time,
 .bat-txt {
   font-size: 1.2em;
-  padding-right: .5rem;
-  color: $blue;
+}
+
+.bright-box {
+  font-size: 1.2em;
+  margin: 0 1em 0 1em;
 }
 
 .ws-box {
@@ -63,7 +69,6 @@ tooltip label {
 }
 
 .workspace {
-  color: $blue;
   padding: 10px 10px;
   border: none;
   opacity: .3;
@@ -79,13 +84,15 @@ tooltip label {
   opacity: 1;
 }
 
-.exp {
-  padding: 10px 15;
-  color: #fff;
-  border: none;
+.bright_slide trough highlight {
+  background-color: $blue;
   border-radius: 5px;
-  transition: background-color 0.3s; // Add a smooth transition for
-  &:hover {
-    color: $red;
-  }
+}
+
+scale trough {
+  background-color: $foreground;
+  border-radius: 5px;
+  min-height: 1em;
+  min-width: 5em;
+  margin-left: .5em;
 }

@@ -1,17 +1,13 @@
-(defpoll time :interval "5s"
-  :initial `date +'{"hour":"%H", "min":"%M"}'`
-  `date +'{"hour":"%H","min":"%M"}'`)
+(defpoll time :interval "1s"
+  :initial `date +'{"hour":"%H", "min":"%M", "sec":"%S", "timezone":"%Z", "day":"%d", "month":"%m", "year":"%Y", "weekday":"%a"}'`
+  `date +'{"hour":"%H", "min":"%M", "sec":"%S", "timezone":"%Z", "day":"%d", "month":"%m", "year":"%Y", "weekday":"%a"}'`)
 (defpoll net :interval "100s"
   :initial `N/A`
   `nmcli -t -f SIGNAL,ACTIVE device wifi \
     | awk -F':' '{if($2=="yes")print$1}'`)
 
-(defpoll ws_init 
-  :interval "1h"
-  "scripts/workspaces"
-)
-
 (defvar battery_hover "false")
+
 (defvar ws_active "1")
 (defvar ws_1 "true")
 (defvar ws_2 "false")
@@ -22,6 +18,12 @@
 (defvar ws_7 "false")
 (defvar ws_8 "false")
 (defvar ws_9 "true")
+
+(defvar time_hover false)
+
+
+(defvar bright_hover false)
+(defpoll current-brightness :interval "5s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
 
 (defwidget barmenu_layout []
   (box :class "layout-box" 
@@ -48,12 +50,7 @@
   (box
     :space-evenly false
     :halign "center"
-    (button :class "time"
-      (label 
-        :class "ws-lbl"
-        :text "${time.hour}:${time.min}"
-      )
-    )
+    (_time)
   )
 )
 
@@ -61,6 +58,7 @@
   (box
     :space-evenly false
     :halign "end"
+    (_bright)
     (_battery :status {EWW_BATTERY.BAT0.status}
       :battery {EWW_BATTERY.BAT0.capacity}
       :hover {battery_hover}
@@ -99,10 +97,68 @@
   (button :class "workspace 
                   ${ws_active == nr ? "ws_active" : ""} 
                   ${exists == 'true' ? "ws_exists" : ""}"
+    :onclick "hyprctl dispatch workspace ${nr} && scripts/workspaces ${nr}"
     (label 
       :class "ws-lbl"
       :text nr
     )
+  )
+)
+
+(defwidget _time []
+  (eventbox
+    :onhover "eww update time_hover=true"
+    :onhoverlost "eww update time_hover=false"
+    (box
+      :space-evenly false
+      (revealer 
+        :transition "slideleft" 
+			  :reveal time_hover
+			  :duration "550ms"
+        (label
+          :class "time"
+          :text "${time.weekday}, ${time.day}.${time.month}.${time.year} - "
+        )
+      )
+      (label
+        :class "time"
+        :text "${time.hour}:${time.min}"
+      )
+	    (revealer 
+        :transition "slideright" 
+			  :reveal time_hover
+			  :duration "550ms"
+        (label
+          :class "time"
+          :text ":${time.sec}"
+        )
+      )
+    )
+  )
+)
+
+(defwidget _bright []
+  (eventbox 
+    :onhover "eww update bright_hover=true"   
+  	:onhoverlost "eww update bright_hover=false"
+  	(box
+      :class "bright-box"
+			:space-evenly "false"
+			(label
+        :class "" :text "")
+  		(revealer :transition "slideright" 
+			  :reveal bright_hover
+			  :duration "550ms"
+  			(scale 
+          :class "bright_slide" 
+			    :value current-brightness 
+				  :tooltip "Brightness: ${current-brightness}"
+				  :onchange "brightnessctl set {}%" 
+				  :max 101 
+				  :min 10
+        )
+      )
+  	)
   )
 )
 
@@ -134,8 +190,8 @@
 	:focusable false
   :stacking "fg"
   :geometry (geometry :x "0%"
-                      :y "0%"
-                      :width "100%"
+                      :y "0.5%"
+                      :width "99.5%"
                       :height "2%"
                       :anchor "bottom center")
   :reserve (struts :side "bottom" :distance "4%")
