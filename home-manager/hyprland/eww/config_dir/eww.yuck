@@ -1,12 +1,8 @@
 (defpoll time :interval "1s"
-  :initial `date +'{"hour":"%H", "min":"%M", "sec":"%S", "timezone":"%Z", "day":"%d", "month":"%m", "year":"%Y", "weekday":"%a"}'`
   `date +'{"hour":"%H", "min":"%M", "sec":"%S", "timezone":"%Z", "day":"%d", "month":"%m", "year":"%Y", "weekday":"%a"}'`)
 (defpoll net :interval "100s"
-  :initial `N/A`
   `nmcli -t -f SIGNAL,ACTIVE device wifi \
     | awk -F':' '{if($2=="yes")print$1}'`)
-
-(defvar battery_hover "false")
 
 (defvar ws_active "1")
 (defvar ws_1 "true")
@@ -21,10 +17,17 @@
 
 (defvar time_hover false)
 
+(defvar audio_hover false)
+(defpoll volume_muted 
+  :interval "5s" 
+  "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '/MUTED/ {print $1; exit}'"
+)
+(defpoll current-volume :interval "5s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2 * 100}'")
 
 (defvar bright_hover false)
 (defpoll current-brightness :interval "5s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
 
+(defvar battery_hover "false")
 (defwidget barmenu_layout []
   (box :class "layout-box" 
     (box 
@@ -58,6 +61,7 @@
   (box
     :space-evenly false
     :halign "end"
+    (_audio)
     (_bright)
     (_battery :status {EWW_BATTERY.BAT0.status}
       :battery {EWW_BATTERY.BAT0.capacity}
@@ -137,6 +141,37 @@
   )
 )
 
+(defwidget _audio []
+  (eventbox 
+    :onhover "eww update audio_hover=true"   
+  	:onhoverlost "eww update audio_hover=false"
+  	(box
+      :class "audio-box"
+			:space-evenly "false"
+      (button
+        :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && eww update volume_muted=${volume_muted == "" ? "true" : ""}"
+			  (label 
+          :class "audio-sym"
+          :text {volume_muted != "" || current-volume == 0 ? "" 
+            :current-volume < 50 ? "" : ""}
+        )
+      )
+  		(revealer :transition "slideright" 
+			  :reveal audio_hover
+			  :duration "550ms"
+  			(scale 
+          :class "audio_slide" 
+			    :value current-volume 
+				  :tooltip "Volume: ${current-volume}"
+				  :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
+				  :max 101 
+				  :min 0
+        )
+      )
+  	)
+  )
+)
+
 (defwidget _bright []
   (eventbox 
     :onhover "eww update bright_hover=true"   
@@ -144,8 +179,7 @@
   	(box
       :class "bright-box"
 			:space-evenly "false"
-			(label
-        :class "" :text "")
+			(label :text "")
   		(revealer :transition "slideright" 
 			  :reveal bright_hover
 			  :duration "550ms"

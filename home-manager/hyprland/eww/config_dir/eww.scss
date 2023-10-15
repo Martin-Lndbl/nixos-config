@@ -54,6 +54,7 @@ tooltip label {
   font-size: 2em;
 }
 
+.audio-sym,
 .time,
 .bat-txt {
   font-size: 1.2em;
@@ -61,7 +62,12 @@ tooltip label {
 
 .bright-box {
   font-size: 1.2em;
-  margin: 0 1em 0 1em;
+  margin: 0 1em 0 0em;
+}
+
+.audio-box {
+  font-size: 1.2em;
+  margin: 0 1.3em 0 0em;
 }
 
 .ws-box {
@@ -84,9 +90,14 @@ tooltip label {
   opacity: 1;
 }
 
+.audio_slide trough highlight,
 .bright_slide trough highlight {
   background-color: $blue;
   border-radius: 5px;
+}
+
+.audio_slide {
+  margin-left: .4em;
 }
 
 scale trough {
