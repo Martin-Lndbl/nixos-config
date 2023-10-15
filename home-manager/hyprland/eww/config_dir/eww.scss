@@ -4,8 +4,10 @@ $surface-lightgrey: #3d464e;
 $surface-grey: #2b3238;
 $surface-red: #f87070;
 
-$background: #1A1B26;
-$foreground: #A9B1D6;
+$background: #1d1f21;
+$foreground: #c5c8c5;
+
+$purple: #6E0E75;
 
 $black: #24283B;
 $gray: #565F89;
@@ -92,7 +94,7 @@ tooltip label {
 
 .audio_slide trough highlight,
 .bright_slide trough highlight {
-  background-color: $blue;
+  background-color: $purple;
   border-radius: 5px;
 }
 

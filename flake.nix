@@ -91,6 +91,8 @@
             ./home-manager/home.nix
             ./home-manager/hyprland
             {
+              config.appearance.wallpaper = "~/downloads/wallpaper/jp2.png";
+              config.appearance.lockScreen = "~/downloads/wallpaper/nix.png";
               config.appearance.fontSize = 14;
               config.monitors.center = "eDP-1";
               config.monitors.right = "DP-1";

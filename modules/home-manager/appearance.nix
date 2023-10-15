@@ -2,6 +2,7 @@
 
 let
   cfg = config.appearance;
+
 in
 with lib;
 {
@@ -13,15 +14,11 @@ with lib;
     };
     wallpaper = mkOption {
       description = "Wallpaper";
-      type = types.path;
-      default = builtins.fetchurl {
-        url = "https://wallha.com/download/ws/14/4wfKF3NT-wallha.com.png";
-        sha256 = "07zl1dlxqh9dav9pibnhr2x1llywwnyphmzcdqaby7dz5js184ly";
-      };
+      type = types.str;
     };
     lockScreen = mkOption {
       description = "Lockscreen";
-      type = types.path;
+      type = types.str;
       default = cfg.wallpaper;
     };
   };
