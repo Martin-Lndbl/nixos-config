@@ -2,7 +2,8 @@
 {
 
   imports = [
-    ./waybar
+    # ./waybar
+    ./eww
     ./swaylock.nix
     ./xdg.nix
   ];
