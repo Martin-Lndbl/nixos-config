@@ -22,6 +22,7 @@
     acpi
     swaybg
     brightnessctl
+    grim
 
     # JSTech
     slack
