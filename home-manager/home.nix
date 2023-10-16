@@ -13,6 +13,7 @@
       allowUnfreePredicate = (_: true);
     };
   };
+
   home.packages = with pkgs; [
     unzip
     calc
@@ -24,14 +25,15 @@
     brightnessctl
     grim
 
-    # JSTech
-    slack
+    # PP-R
+    rstudio
 
     # communication
     whatsapp-for-linux
     spotifywm
     discord
     zoom-us
+    # slack
 
     # Notes
     trilium-desktop

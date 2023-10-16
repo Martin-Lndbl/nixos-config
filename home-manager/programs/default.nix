@@ -6,7 +6,7 @@
     ./firefox.nix
     ./git.nix
     ./ssh.nix
-    ./vscode.nix
+    # ./vscode.nix
   ];
   programs = {
     home-manager.enable = true;

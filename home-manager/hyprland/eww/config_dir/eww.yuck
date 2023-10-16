@@ -28,6 +28,9 @@
 (defpoll current-brightness :interval "5s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
 
 (defvar battery_hover "false")
+(defpoll battery_timeleft :interval "5m" "acpi | awk -F '%, ' '{print $2}'")
+
+
 (defwidget barmenu_layout []
   (box :class "layout-box" 
     (box 
@@ -213,6 +216,7 @@
           :battery < 80 ? three
           :full 
         }
+        :tooltip battery_timeleft
       ))
   )
 )
