@@ -7,7 +7,7 @@ $surface-red: #f87070;
 $background: #1d1f21;
 $foreground: #c5c8c5;
 
-$purple: #504C5E;
+$sliders: #504C5E;
 
 $black: #24283B;
 $gray: #565F89;
@@ -56,20 +56,22 @@ tooltip label {
   font-size: 2em;
 }
 
-.audio-sym,
+.muted-sym,
 .time,
 .bat-txt {
   font-size: 1.2em;
 }
 
-.bright-box {
+.audio-sym,
+.bright-sym {
+  margin: 0 .5em 0 0;
   font-size: 1.2em;
-  margin: 0 1em 0 0em;
 }
 
-.audio-box {
+.audio-box,
+.bright-box {
   font-size: 1.2em;
-  margin: 0 1.3em 0 0em;
+  margin: 0 1.1em 0 0em;
 }
 
 .ws-box {
@@ -94,7 +96,7 @@ tooltip label {
 
 .audio_slide trough highlight,
 .bright_slide trough highlight {
-  background-color: $purple;
+  background-color: $sliders;
   border-radius: 5px;
 }
 

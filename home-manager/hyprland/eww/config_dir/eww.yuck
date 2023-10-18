@@ -154,7 +154,7 @@
       (button
         :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && eww update volume_muted=${volume_muted == "" ? "true" : ""}"
 			  (label 
-          :class "audio-sym"
+          :class {volume_muted == "" ? "audio-sym":"muted-sym"}
           :text {volume_muted != "" || current-volume == 0 ? "" 
             :current-volume < 50 ? "" : ""}
         )
@@ -182,7 +182,10 @@
   	(box
       :class "bright-box"
 			:space-evenly "false"
-			(label :text "")
+			(label
+        :class "bright-sym"
+        :text ""
+      )
   		(revealer :transition "slideright" 
 			  :reveal bright_hover
 			  :duration "550ms"
