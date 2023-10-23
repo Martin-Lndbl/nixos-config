@@ -15,6 +15,7 @@
             instance = "Alacritty";
             general = "Alacritty";
           };
+          padding.x = 4;
         };
         font = {
           normal = {

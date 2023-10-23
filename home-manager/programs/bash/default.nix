@@ -6,7 +6,8 @@
     bashrcExtra =
       ''
         export EDITOR="vim"
-        PS1="\[\e[1;32m\][\t]: \w $\[\e[m\] "
+        # PS1="\[\e[1;32m\][\t]: \w $\[\e[m\] "
+        # PS1="[\u@\h] \w $ "
       '';
     shellAliases = {
       ".." = "cd ..";

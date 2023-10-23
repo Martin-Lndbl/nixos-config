@@ -55,12 +55,6 @@
       comic-mono
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
-    # fontconfig.defaultFonts = {
-    #   serif = [ "Noto Serif" "Noto Color Emoji" ];
-    #   sansSerif = [ "Noto Sans" "Noto Color Emoji" ];
-    #   monospace = [ "Noto Sans Mono" "Noto Color Emoji" ];
-    #   emoji = [ "Noto Color Emoji" ];
-    # };
   };
 
   environment.systemPackages = with pkgs; [

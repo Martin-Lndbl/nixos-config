@@ -18,9 +18,9 @@ exec-once = swaybg -i ${config.appearance.wallpaper}
 exec-once = eww open bar
 exec-once = systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
 
-exec-once = [workspace 9; noanim; fakefullscreen] firefox https://outlook.live.com/calendar/0/view/week
-# exec-once = [workspace 9; noanim] spotifywm
-exec-once = [workspace 9; noanim] whatsapp-for-linux
+exec-once = [workspace 9 silent; noanim; fakefullscreen] firefox https://outlook.live.com/calendar/0/view/week
+# exec-once = [workspace 9 silent; noanim] spotifywm
+exec-once = [workspace 9 silent; noanim] whatsapp-for-linux
 
 exec-once = [workspace 1; noanim] alacritty
 exec-once = [workspace 1; noanim] alacritty
