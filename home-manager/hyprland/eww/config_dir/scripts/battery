@@ -1,0 +1,14 @@
+#! /bin/sh
+
+# Eww kills this script after a while. Since I don't want to loose control over tthe process completely "&" won't do.
+
+# while true; do
+    lifetime=$(acpi | awk -F '%, ' '{print $2}')
+    eww update battery_timeleft="$lifetime"
+
+#     result=$(eww get battery_hover)
+#     if [ "$result" = "false" ]; then
+#         break
+#     fi
+#     sleep 1
+# done
