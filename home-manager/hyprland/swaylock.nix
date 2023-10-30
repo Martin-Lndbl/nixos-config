@@ -9,9 +9,9 @@
         indicator-idle-visible = false;
         indicator-radius = 60;
         show-failed-attemps = true;
-        inside-color = "ffffff00";
-        key-hl-color = "153B3099";
-        ring-color = "3B3B3999";
+        inside-color = config.colorScheme.colors.base00;
+        key-hl-color = config.colorScheme.colors.base08;
+        ring-color = config.colorScheme.colors.base07;
       };
     };
 }
