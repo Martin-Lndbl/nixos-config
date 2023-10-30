@@ -15,9 +15,11 @@
     # Neovim
     neovim.url = "github:Martin-Lndbl/nix-neovim-module";
     neovim.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-colors.url = "github:Misterio77/nix-colors";
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, neovim, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, neovim, nix-colors, ... }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -88,6 +90,7 @@
           modules = [
             hyprland.homeManagerModules.default
             neovim.homeManagerModules.default
+            nix-colors.homeManagerModules.default
             ./home-manager/home.nix
             ./home-manager/hyprland
             {

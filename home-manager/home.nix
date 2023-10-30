@@ -6,6 +6,8 @@
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
+  colorScheme = inputs.nix-colors.colorSchemes.dracula;
+
   nixpkgs = {
     overlays = outputs.overlays.modifications ;
     config = {
