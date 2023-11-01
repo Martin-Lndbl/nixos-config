@@ -38,8 +38,8 @@
         };
         colors = {
           primary = {
-            background = "#1d1f21";
-            foreground = "#c5c8c5";
+            background = "#${config.colorscheme.colors.base00}";
+            foreground = "#${config.colorscheme.colors.base07}";
           };
         };
       };

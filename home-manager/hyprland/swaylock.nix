@@ -10,8 +10,8 @@
         indicator-radius = 60;
         show-failed-attemps = true;
         inside-color = config.colorScheme.colors.base00;
-        key-hl-color = config.colorScheme.colors.base08;
-        ring-color = config.colorScheme.colors.base07;
+        key-hl-color = config.colorScheme.colors.base05;
+        ring-color = config.colorScheme.colors.base02;
       };
     };
 }
