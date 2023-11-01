@@ -6,7 +6,7 @@
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
-  # colorScheme = inputs.nix-colors.colorSchemes.dracula;
+  # colorScheme = inputs.nix-colors.colorSchemes.tokyo-night-dark;
   colorScheme = import ./colorschemes/spacecamp.nix;
 
   nixpkgs = {

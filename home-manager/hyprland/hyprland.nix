@@ -195,11 +195,11 @@ ${builtins.foldl'
 
 ${builtins.foldl'
     (acc: new:
-      acc + "\nbind=SUPER, ${new}, exec, ${config.programs.eww.configDir}/scripts/workspaces ${new}") "" workspaces}
+      acc + "\nbind=SUPER, ${new}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${new}") "" workspaces}
 
 ${builtins.foldl'
     (acc: new:
-      acc + "\nbind=SUPER_SHIFT, ${new}, exec, ${config.programs.eww.configDir}/scripts/workspaces ${new}") "" workspaces}
+      acc + "\nbind=SUPER_SHIFT, ${new}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${new}") "" workspaces}
 
 
 # Audio
