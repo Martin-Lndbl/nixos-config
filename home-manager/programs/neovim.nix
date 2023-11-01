@@ -17,7 +17,7 @@ let
     type = "lua";
     config = with config.colorscheme.colors; "
           require('base16-colorscheme').setup({
-            base00 = '#${base00}',
+            base00 = 'NONE',
             base01 = '#${base01}',
             base02 = '#${base02}',
             base03 = '#${base03}',
@@ -41,10 +41,8 @@ in
 {
   programs.neovim = {
     baseConfiguration.enable = true;
-    baseConfiguration.colorscheme = "spacecamp_transparent";
     plugins = [
-      spacecamp
-      # base16_build
+      base16_build
     ];
   };
 }

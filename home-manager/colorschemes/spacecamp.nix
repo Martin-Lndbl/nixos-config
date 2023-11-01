@@ -3,21 +3,21 @@
   name = "SpaceCamp";
   author = "https://github.com/jaredgorski/SpaceCamp";
   colors = {
-    base00 = "#282828";
-    base01 = "#D71A1A";
-    base02 = "#57BA37";
-    base03 = "#F0D50C";
-    base04 = "#91AADF";
-    base05 = "#CF73E6";
-    base06 = "#B7CBF4";
-    base07 = "#DEDEDE";
-    base08 = "#666666";
-    base09 = "#FF0000";
+    base00 = "#121212";
+    base01 = "#262626";
+    base02 = "#49483E";
+    base03 = "#6B6B6B";
+    base04 = "#B0B0B0";
+    base05 = "#F0D50C";
+    base06 = "#DEDEDE";
+    base07 = "#EEEEEE";
+    base08 = "#FF0000";
+    base09 = "#F66100";
     base0A = "#D8FA3B";
-    base0B = "#E7C547";
+    base0B = "#57BA37";
     base0C = "#B7CBF4";
-    base0D = "#B77EE0";
-    base0E = "#A9C1DE";
-    base0F = "#EEEEEE";
+    base0D = "#91AADF";
+    base0E = "#B77EE0";
+    base0F = "#CF73E6";
   };
 }
