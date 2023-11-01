@@ -1,34 +1,20 @@
 { pkgs, config }:
 
+with config.colorscheme.colors;
 pkgs.writeText "eww.scss" 
 ''
-  $surface-darkgrey: #20252b;
-  $surface-fg: #949494;
-  $surface-lightgrey: #3d464e;
-  $surface-grey: #2b3238;
-  $surface-red: #f87070;
+  $background: #${base00};
+  $foreground: #${base06};
 
-  $background: #1d1f21;
-  $foreground: #c5c8c5;
-
-  $sliders: #504C5E;
-
-  $black: #24283B;
-  $gray: #565F89;
-  $red: #F7768E;
-  $green: #73DACA;
-  $yellow: #E0AF68;
-  $blue: #7AA2F7;
-  $magenta: #BB9AF7;
-  $cyan: #7DCFFF;
+  $sliders: #${base0D};
 
   * { all: unset; }
 
   tooltip.background {
-      background-color: #0f0f17;
+      background-color: #${base00};
       font-size: 18;
       border-radius: 8px;
-      color: #bfc9db;
+      color: #${base05};
   }
 
   tooltip label {
@@ -61,8 +47,12 @@ pkgs.writeText "eww.scss"
   }
 
   .muted-sym,
-  .time,
   .bat-txt {
+    font-size: 1.2em;
+  }
+
+  .time {
+    color: #${base05};
     font-size: 1.2em;
   }
 
@@ -94,7 +84,7 @@ pkgs.writeText "eww.scss"
 
   .ws_active {
     font-size: 1.1em;
-    color: $red;
+    color: #${base08};
     opacity: 1;
   }
 
