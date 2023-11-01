@@ -12,7 +12,7 @@
     inherit pkgs config;
   };
 
-  xdg. configFile."eww/scripts" = {
+  xdg.configFile."eww/scripts" = {
     source = ./config_dir/scripts;
     recursive = true;
   };
