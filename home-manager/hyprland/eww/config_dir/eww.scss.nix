@@ -52,7 +52,6 @@ pkgs.writeText "eww.scss"
   }
 
   .time {
-    color: #${base05};
     font-size: 1.2em;
   }
 
