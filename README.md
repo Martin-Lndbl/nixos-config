@@ -7,9 +7,15 @@ Currently I am using
 * [Eww](https://github.com/elkowar/eww) for my status bar etc.
 * [Neovim](https://github.com/neovim/neovim) as editor.
 
-Feel free to browse!
+![](./images/tetris.png)
 
-![](./images/wallpaper.png)
+## Highlights
+Setting the nix-colors colorscheme changes the whole operating system, including neovim and bash.
+![](./images/spacecamp.png)
+![](./images/chalk.png)
+![](./images/classic-light.png)
+
+Feel free to browse!
 
 ## Further reading
 * [Misterio77](https://github.com/Misterio77)
