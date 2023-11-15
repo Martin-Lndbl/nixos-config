@@ -6,8 +6,8 @@
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
-  # colorScheme = inputs.nix-colors.colorSchemes.classic-light;
-  colorScheme = import ./colorschemes/spacecamp.nix;
+  colorScheme = inputs.nix-colors.colorSchemes.classic-dark;
+  # colorScheme = import ./colorschemes/spacecamp.nix;
 
   nixpkgs = {
     overlays = outputs.overlays.modifications ;
