@@ -12,6 +12,11 @@ with lib;
       type = types.int;
       default = 14;
     };
+    opacity = mkOption {
+      description = "Set the opacity for inactive hyprland clients";
+      type = types.float;
+      default = 0.8;
+    };
     wallpaper = mkOption {
       description = "Wallpaper";
       type = types.str;

@@ -128,6 +128,8 @@ bind=SUPER_CTRL, j, moveintogroup, d
 
 # Window Rules
 
+windowrule = opacity 1.0 override ${builtins.toString config.appearance.opacity} override,.*
+
 windowrulev2 = float, title:^(popup)$
 windowrulev2 = rounding 0, xwayland:1, floating:1
 

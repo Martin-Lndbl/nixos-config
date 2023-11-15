@@ -10,7 +10,6 @@
           decorations = "full";
           title = "Alacritty";
           dynamic_title = true;
-          opacity = 0.8;
           class = {
             instance = "Alacritty";
             general = "Alacritty";
