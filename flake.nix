@@ -97,7 +97,6 @@
               config.appearance.wallpaper = "~/downloads/wallpaper/dodge.jpg";
               config.appearance.lockScreen = "~/downloads/wallpaper/nix.png";
               config.appearance.fontSize = 14;
-              config.appearance.opacity = 0.7;
               config.monitors.center = "eDP-1";
               config.monitors.right = "DP-1";
             }

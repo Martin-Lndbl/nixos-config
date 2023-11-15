@@ -3,6 +3,10 @@
 let
   cfg = config.appearance;
 
+  opacity = if builtins.match "[0/1].*" config.colorscheme.colors.base00 == null
+    then 1.0
+    else 0.7;
+
 in
 with lib;
 {
@@ -15,7 +19,7 @@ with lib;
     opacity = mkOption {
       description = "Set the opacity for inactive hyprland clients";
       type = types.float;
-      default = 0.8;
+      default = opacity;
     };
     wallpaper = mkOption {
       description = "Wallpaper";

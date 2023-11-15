@@ -17,7 +17,7 @@ let
     type = "lua";
     config = with config.colorscheme.colors; "
           require('base16-colorscheme').setup({
-            base00 = 'NONE',
+            base00 = '#${base00}',
             base01 = '#${base01}',
             base02 = '#${base02}',
             base03 = '#${base03}',
