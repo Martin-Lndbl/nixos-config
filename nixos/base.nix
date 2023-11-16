@@ -34,8 +34,6 @@
     useXkbConfig = true;
   };
 
-  # virtualisation.docker.enable = true;
-
   # Sound 
   sound.enable = true;
   services.pipewire = {

@@ -10,10 +10,16 @@
   # colorScheme = import ./colorschemes/spacecamp.nix;
 
   nixpkgs = {
-    overlays = outputs.overlays.modifications ;
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.unstable-packages
+    ] ++ outputs.overlays.modifications;
     config = {
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
+      permittedInsecurePackages = [
+        "electron-24.8.6"
+      ];
     };
   };
 
@@ -36,17 +42,14 @@
     spotifywm
     discord
     zoom-us
-    # slack
 
     # Notes
     trilium-desktop
+    anki
 
     # eyecandy
     neofetch
     cava
-
-    # games
-    vitetris
 
     # PDF stuff
     zathura
@@ -57,11 +60,11 @@
   xdg.userDirs = {
     download = "${config.home.homeDirectory}/downloads";
     pictures = "${config.home.homeDirectory}/downloads";
-    desktop = config.home.homeDirectory;
-    music = config.home.homeDirectory;
-    videos = config.home.homeDirectory;
-    templates = config.home.homeDirectory;
-    publicShare = config.home.homeDirectory;
+    desktop = "${config.home.homeDirectory}/other";
+    music = "${config.home.homeDirectory}/other";
+    videos = "${config.home.homeDirectory}/other";
+    templates = "${config.home.homeDirectory}/other";
+    publicShare = "${config.home.homeDirectory}/other";
   };
 
   systemd.user.startServices = "sd-switch";
