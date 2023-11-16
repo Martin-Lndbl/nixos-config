@@ -1,14 +1,9 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    gamemode
-    patchelf
-    # heroic
+   # gamemode
     vitetris
-    # unstable.atlauncher
     atlauncher
-    # winePackages.stagingFull
-    # winetricks
   ];
 
   # programs.atlauncher = {
@@ -25,7 +20,6 @@
   #     javaPath = "${pkgs.jdk8}";
   #   };
   # };
-
   # xdg.desktopEntries = {
   #   rocket-league = {
   #     categories = [ "Game" ];
