@@ -1,28 +1,30 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # gamemode
+    gamemode
+    patchelf
     # heroic
     vitetris
-    unstable.atlauncher
+    # unstable.atlauncher
+    atlauncher
     # winePackages.stagingFull
     # winetricks
   ];
 
-  programs.atlauncher = {
-    enable = false;
-    package = pkgs.unstable.atlauncher;
+  # programs.atlauncher = {
+  #   enable = false;
+  #   package = pkgs.unstable.atlauncher;
 
-    settings = {
-      enableAnalytics = true;
-      enableConsole = false;
-      enableTrayMenu = false;
-      firstTimeRun = false;
-      keepLauncherOpen = false;
-      usingCustimJavaPath = true;
-      javaPath = "${pkgs.jdk8}";
-    };
-  };
+  #   settings = {
+  #     enableAnalytics = true;
+  #     enableConsole = false;
+  #     enableTrayMenu = false;
+  #     firstTimeRun = false;
+  #     keepLauncherOpen = false;
+  #     usingCustimJavaPath = true;
+  #     javaPath = "${pkgs.jdk8}";
+  #   };
+  # };
 
   # xdg.desktopEntries = {
   #   rocket-league = {
