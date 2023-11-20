@@ -6,13 +6,12 @@
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
-  colorScheme = inputs.nix-colors.colorSchemes.classic-dark;
+  colorScheme = inputs.nix-colors.colorSchemes.brewer;
   # colorScheme = import ./colorschemes/spacecamp.nix;
 
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
-      outputs.overlays.unstable-packages
     ] ++ outputs.overlays.modifications;
     config = {
       allowUnfree = true;
@@ -24,9 +23,10 @@
   };
 
   home.packages = with pkgs; [
+    universal-ctags
+    xdg-utils
     unzip
     calc
-    universal-ctags
     fd
     xclip
     acpi
@@ -34,12 +34,8 @@
     brightnessctl
     grim
 
-    # PP-R
-    rstudio
-
     # communication
     whatsapp-for-linux
-    spotifywm
     discord
     zoom-us
 
@@ -56,15 +52,21 @@
     texlive.combined.scheme-full
   ];
 
-  xdg.configFile."cava/config".source = ./programs/cava;
+  xdg.enable = true;
+  xdg.cacheHome = config.home.homeDirectory + "/.local/cache";
+  xdg.mimeApps.enable = true;
   xdg.userDirs = {
+    enable = true;
+    createDirectories = false;
+    documents = "${config.home.homeDirectory}/documents";
     download = "${config.home.homeDirectory}/downloads";
-    pictures = "${config.home.homeDirectory}/downloads";
+    pictures = "${config.home.homeDirectory}/other";
     desktop = "${config.home.homeDirectory}/other";
     music = "${config.home.homeDirectory}/other";
     videos = "${config.home.homeDirectory}/other";
     templates = "${config.home.homeDirectory}/other";
     publicShare = "${config.home.homeDirectory}/other";
+    extraConfig.XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/screenshots";
   };
 
   systemd.user.startServices = "sd-switch";

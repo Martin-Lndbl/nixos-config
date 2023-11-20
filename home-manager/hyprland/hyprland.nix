@@ -77,7 +77,7 @@ master {
 # App binds
 
 bind=SUPER, return, exec, alacritty
-bind=SUPER, d, exec, wofi --show run
+bind=SUPER, d, exec, wofi --show drun
 bind=SUPER, g, exec, MOZ_ENABLE_WAYLAND=1 firefox
 bind=SUPER_SHIFT, Q, killactive
 bind=SUPERALT, L, exec, swaylock -fel

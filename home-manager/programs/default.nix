@@ -7,7 +7,9 @@
     ./git.nix
     ./ssh.nix
     ./neovim.nix
-    # ./vscode.nix
+    ./cava.nix
+    ./spotify.nix
+    ./calc.nix
   ];
   programs = {
     home-manager.enable = true;
