@@ -61,6 +61,12 @@ pkgs.writeText "eww.scss"
     font-size: 1.2em;
   }
 
+  .network-sym {
+    margin: 0 .5em 0 0;
+    font-size: 1.1em;
+  }
+
+  .network-box,
   .audio-box,
   .bright-box {
     font-size: 1.2em;

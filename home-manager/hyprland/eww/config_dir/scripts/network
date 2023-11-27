@@ -1,0 +1,5 @@
+#! /bin/sh -eux
+
+active_network=$(nmcli -t -f NAME,ACTIVE,TYPE connection show | awk -F':' '{if($2=="yes" && $3!="loopback")print$1}')
+
+eww update network_connection="${active_network}"

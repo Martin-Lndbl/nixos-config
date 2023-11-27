@@ -1,13 +1,11 @@
-#! /bin/sh -eux
+#! /bin/sh
 
 if [ $# -gt 0 ]
   then
   eww update ws_active=$1
 fi
 
-
-ws=$(hyprctl workspaces | awk -vRS=")" -vFS="(" '{print $2}')
-echo ${ws}
+ws=$(hyprctl workspaces | grep -oP 'workspace ID \K\d+(?= \(\d+\) on monitor)')
 
 for key in 1 2 3 4 5 6 7 8 9
 do

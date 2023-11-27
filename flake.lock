@@ -92,11 +92,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1698040691,
-        "narHash": "sha256-QaphYLQULRR+H4o9IwsDOZ9oZCOJf/QRlIrMQaK0NGo=",
+        "lastModified": 1701052581,
+        "narHash": "sha256-3BDzIs2J29TKQyRtYe4MdNseMf4TeeiYtvnrCGh48ZQ=",
         "owner": "Martin-Lndbl",
         "repo": "nix-neovim-module",
-        "rev": "e14e8a69fce98649016e6f9ae817b86ad82cff8b",
+        "rev": "ab1471112f4cbf42015d772ecfa6e41cea46f2bb",
         "type": "github"
       },
       "original": {

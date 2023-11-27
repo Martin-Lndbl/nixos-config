@@ -1,11 +1,8 @@
 (defpoll time :interval "1s"
   `date +'{"hour":"%H", "min":"%M", "sec":"%S", "timezone":"%Z", "day":"%d", "month":"%m", "year":"%Y", "weekday":"%a"}'`)
-(defpoll net :interval "100s"
-  `nmcli -t -f SIGNAL,ACTIVE device wifi \
-    | awk -F':' '{if($2=="yes")print$1}'`)
 
 (defvar ws_active "1")
-(defvar ws_1 "true")
+(defvar ws_1 "false")
 (defvar ws_2 "false")
 (defvar ws_3 "false")
 (defvar ws_4 "false")
@@ -13,9 +10,11 @@
 (defvar ws_6 "false")
 (defvar ws_7 "false")
 (defvar ws_8 "false")
-(defvar ws_9 "true")
+(defvar ws_9 "false")
 
 (defvar time_hover false)
+
+(defvar network_connection "unknown")
 
 (defvar audio_hover false)
 (defpoll volume_muted 
@@ -63,6 +62,7 @@
   (box
     :space-evenly false
     :halign "end"
+    (_network)
     (_audio)
     (_bright)
     (_battery :status {EWW_BATTERY.BAT0.status}
@@ -140,6 +140,19 @@
         )
       )
     )
+  )
+)
+
+
+(defwidget _network []
+  (eventbox
+    :onhover "scripts/network"
+    (box :class "network-box" (label
+      :class "network-sym"
+      :space-evenly "false"
+      :text { "" }
+      :tooltip network_connection
+    ))
   )
 )
 
