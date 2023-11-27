@@ -2,10 +2,8 @@
 {
 
   imports = [
-    # ./waybar
     ./eww
     ./swaylock.nix
-    ./xdg.nix
   ];
 
   programs.wofi.enable = true;
