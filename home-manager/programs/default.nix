@@ -10,6 +10,7 @@
     ./cava.nix
     ./spotify.nix
     ./calc.nix
+    ./ape.nix
   ];
   programs = {
     home-manager.enable = true;
