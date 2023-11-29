@@ -28,7 +28,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-XoqpsgLmkpa2SdjZvPkgg6BUJulIBIeu6mBsJJCixfo=";
   };
 
-
   dontUnpack = true;
 
   buildInputs = [ ];
@@ -46,19 +45,15 @@ stdenv.mkDerivation (finalAttrs: {
       --add-flags "--working-dir \"\''${XDG_DATA_HOME:-\$HOME/.local/share}/ATLauncher\"" \
       --add-flags "--no-launcher-update"
 
+    ${
+      if java-version == jre8
+      then "makeWrapper ${xorg.xrandr}/bin/xrandr $out/bin/xrandr"
+      else "" # SevTech needs xrandr
+    }
+
     mkdir -p $out/share/icons/hicolor/scalable/apps
     cp $ICON $out/share/icons/hicolor/scalable/apps/${finalAttrs.pname}.svg
 
     runHook postInstall
   '';
-
-  desktopItems = [
-    (makeDesktopItem {
-      name = finalAttrs.pname;
-      exec = finalAttrs.pname;
-      icon = finalAttrs.pname;
-      desktopName = "ATLauncher";
-      categories = [ "Game" ];
-    })
-  ];
 })

@@ -1,7 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
     ./programs
-    ./games.nix
+    ./games
   ];
 
   home.username = "mrtn";
