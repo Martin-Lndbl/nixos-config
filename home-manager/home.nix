@@ -1,6 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
     ./programs
+    ./games
   ];
 
   home.username = "mrtn";
