@@ -62,7 +62,7 @@
     documents = "${config.home.homeDirectory}/documents";
     download = "${config.home.homeDirectory}/downloads";
     pictures = "${config.home.homeDirectory}/other";
-    desktop = "${config.home.homeDirectory}/other";
+    desktop = "${config.home.homeDirectory}/.local/share/applications";
     music = "${config.home.homeDirectory}/other";
     videos = "${config.home.homeDirectory}/other";
     templates = "${config.home.homeDirectory}/other";
