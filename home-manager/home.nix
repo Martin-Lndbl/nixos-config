@@ -61,10 +61,10 @@
     createDirectories = false;
     documents = "${config.home.homeDirectory}/documents";
     download = "${config.home.homeDirectory}/downloads";
-    pictures = "${config.home.homeDirectory}/other";
     desktop = "${config.home.homeDirectory}/.local/share/applications";
-    music = "${config.home.homeDirectory}/other";
-    videos = "${config.home.homeDirectory}/other";
+    pictures = "${config.home.homeDirectory}/other/pictures";
+    music = "${config.home.homeDirectory}/other/music";
+    videos = "${config.home.homeDirectory}/other/videos";
     templates = "${config.home.homeDirectory}/other";
     publicShare = "${config.home.homeDirectory}/other";
     extraConfig.XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/screenshots";

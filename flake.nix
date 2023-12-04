@@ -16,7 +16,11 @@
     neovim.url = "github:Martin-Lndbl/nix-neovim-module";
     neovim.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Nix Colors
     nix-colors.url = "github:Misterio77/nix-colors";
+
+    # Nix Gaming
+    nix-gaming.url = "github:fufexan/nix-gaming";
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, neovim, nix-colors, ... }@inputs:
