@@ -37,8 +37,6 @@
     ripgrep
 
     # communication
-    whatsapp-for-linux
-    discord
     zoom-us
 
     # Notes
@@ -73,5 +71,5 @@
 
   systemd.user.startServices = "sd-switch";
 
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.11";
 }

@@ -63,6 +63,7 @@
           modules = [
             neovim.homeManagerModules.default
             hyprland.homeManagerModules.default
+            nix-colors.homeManagerModules.default
             ./home-manager/home.nix
             ./home-manager/hyprland
             {

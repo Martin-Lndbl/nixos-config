@@ -1,14 +1,19 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 {
-
   imports = [
     ./eww
     ./swaylock.nix
   ];
 
-  programs.wofi.enable = true;
+  wayland.windowManager.hyprland.enable = true;
+  xdg.configFile."hypr/hyprland.conf".source = import ./hyprland.nix { inherit pkgs config; };
+  # wayland.windowManager.hyprland.extraConfig = builtins.readFile
+  #   (import ./hyprland.nix { inherit pkgs config; });
 
-  services.mako.enable = true;
+  services.mako.enable = true; # Notifications
+
+  programs.wofi.enable = true; # Application launcher
+  xdg.configFile."wofi/style.css".source = ./wofi.css;
 
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
@@ -19,9 +24,4 @@
     XDG_SESSION_TYPE = "wayland";
     NIXOS_OZONE_WL = "1";
   };
-
-  wayland.windowManager.hyprland.enable = true;
-  xdg.configFile."hypr/hyprland.conf".source = import ./hyprland.nix { inherit pkgs config; };
-
-  xdg.configFile."wofi/style.css".source = ./wofi.css;
 }
