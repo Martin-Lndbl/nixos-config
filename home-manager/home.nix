@@ -34,6 +34,7 @@
     swaybg
     brightnessctl
     grim
+    ripgrep
 
     # communication
     whatsapp-for-linux

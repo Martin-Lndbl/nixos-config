@@ -42,6 +42,14 @@ in
         xdg-desktop-portal-hyprland
         xdg-desktop-portal-gtk
       ];
+      config = {
+        "Hyprland" = {
+          default = [ "hyprland" "gtk" ];
+        };
+        "common" = {
+          default = [ "gtk" ];
+        };
+      };
     };
   };
 

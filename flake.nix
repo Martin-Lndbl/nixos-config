@@ -21,6 +21,7 @@
 
     # Nix Gaming
     nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-gaming.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, neovim, nix-colors, ... }@inputs:
