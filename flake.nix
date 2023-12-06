@@ -5,8 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    hm.url = "github:nix-community/home-manager";
+    hm.inputs.nixpkgs.follows = "nixpkgs";
 
     # Neovim
     neovim.url = "github:Martin-Lndbl/nix-neovim-module";
@@ -20,7 +20,7 @@
     nix-gaming.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, neovim, nix-colors, ... }@inputs:
+  outputs = { self, nixpkgs, hm, neovim, nix-colors, ... }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -53,20 +53,20 @@
         ] ++ import ./modules/nixos;
       };
       homeConfigurations = {
-        "mrtn@nix-gt" = home-manager.lib.homeManagerConfiguration {
+        "mrtn@nix-gt" = hm.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             neovim.homeManagerModules.default
             nix-colors.homeManagerModules.default
-            ./home-manager/home.nix
-            ./home-manager/hyprland
+            ./hm/home.nix
+            ./hm/hyprland
             {
               config.appearance.fontSize = 18;
               config.monitors.center = "DP-2";
               config.monitors.right = "DP-3";
             }
-          ] ++ import ./modules/home-manager;
+          ] ++ import ./modules/hm;
         };
       };
 
@@ -85,14 +85,14 @@
         ] ++ import ./modules/nixos;
       };
       homeConfigurations = {
-        "mrtn@nix-nb" = home-manager.lib.homeManagerConfiguration {
+        "mrtn@nix-nb" = hm.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             neovim.homeManagerModules.default
             nix-colors.homeManagerModules.default
-            ./home-manager/home.nix
-            ./home-manager/hyprland
+            ./hm/home.nix
+            ./hm/hyprland
             {
               config.appearance.wallpaper = "~/downloads/wallpaper/dodge.jpg";
               config.appearance.lockScreen = "~/downloads/wallpaper/nix.png";
@@ -100,7 +100,7 @@
               config.monitors.center = "eDP-1";
               config.monitors.right = "DP-1";
             }
-          ] ++ import ./modules/home-manager;
+          ] ++ import ./modules/hm;
         };
       };
     };

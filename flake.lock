@@ -34,7 +34,7 @@
         "type": "github"
       }
     },
-    "home-manager": {
+    "hm": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -165,7 +165,7 @@
     },
     "root": {
       "inputs": {
-        "home-manager": "home-manager",
+        "hm": "hm",
         "neovim": "neovim",
         "nix-colors": "nix-colors",
         "nix-gaming": "nix-gaming",
