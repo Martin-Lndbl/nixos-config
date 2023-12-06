@@ -20,4 +20,3 @@ Feel free to browse!
 ## Further reading
 * [Misterio77](https://github.com/Misterio77)
 * [fufexan](https://github.com/fufexan)
-* [Mic92](https://github.com/Mic92)

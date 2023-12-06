@@ -15,7 +15,6 @@ in
       ''
         export EDITOR="vim"
         PS1="\[\e[1m\e[38;2;$((16#${R}));$((16#${G}));$((16#${B}))m\][\u@\h:\w]$ \[\e[0m\]"
-
       '';
     shellAliases = {
       ".." = "cd ..";

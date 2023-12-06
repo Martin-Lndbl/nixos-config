@@ -1,14 +1,16 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 let
-  swayConfig = pkgs.writeText "greetd-sway-config" ''
-    exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-    exec "${pkgs.greetd.gtkgreet}/bin/gtkgreet -l; swaymsg exit"
-    bindsym Mod4+shift+e exec swaynag \
-      -t warning \
-      -m 'What do you want to do?' \
-      -b 'Poweroff' 'systemctl poweroff' \
-      -b 'Reboot' 'systemctl reboot'
-  '';
+  swayConfig = pkgs.writeText "greetd-sway-config"
+    ''
+      input * xkb_layout de
+      exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+      exec "${pkgs.greetd.gtkgreet}/bin/gtkgreet -l; swaymsg exit"
+      bindsym Mod4+shift+e exec swaynag \
+        -t warning \
+        -m 'What do you want to do?' \
+        -b 'Poweroff' 'systemctl poweroff' \
+        -b 'Reboot' 'systemctl reboot'
+    '';
 in
 {
   services.greetd = {
@@ -52,6 +54,8 @@ in
       };
     };
   };
+
+  console.keyMap = lib.mkForce "de-latin1";
 
   security.pam.services.swaylock = {
     text = "auth include login";
