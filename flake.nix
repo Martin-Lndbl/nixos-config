@@ -49,7 +49,7 @@
           ./nixos/machines/nix-gt.nix
 
           # Choose any display / window - Manager
-          ./nixos/display-manager/hyprland.nix
+          ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;
       };
       homeConfigurations = {
@@ -81,7 +81,7 @@
           ./nixos/machines/nix-nb.nix
 
           # Choose any display / window - Manager
-          ./nixos/display-manager/hyprland.nix
+          ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;
       };
       homeConfigurations = {
