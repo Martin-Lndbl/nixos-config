@@ -2,7 +2,7 @@
 
 My system configuration in one place.
 
-Currently I am using 
+Currently I'm using
 * [Hyprland](https://github.com/hyprwm/Hyprland) as tilting manager
 * [Eww](https://github.com/elkowar/eww) for my status bar etc.
 * [Neovim](https://github.com/neovim/neovim) as editor.
@@ -10,13 +10,16 @@ Currently I am using
 ![](./images/tetris.png)
 
 ## Highlights
-Setting the nix-colors colorscheme changes the whole operating system, including neovim and bash.
-![](./images/spacecamp.png)
-![](./images/chalk.png)
-![](./images/classic-light.png)
+* Readable approach to manage multiple hosts and users
+* Build your operating systems color scheme automatically from base16 colors:
 
+<p float="center">
+  <img src="./images/spacecamp.png" width="32%" />
+  <img src="./images/chalk.png" width="32%" />
+  <img src="./images/classic-light.png" width="32%" />
+</p>
 Feel free to browse!
 
-## Further reading
+## Thanks to
 * [Misterio77](https://github.com/Misterio77)
 * [fufexan](https://github.com/fufexan)
