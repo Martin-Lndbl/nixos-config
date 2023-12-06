@@ -3,12 +3,8 @@
   imports = [
     ./eww
     ./swaylock.nix
+    ./hyprland.nix
   ];
-
-  wayland.windowManager.hyprland.enable = true;
-  xdg.configFile."hypr/hyprland.conf".source = import ./hyprland.nix { inherit pkgs config; };
-  # wayland.windowManager.hyprland.extraConfig = builtins.readFile
-  #   (import ./hyprland.nix { inherit pkgs config; });
 
   services.mako.enable = true; # Notifications
 

@@ -6,7 +6,6 @@
     exec = "firefox --new-window https://discord.com/app";
     terminal = false;
     categories = [ "Application" "Network" "Audio" "Video" "InstantMessaging" ];
-    mimeType = [ "x-scheme-handler/discord" ];
     type = "Application";
     settings.StartupWMClass = "discord";
   };

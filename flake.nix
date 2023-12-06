@@ -8,10 +8,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Hyprland
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "nixpkgs";
-
     # Neovim
     neovim.url = "github:Martin-Lndbl/nix-neovim-module";
     neovim.inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +20,7 @@
     nix-gaming.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, neovim, nix-colors, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, neovim, nix-colors, ... }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -62,7 +58,6 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             neovim.homeManagerModules.default
-            hyprland.homeManagerModules.default
             nix-colors.homeManagerModules.default
             ./home-manager/home.nix
             ./home-manager/hyprland
@@ -94,7 +89,6 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
-            hyprland.homeManagerModules.default
             neovim.homeManagerModules.default
             nix-colors.homeManagerModules.default
             ./home-manager/home.nix

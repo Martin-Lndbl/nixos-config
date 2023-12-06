@@ -2,218 +2,153 @@
 
 let
   workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
+
+  switch_workspace = builtins.map
+    (ws: "SUPER, ${ws}, workspace, ${ws}")
+    workspaces;
+
+  move_workspace = builtins.map
+    (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}")
+    workspaces;
+
+  eww_trigger_ws =
+    (builtins.map
+      (ws: "SUPER, ${ws}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${ws}")
+      workspaces) ++
+    (builtins.map
+      (ws: "SUPER, ${ws}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${ws}")
+      workspaces
+    );
 in
+{
+  wayland.windowManager.hyprland.enable = true;
+  # wayland.windowManager.hyprland.systemd.enable = false;
 
-pkgs.writeText "hyprland.conf" ''
+  wayland.windowManager.hyprland.settings = with config.colorScheme; {
+    exec-once = [
+      "swaybg -i ${config.appearance.wallpaper}"
+      "eww open bar"
+      "[workspace 9 silent; noanim; fakefullscreen] firefox -p autostart https://outlook.live.com/calendar/0/view/week"
+      "[workspace 9 silent; noanim; fakefullscreen] firefox -p autostart https://discord.com/app/"
+      "[workspace 9 silent; noanim; fakefullscreen] firefox -p autostart https://web.whatsapp.com/"
+      "[workspace 1; noanim] alacritty"
+      "[workspace 1; noanim] alacritty"
+    ];
 
-# Colors
+    input = {
+      kb_layout = "de";
+      follow_mouse = 1;
+    };
 
-$white = 0xffffffff
-$gray = 0xff444444
-$active_blue = 0x9912A3E3
-$inactive_blue = 0x99164650
+    monitor = [
+      "eDP-1, 1920x1080@60,0x0,1"
+      ",highres,auto,1"
+    ];
 
-# Startup
-exec-once = swaybg -i ${config.appearance.wallpaper}
-exec-once = eww open bar
-exec-once = systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
+    general = {
+      gaps_in = 5;
+      gaps_out = 10;
+      resize_on_border = true;
+      "col.active_border" = "rgb(${colors.base06})";
+      "col.inactive_border" = "rgb(${colors.base02})";
+    };
 
-exec-once = [workspace 9 silent; noanim; fakefullscreen] firefox https://outlook.live.com/calendar/0/view/week
-exec-once = [workspace 9 silent; noanim; fakefullscreen] firefox https://discord.com/
-exec-once = [workspace 9 silent; noanim; fakefullscreen] firefox https://web.whatsapp.com/
+    group = {
+      "col.border_active" = "rgb(${colors.base0C})";
+      "col.border_inactive" = "rgb(${colors.base0D})";
+    };
 
-exec-once = [workspace 1; noanim] alacritty
-exec-once = [workspace 1; noanim] alacritty
+    decoration = {
+      rounding = 5;
+      blur = {
+        enabled = true;
+        size = 3;
+        passes = 2;
+      };
+    };
 
-monitor= eDP-1, 1920x1080@60,0x0,1
-monitor=,highres,auto,1
+    animations = {
+      enabled = 1;
+      animation = [
+        "windows,1,7,default"
+        "workspaces,1,6,default"
+      ];
+    };
 
-general {
-	gaps_in = 5
-	gaps_out = 10
-	col.active_border = $white
-	col.inactive_border = $gray
-	resize_on_border = true
+    dwindle = {
+      pseudotile = true;
+      force_split = 2;
+      preserve_split = true;
+    };
+
+    master.new_is_master = true;
+
+    windowrule = [
+      "opacity 0.94 override ${builtins.toString config.appearance.opacity} override, .*"
+    ];
+
+    bind = [
+      # App binds
+      "SUPER, return, exec, alacritty"
+      "SUPER, d, exec, wofi --show drun"
+      "SUPER, g, exec, MOZ_ENABLE_WAYLAND=1 firefox"
+      "SUPER_SHIFT, Q, killactive"
+      "SUPERALT, L, exec, swaylock -fel"
+      "SUPERALT, S, exec, swaylock -fel; sleep 1; systemctl suspend -i"
+
+      # Move focus
+      "SUPER, left, movefocus, l"
+      "SUPER, right, movefocus, r"
+      "SUPER, up, movefocus, u"
+      "SUPER, down, movefocus, d"
+
+      "SUPER, h, movefocus, l"
+      "SUPER, l, movefocus, r"
+      "SUPER, k, movefocus, u"
+      "SUPER, j, movefocus, d"
+
+      "SUPER_SHIFT, left, movewindow, l"
+      "SUPER_SHIFT, right, movewindow, r"
+      "SUPER_SHIFT, up, movewindow, u"
+      "SUPER_SHIFT, down, movewindow, d"
+
+      "SUPER_SHIFT, h, movewindow, l"
+      "SUPER_SHIFT, l, movewindow, r"
+      "SUPER_SHIFT, k, movewindow, u"
+      "SUPER_SHIFT, j, movewindow, d"
+
+      "SUPER, q, togglesplit,"
+      "SUPER, v, togglefloating,"
+      "SUPER, v, centerwindow,"
+      "SUPER, f, fullscreen,"
+      "SUPER_SHIFT, f, fakefullscreen"
+
+      # Groups
+      "SUPER_CTRL, g, togglegroup,"
+      "SUPER_CTRL, w, changegroupactive, f"
+      "SUPER_CTRL, e, moveoutofgroup,"
+      "SUPER_CTRL, left, moveintogroup, l"
+      "SUPER_CTRL, right, moveintogroup, r"
+      "SUPER_CTRL, up, moveintogroup, u"
+      "SUPER_CTRL, down, moveintogroup, d"
+      "SUPER_CTRL, h, moveintogroup, l"
+      "SUPER_CTRL, l, moveintogroup, r"
+      "SUPER_CTRL, k, moveintogroup, u"
+      "SUPER_CTRL, j, moveintogroup, d"
+
+      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
+      ", XF86Calculator, exec, alacritty  -t popup -e calc"
+    ]
+    ++ switch_workspace
+    ++ move_workspace
+    ++ eww_trigger_ws;
+
+    bindm = [ "SUPER, mouse:272, movewindow" ];
+
+    binde = [
+      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+"
+      ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+    ];
+  };
 }
-
-group {
-	col.border_active = $active_blue
-	col.border_inactive = $inactive_blue
-}
-
-decoration {
-    rounding=5
-    blur {
-      enabled = true
-      size=3 # minimum 1
-      passes=2 # minimum 1, more passes = more resource intensive.
-    }
-
-	drop_shadow = true
-	shadow_range = 4
-}
-
-animations {
-    enabled=1
-    animation=windows,1,7,default
-    animation=workspaces,1,6,default
-}
-
-input {
-  kb_layout=de
-  follow_mouse=1
-}
-
-dwindle {
-  pseudotile = true
-  force_split = 2
-  preserve_split = true
-}
-
-master {
-	new_is_master = true
-}
-
-# App binds
-
-bind=SUPER, return, exec, alacritty
-bind=SUPER, d, exec, wofi --show drun
-bind=SUPER, g, exec, MOZ_ENABLE_WAYLAND=1 firefox
-bind=SUPER_SHIFT, Q, killactive
-bind=SUPERALT, L, exec, swaylock -fel
-bind=SUPERALT, S, exec, swaylock -fel; sleep 1; systemctl suspend -i
-
-# Move focus
-
-bind=SUPER, left, movefocus, l
-bind=SUPER, right, movefocus, r
-bind=SUPER, up, movefocus, u
-bind=SUPER, down, movefocus, d
-
-bind=SUPER, h, movefocus, l
-bind=SUPER, l, movefocus, r
-bind=SUPER, k, movefocus, u
-bind=SUPER, j, movefocus, d
-
-bind=SUPER_SHIFT, left, movewindow, l
-bind=SUPER_SHIFT, right, movewindow, r
-bind=SUPER_SHIFT, up, movewindow, u
-bind=SUPER_SHIFT, down, movewindow, d
-
-bind=SUPER_SHIFT, h, movewindow, l
-bind=SUPER_SHIFT, l, movewindow, r
-bind=SUPER_SHIFT, k, movewindow, u
-bind=SUPER_SHIFT, j, movewindow, d
-
-bind=SUPER, q, togglesplit,
-bind=SUPER, v, togglefloating,
-bind=SUPER, v, centerwindow,
-bind=SUPER, f, fullscreen,
-bind=SUPER_SHIFT, f, fakefullscreen
-
-# Groups
-bind=SUPER_CTRL, g, togglegroup,
-bind=SUPER_CTRL, w, changegroupactive, f
-bind=SUPER_CTRL, e, moveoutofgroup,
-
-bind=SUPER_CTRL, left, moveintogroup, l
-bind=SUPER_CTRL, right, moveintogroup, r
-bind=SUPER_CTRL, up, moveintogroup, u
-bind=SUPER_CTRL, down, moveintogroup, d
-bind=SUPER_CTRL, h, moveintogroup, l
-bind=SUPER_CTRL, l, moveintogroup, r
-bind=SUPER_CTRL, k, moveintogroup, u
-bind=SUPER_CTRL, j, moveintogroup, d
-
-
-# Window Rules
-
-windowrule = opacity 0.94 override ${builtins.toString config.appearance.opacity} override,.*
-
-windowrulev2 = float, title:^(popup)$
-windowrulev2 = rounding 0, xwayland:1, floating:1
-
-# Firefox
-#	Popups
-windowrulev2 = size 578 187, title:^((?!Save)(?!Mozilla firefox).)*$,floating:1,class:^(firefox)$
-#	Downloads 
-windowrulev2 = size 800 400, title:^(Save)(.*)$, floating:1
-
-# Color
-windowrulev2 = size 488 316, title:^(Choose a color)$, floating:1, class:^(firefox)$
-
-# Whatsapp 
-windowrulev2=fakefullscreen,class:^(whatsapp-for-linux)$
-
-# Floats
-bind=SUPER, r, submap, resize
-submap = resize
-
-binde=, left, resizeactive,-20 0
-binde=, right, resizeactive,20 0
-binde=, up, resizeactive,0 -20
-binde=, down, resizeactive,0 20
-
-binde=, h, resizeactive,-20 0
-binde=, l, resizeactive,20 0
-binde=, k, resizeactive,0 -20
-binde=, j, resizeactive,0 20
-
-binde=SUPER, left, moveactive,-20 0
-binde=SUPER, right, moveactive,20 0
-binde=SUPER, up, moveactive,0 -20
-binde=SUPER, down, moveactive,0 20
-
-binde=SUPER, h, moveactive,-20 0
-binde=SUPER, l, moveactive,20 0
-binde=SUPER, k, moveactive,0 -20
-binde=SUPER, j, moveactive,0 -20
-
-bind=, mouse:272, movewindow # 272 = LMB
-bind=, c, centerwindow,
-
-bind=, escape, submap, reset
-bind=SUPER, escape, submap, reset
-submap = reset
-
-bind=SUPER, c, centerwindow,
-bindm=SUPER, mouse:272, movewindow 
-
-# Workspaces
-
-workspace=1, monitor:${config.monitors.center}, default:true
-workspace=2, monitor:${config.monitors.center}
-workspace=3, monitor:${config.monitors.center}
-workspace=8, monitor:${config.monitors.right}
-workspace=9, monitor:${config.monitors.right}, default:true
-
-${builtins.foldl'
-    (acc: new:
-      acc + "\nbind=SUPER, ${new}, workspace, ${new}") "" workspaces}
-
-${builtins.foldl'
-    (acc: new:
-      acc + "\nbind=SUPER_SHIFT, ${new}, movetoworkspace, ${new}") "" workspaces}
-
-${builtins.foldl'
-    (acc: new:
-      acc + "\nbind=SUPER, ${new}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${new}") "" workspaces}
-
-${builtins.foldl'
-    (acc: new:
-      acc + "\nbind=SUPER_SHIFT, ${new}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${new}") "" workspaces}
-
-
-# Audio
-bind=, XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bind=, XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle
-binde=, XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+
-binde=, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
-
-# Misc
-bind=, XF86MonBrightnessUp, exec, alacritty
-binde=, XF86MonBrightnessUp, exec, brightnessctl set +2%
-binde=, XF86MonBrightnessDown, exec, brightnessctl set 2%- -n 100
-
-bind=, XF86Calculator, exec, alacritty  -t popup -e calc
-''
