@@ -8,4 +8,11 @@
   ];
 
   additions = final: _prev: import ../pkgs { pkgs = final; };
+
+  fallbackpkgs = final: _prev: {
+    fallback = import inputs.fallbackpkgs {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
 }
