@@ -43,8 +43,13 @@
   services.pipewire = {
     enable = true;
     alsa.enable = true;
+    alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  environment.etc."/openal/alsoft.conf".text = ''
+    drivers=pulse,alsa
+  '';
 
   fonts = {
     fontDir.enable = true;
