@@ -6,6 +6,10 @@
     ./hyprland.nix
   ];
 
+  home.packages = with pkgs; [
+    wl-clipboard
+  ];
+
   services.mako.enable = true; # Notifications
 
   programs.wofi.enable = true; # Application launcher
