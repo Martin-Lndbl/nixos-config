@@ -3,13 +3,13 @@
 .profile, .slider, .shutdown, .reboot, .lock, .sleep, .logout {
   border-radius: 1rem;
   background-color: rgba(15,15,15, 1);
-  padding: 2rem;
   margin: .5rem;
 }
 
 .profile {
-  min-width: 16rem;
-  min-height: 22rem;
+  padding-top: 2rem;
+  min-width: 20rem;
+  min-height: 24rem;
 }
 
 .profile-picture {
@@ -28,13 +28,17 @@
   font-size: 1.5rem;
 }
 
+.slider {
+  padding: 2.15rem;
+}
+
 .disk-symbol, .speaker2-symbol, .speaker1-symbol, .speakerx-symbol, .brightness-symbol {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.8rem;
-  min-width: 1.8rem;
+  min-width: 2rem;
   min-height: 1.8rem;
-  margin-right: 1.5rem;
+  margin-right: 1rem;
   margin-top: .5rem;
   margin-bottom: .5rem;
 }
@@ -45,12 +49,12 @@
 .speakerx-symbol { background-image: url("./images/speakerx.svg"); }
 .brightness-symbol { background-image: url("./images/brightness.svg"); }
 
-scale trough highlight {
+.db-scale trough highlight {
 	background-color: #ffd5cd;
 	border-radius: 1rem;
 }
 
-scale trough {
+.db-scale trough {
     background-color: rgba(255, 255, 255, .5);
     border-radius: .5rem;
     min-height: 1rem;
@@ -61,8 +65,8 @@ scale trough {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 3.5rem;
-  min-height: 3rem;
-  min-width: 3rem;
+  min-height: 7rem;
+  min-width: 7rem;
 }
 
 .shutdown { background-image: url("./images/shutdown.svg"); }

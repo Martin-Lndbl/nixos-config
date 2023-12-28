@@ -90,7 +90,8 @@ tooltip label {
   margin-left: .4em;
 }
 
-scale trough {
+.audio_slide trough, 
+.bright_slide trough {
   background-color: $foreground;
   border-radius: 5px;
   min-height: 1em;
