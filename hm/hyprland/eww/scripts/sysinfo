@@ -44,21 +44,11 @@ get_mem() {
 	printf "%.0f\n" $(free -m | grep Mem | awk '{print ($3/$2)*100}')
 }
 
-## Get Battery 
-get_battery() {
-	BAT=`ls /sys/class/power_supply | grep BAT | head -n 1`
-	cat /sys/class/power_supply/${BAT}/capacity
-}
-
 ## Execute accordingly
 if [[ "$1" == "--cpu" ]]; then
 	get_cpu
 elif [[ "$1" == "--mem" ]]; then
 	get_mem
-elif [[ "$1" == "--blight" ]]; then
-	get_blight
-elif [[ "$1" == "--bat" ]]; then
-	get_battery
 fi
 
 # Thanks to: https://github.com/adi1090x/widgets

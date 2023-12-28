@@ -1,0 +1,81 @@
+(defwidget layout []
+  (box :orientation "h" :space-evenly "false" :halign "center"
+    (box :orientation "v" :space-evenly "false"
+      (profile)
+      (slider)
+    )
+    (system)
+  )
+)
+
+(defwidget system []
+  (box :orientation "v"
+    (box :class "shutdown"
+      (button :onclick ""))
+    (box :class "reboot"
+      (button :onclick ""))
+    (box :class "lock"
+      (button :onclick ""))
+    (box :class "sleep"
+      (button :onclick ""))
+    (box :class "logout"
+      (button :onclick ""))
+  )
+)
+
+(defwidget profile []
+  (box :class "profile" :orientation "v"
+    (box :class "profile-picture")
+    (box :orientation "v" :space-evenly "false"
+      (label :class "profile-text" :text "mrtn")
+      (label :class "profile-subtext" :text "nix-nb")
+    )
+  )
+)
+
+(defwidget slider []
+  (box :class "slider" :orientation "v"
+    (box :class "scale" :orientation "h" :space-evenly "false"
+      (box :class "disk-symbol")
+      (scale 
+        :value MEM_USAGE
+        :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
+        :max 101 
+        :min 0
+      )
+    )
+    (box :class "scale" :orientation "h" :space-evenly "false"
+      (box :class {
+              volume_muted != "" || current-volume == 0 ? "speakerx-symbol" 
+            : current-volume < 50 ? "speaker1-symbol" : "speaker2-symbol"})
+      (scale 
+        :value current-volume
+        :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
+        :max 101 
+        :min 0
+      )
+    )
+    (box :class "scale" :orientation "h" :space-evenly "false"
+      (box :class "brightness-symbol")
+      (scale 
+        :value BLIGHT
+        :onchange "brightnessctl set {}%"
+        :max 101
+        :min 2
+      )
+    )
+  )
+)
+
+(defwindow layout
+  :monitor 0
+  :stacking "overlay"
+  :geometry ( geometry
+    :x "0%"
+    :y "0%"
+    :width "70%"
+    :height "55%"
+    :anchor "center"
+    )
+		(layout)
+)
