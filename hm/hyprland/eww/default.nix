@@ -6,14 +6,14 @@
   ];
 
   xdg.configFile."eww/eww.yuck".source = pkgs.writeText "eww.yuck"
-    "${builtins.readFile ./config_dir/eww.yuck}";
+    "${builtins.readFile ./bar/eww.yuck}";
 
-  xdg.configFile."eww/eww.scss".source = import ./config_dir/eww.scss.nix {
+  xdg.configFile."eww/eww.scss".source = import ./bar/eww.scss.nix {
     inherit pkgs config;
   };
 
   xdg.configFile."eww/scripts" = {
-    source = ./config_dir/scripts;
+    source = ./bar/scripts;
     recursive = true;
   };
 }

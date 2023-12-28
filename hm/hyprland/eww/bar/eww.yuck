@@ -247,6 +247,5 @@
                       :width "99.5%"
                       :height "2%"
                       :anchor "bottom center")
-  :reserve (struts :side "bottom" :distance "4%")
   (barmenu_layout)
 )
