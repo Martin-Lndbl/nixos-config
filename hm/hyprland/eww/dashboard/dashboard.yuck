@@ -39,9 +39,9 @@
       (box :class "disk-symbol")
       (scale 
         :class "db-scale"
-        :value MEM_USAGE
-        :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
-        :max 101 
+        :active "false"
+        :value DISK_USED
+        :max "${DISK_FREE + DISK_USED}"
         :min 0
       )
     )

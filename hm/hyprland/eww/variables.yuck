@@ -2,7 +2,11 @@
 (defpoll HOST :interval "5s" `hostname`)
 (defpoll CPU_USAGE :interval "1s" `scripts/sys_info --cpu`)
 (defpoll MEM_USAGE :interval "1s" `scripts/sys_info --mem`)
-(defpoll FREE :interval "5s" `df -h / | awk '{print $4}' | tail -n 1 | sed 's/G/GB/'`)
+
+(defpoll DISK_USED :interval "5s"
+  `df -h / | awk 'NR==2 {gsub(/G/, "", $3); print $3}'`)
+(defpoll DISK_FREE :interval "5s"
+  `df -h / | awk 'NR==2 {gsub(/G/, "", $4); print $4}'`)
 
 (defpoll time :interval "1s"
   `date +'{"hour":"%H", "min":"%M", "sec":"%S", "timezone":"%Z", "day":"%d", "month":"%m", "year":"%Y", "weekday":"%a"}'`)
