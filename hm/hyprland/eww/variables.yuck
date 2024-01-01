@@ -1,0 +1,40 @@
+;; System vars
+(defpoll HOST :interval "5s" `hostname`)
+(defpoll CPU_USAGE :interval "1s" `scripts/sys_info --cpu`)
+(defpoll MEM_USAGE :interval "1s" `scripts/sys_info --mem`)
+
+(defpoll DISK_USED :interval "5s"
+  `df -h / | awk 'NR==2 {gsub(/G/, "", $3); print $3}'`)
+(defpoll DISK_FREE :interval "5s"
+  `df -h / | awk 'NR==2 {gsub(/G/, "", $4); print $4}'`)
+
+(defpoll time :interval "1s"
+  `date +'{"hour":"%H", "min":"%M", "sec":"%S", "timezone":"%Z", "day":"%d", "month":"%m", "year":"%Y", "weekday":"%a"}'`)
+
+(defvar ws_active "1")
+(defvar ws_1 "false")
+(defvar ws_2 "false")
+(defvar ws_3 "false")
+(defvar ws_4 "false")
+(defvar ws_5 "false")
+(defvar ws_6 "false")
+(defvar ws_7 "false")
+(defvar ws_8 "false")
+(defvar ws_9 "false")
+
+(defvar time_hover false)
+
+(defvar network_connection "unknown")
+
+(defvar audio_hover false)
+(defpoll volume_muted 
+  :interval "5s" 
+  "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '/MUTED/ {print $1; exit}'"
+)
+(defpoll current-volume :interval "5s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2 * 100}'")
+
+(defvar bright_hover false)
+(defpoll BLIGHT :interval "5s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+
+(defvar battery_hover "false")
+(defvar battery_timeleft "")
