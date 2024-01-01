@@ -96,7 +96,7 @@
             ./hm/home.nix
             ./hm/hyprland
             {
-              config.appearance.wallpaper = "~/downloads/wallpaper/dodge.jpg";
+              config.appearance.wallpaper = "~/downloads/wallpaper/mountains.png";
               config.appearance.lockScreen = "~/downloads/wallpaper/nix.png";
               config.appearance.fontSize = 14;
               config.monitors.center = "eDP-1";
