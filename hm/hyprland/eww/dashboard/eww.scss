@@ -1,0 +1,76 @@
+* { all: unset; }
+
+.profile, .slider, .shutdown, .reboot, .lock, .sleep, .logout {
+  border-radius: 1rem;
+  background-color: rgba(15,15,15, 1);
+  margin: .5rem;
+}
+
+.profile {
+  padding-top: 2rem;
+  min-width: 20rem;
+  min-height: 24rem;
+}
+
+.profile-picture {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10rem;
+  background-image: url("./images/pb.png");
+}
+
+.profile-text {
+  padding-top: 3rem;
+  font-size: 3rem;
+}
+
+.profile-subtext {
+  font-size: 1.5rem;
+}
+
+.slider {
+  padding: 2.15rem;
+}
+
+.disk-symbol, .speaker2-symbol, .speaker1-symbol, .speakerx-symbol, .brightness-symbol {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.8rem;
+  min-width: 2rem;
+  min-height: 1.8rem;
+  margin-right: 1rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+
+.disk-symbol { background-image: url("./images/disk.svg"); }
+.speaker2-symbol { background-image: url("./images/speaker2.svg"); }
+.speaker1-symbol { background-image: url("./images/speaker1.svg"); }
+.speakerx-symbol { background-image: url("./images/speakerx.svg"); }
+.brightness-symbol { background-image: url("./images/brightness.svg"); }
+
+.db-scale trough highlight {
+	background-color: #ffd5cd;
+	border-radius: 1rem;
+}
+
+.db-scale trough {
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: .5rem;
+    min-height: 1rem;
+    min-width: 12rem;
+}
+
+.shutdown, .reboot, .lock, .sleep, .logout {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 3.5rem;
+  min-height: 7rem;
+  min-width: 7rem;
+}
+
+.shutdown { background-image: url("./images/shutdown.svg"); }
+.reboot { background-image: url("./images/reboot.svg"); }
+.lock { background-image: url("./images/lock.svg"); }
+.sleep { background-image: url("./images/sleep.svg"); }
+.logout { background-image: url("./images/logout.svg"); }
