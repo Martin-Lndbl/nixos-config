@@ -2,7 +2,7 @@
 
 .profile, .slider, .shutdown, .reboot, .lock, .sleep, .logout {
   border-radius: 1rem;
-  background-color: rgba(15,15,15, 1);
+  background-color: $background;
   margin: .5rem;
 }
 
@@ -50,12 +50,12 @@
 .brightness-symbol { background-image: url("./images/brightness.svg"); }
 
 .db-scale trough highlight {
-	background-color: #ffd5cd;
+	background-color: $sliders;
 	border-radius: 1rem;
 }
 
 .db-scale trough {
-    background-color: rgba(255, 255, 255, .5);
+    background-color: $foreground;
     border-radius: .5rem;
     min-height: 1rem;
     min-width: 12rem;
