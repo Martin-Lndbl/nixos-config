@@ -28,6 +28,19 @@
   font-size: 1.5rem;
 }
 
+.hover-text {
+  font-size: 1rem;
+  min-width: 2rem;
+  min-height: 1.8rem;
+  margin-right: 1rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+
+.hidden {
+  opacity: 0;
+}
+
 .slider {
   padding: 2.15rem;
 }

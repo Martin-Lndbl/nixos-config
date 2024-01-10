@@ -3,6 +3,7 @@
 (defpoll CPU_USAGE :interval "1s" `scripts/sys_info --cpu`)
 (defpoll MEM_USAGE :interval "1s" `scripts/sys_info --mem`)
 
+(defvar DISK_HOVER false)
 (defpoll DISK_USED :interval "5s"
   `df -h / | awk 'NR==2 {gsub(/G/, "", $3); print $3}'`)
 (defpoll DISK_FREE :interval "5s"
@@ -26,6 +27,7 @@
 
 (defvar network_connection "unknown")
 
+(defvar AUDIO_HOVER false)
 (defvar audio_hover false)
 (defpoll volume_muted 
   :interval "5s" 
@@ -33,6 +35,7 @@
 )
 (defpoll current-volume :interval "5s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2 * 100}'")
 
+(defvar BLIGHT_HOVER false)
 (defvar bright_hover false)
 (defpoll BLIGHT :interval "5s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
 

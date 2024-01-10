@@ -36,7 +36,18 @@
 (defwidget slider []
   (box :class "slider" :orientation "v"
     (box :class "scale" :orientation "h" :space-evenly "false"
-      (box :class "disk-symbol")
+      (eventbox
+        :onhover "eww update DISK_HOVER=true"
+        :onhoverlost "eww update DISK_HOVER=false"
+        (box :class {DISK_HOVER ? "" : "disk-symbol"}
+          (label
+            :class {DISK_HOVER ? "hover-text" : "hidden"}
+            :text DISK_FREE
+            :valign "center"
+            :halign "center"
+          )
+        )
+      )
       (scale 
         :class "db-scale"
         :active "false"
@@ -46,9 +57,18 @@
       )
     )
     (box :class "scale" :orientation "h" :space-evenly "false"
-      (box :class {
-              volume_muted != "" || current-volume == 0 ? "speakerx-symbol" 
-            : current-volume < 50 ? "speaker1-symbol" : "speaker2-symbol"})
+      (eventbox
+        :onhover "eww update AUDIO_HOVER=true"
+        :onhoverlost "eww update AUDIO_HOVER=false"
+        (box :class {AUDIO_HOVER ? "" : volume_muted != "" || current-volume == 0 ? "speakerx-symbol" : current-volume < 50 ? "speaker1-symbol" : "speaker2-symbol"}
+          (label
+            :class {AUDIO_HOVER ? "hover-text" : "hidden"}
+            :text current-volume
+            :valign "center"
+            :halign "center"
+          )
+        )
+      )
       (scale 
         :class "db-scale"
         :value current-volume
@@ -58,7 +78,18 @@
       )
     )
     (box :class "scale" :orientation "h" :space-evenly "false"
-      (box :class "brightness-symbol")
+      (eventbox
+        :onhover "eww update BLIGHT_HOVER=true"
+        :onhoverlost "eww update BLIGHT_HOVER=false"
+        (box :class {BLIGHT_HOVER ? "" : "brightness-symbol"}
+          (label
+            :class {BLIGHT_HOVER ? "hover-text" : "hidden"}
+            :text "${BLIGHT}"
+            :valign "center"
+            :halign "center"
+          )
+        )
+      )
       (scale 
         :class "db-scale"
         :value BLIGHT
