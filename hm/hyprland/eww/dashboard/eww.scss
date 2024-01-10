@@ -1,3 +1,5 @@
+@import '/home/mrtn/.config/eww/eww.scss';
+
 * { all: unset; }
 
 .profile, .slider, .shutdown, .reboot, .lock, .sleep, .logout {
@@ -29,12 +31,6 @@
 }
 
 .hover-text {
-  font-size: 1rem;
-  min-width: 2rem;
-  min-height: 1.8rem;
-  margin-right: 1rem;
-  margin-top: .5rem;
-  margin-bottom: .5rem;
 }
 
 .hidden {
@@ -45,7 +41,7 @@
   padding: 2.15rem;
 }
 
-.disk-symbol, .speaker2-symbol, .speaker1-symbol, .speakerx-symbol, .brightness-symbol {
+.disk-symbol, .speaker2-symbol, .speaker1-symbol, .speakerx-symbol, .brightness-symbol, .hover-symbol {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.8rem;

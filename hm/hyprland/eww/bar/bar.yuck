@@ -82,8 +82,8 @@
 
 (defwidget _time []
   (eventbox
-    :onhover "eww update time_hover=true"
-    :onhoverlost "eww update time_hover=false"
+    :onhover "${EWW_CMD} update time_hover=true"
+    :onhoverlost "${EWW_CMD} update time_hover=false"
     (box
       :space-evenly false
       (revealer 
@@ -127,13 +127,13 @@
 
 (defwidget _audio []
   (eventbox 
-    :onhover "eww update audio_hover=true"   
-  	:onhoverlost "eww update audio_hover=false"
+    :onhover "${EWW_CMD} update audio_hover=true"   
+  	:onhoverlost "${EWW_CMD} update audio_hover=false"
   	(box
       :class "audio-box"
 			:space-evenly "false"
       (button
-        :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && eww update volume_muted=${volume_muted == "" ? "true" : ""}"
+        :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ${EWW_CMD} update volume_muted=${volume_muted == "" ? "true" : ""}"
 			  (label 
           :class {volume_muted == "" ? "audio-sym":"muted-sym"}
           :text {volume_muted != "" || current-volume == 0 ? "" 
@@ -158,8 +158,8 @@
 
 (defwidget _bright []
   (eventbox 
-    :onhover "eww update bright_hover=true"   
-  	:onhoverlost "eww update bright_hover=false"
+    :onhover "${EWW_CMD} update bright_hover=true"   
+  	:onhoverlost "${EWW_CMD} update bright_hover=false"
   	(box
       :class "bright-box"
 			:space-evenly "false"
@@ -185,8 +185,8 @@
 
 (defwidget _battery [battery status hover empty quater half three full charge]
   (eventbox :class "bat-box" 
-    :onhover "eww update battery_hover=true; ./scripts/battery"
-    :onhoverlost "eww update battery_hover=false"
+    :onhover "${EWW_CMD} update battery_hover=true; ./scripts/battery"
+    :onhoverlost "${EWW_CMD} update battery_hover=false"
     (box :class "bat-box" (label 
         :class {
           hover == 'true' ? "bat-txt" : "bat-sym"
