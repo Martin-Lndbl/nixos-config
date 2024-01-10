@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, lib, config, ... }:
 
 {
   home.packages = with pkgs; [
@@ -12,20 +12,25 @@
     (include "${./dashboard/dashboard.yuck}")
   '';
 
-  xdg.configFile."eww/eww.scss".source = 
-  with config.colorscheme.colors; pkgs.writeText "eww.scss" 
-   ''
-    $background: #${base00};
-    $foreground: #${base06};
+  xdg.configFile."eww/eww.scss".source =
+    with config.colorscheme.colors; with builtins; pkgs.writeText "eww.scss"
+      ''
+        $background: #${base00};
+        $foreground: #${base06};
 
-    $active: #${base08};
-    $sliders: #${base0D};
+        $active: #${base08};
+        $sliders: #${base0D};
 
-    * { all: unset; }
+        ${lib.attrsets.foldlAttrs
+          (acc: n: v: acc + "\n\$${n}: #${v};") "" config.colorscheme.colors}
 
-    ${builtins.readFile ./bar/eww.scss}
-    ${builtins.readFile ./dashboard/eww.scss}
-  '';
+        * { all: unset; }
+
+        ${substring 43 (-1) (readFile ./bar/eww.scss)
+        /*removes import of itself in production*/}
+        ${substring 43 (-1) (readFile ./dashboard/eww.scss)
+        /*removes import of itself in production*/}
+      '';
 
   xdg.configFile."eww/scripts" = {
     source = ./scripts;
