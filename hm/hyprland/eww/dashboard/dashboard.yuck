@@ -42,7 +42,7 @@
         (box :class {DISK_HOVER ? "hover-symbol" : "disk-symbol"}
           (label
             :class {DISK_HOVER ? "hover-text image" : "hidden"}
-            :text DISK_FREE
+            :text  {round(EWW_DISK["/"].used_perc, 0)}
             :valign "center"
             :halign "center"
           )
@@ -51,8 +51,8 @@
       (scale 
         :class "db-scale_disk"
         :active "false"
-        :value DISK_USED
-        :max "${DISK_FREE + DISK_USED}"
+        :value {EWW_DISK["/"].used_perc}
+        :max 101
         :min 0
       )
     )
