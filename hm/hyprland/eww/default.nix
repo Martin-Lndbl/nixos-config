@@ -22,7 +22,7 @@
         $foreground: #${base05};
 
         $active: #${base08};
-        $sliders: #${base0C};
+        $sliders: #${base0D};
 
         ${lib.attrsets.foldlAttrs
           (acc: n: v: acc + "\n\$${n}: #${v};") "" config.colorscheme.colors}

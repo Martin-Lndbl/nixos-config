@@ -67,12 +67,19 @@
 .speakerx-symbol { background-image: url("./images/speakerx.svg"); }
 .brightness-symbol { background-image: url("./images/brightness.svg"); }
 
-.db-scale trough highlight {
-	background-color: $sliders;
+.db-scale_disk trough highlight,
+.db-scale_audio trough highlight,
+.db-scale_blight trough highlight {
 	border-radius: 1rem;
 }
 
-.db-scale trough {
+.db-scale_disk trough highlight { background-color: $base08; }
+.db-scale_audio trough highlight { background-color: $base09; }
+.db-scale_blight trough highlight { background-color: $base0A; }
+
+.db-scale_disk trough,
+.db-scale_audio trough,
+.db-scale_blight trough {
     background-color: $foreground;
     border-radius: .5rem;
     min-height: 1rem;

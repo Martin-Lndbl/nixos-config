@@ -49,7 +49,7 @@
         )
       )
       (scale 
-        :class "db-scale"
+        :class "db-scale_disk"
         :active "false"
         :value DISK_USED
         :max "${DISK_FREE + DISK_USED}"
@@ -75,7 +75,7 @@
         )
       )
       (scale 
-        :class "db-scale"
+        :class "db-scale_audio"
         :value current-volume
         :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
         :max 101 
@@ -96,7 +96,7 @@
         )
       )
       (scale 
-        :class "db-scale"
+        :class "db-scale_blight"
         :value BLIGHT
         :onchange "brightnessctl set {}%"
         :max 101
