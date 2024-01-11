@@ -36,7 +36,6 @@
     (_bright)
     (_battery :status {EWW_BATTERY.BAT0.status}
       :battery {EWW_BATTERY.BAT0.capacity}
-      :hover {battery_hover}
       :charge "" :full "" :three "" :half "" :quater "" :empty ""
     )
   )
@@ -82,30 +81,31 @@
 
 (defwidget _time []
   (eventbox
-    :onhover "${EWW_CMD} update time_hover=true"
-    :onhoverlost "${EWW_CMD} update time_hover=false"
+    :onhover "${EWW_CMD} update TIME_HOVER=true"
+    :onhoverlost "${EWW_CMD} update TIME_HOVER=false"
     (box
       :space-evenly false
       (revealer 
         :transition "slideleft" 
-			  :reveal time_hover
+			  :reveal TIME_HOVER
 			  :duration "550ms"
         (label
           :class "time"
           :text "${time.weekday}, ${time.day}.${time.month}.${time.year} - "
+          :text {formattime(EWW_TIME, "%a, %d.%m.%Y -")}
         )
       )
       (label
         :class "time"
-        :text "${time.hour}:${time.min}"
+        :text {formattime(EWW_TIME, "%H:%M")}
       )
 	    (revealer 
         :transition "slideright" 
-			  :reveal time_hover
+			  :reveal TIME_HOVER
 			  :duration "550ms"
         (label
           :class "time"
-          :text ":${time.sec}"
+          :text {formattime(EWW_TIME, ":%S")}
         )
       )
     )
@@ -115,20 +115,20 @@
 
 (defwidget _network []
   (eventbox
-    :onhover "scripts/network"
+    :onhover `scripts/network "${EWW_CMD}"`
     (box :class "network-box" (label
       :class "network-sym"
       :space-evenly "false"
       :text { "" }
-      :tooltip network_connection
+      :tooltip NET_CON
     ))
   )
 )
 
 (defwidget _audio []
   (eventbox 
-    :onhover "${EWW_CMD} update audio_hover=true"   
-  	:onhoverlost "${EWW_CMD} update audio_hover=false"
+    :onhover "${EWW_CMD} update BAR-AUDIO_HOVER=true"
+    :onhoverlost "${EWW_CMD} update BAR-AUDIO_HOVER=false"
   	(box
       :class "audio-box"
 			:space-evenly "false"
@@ -141,7 +141,7 @@
         )
       )
   		(revealer :transition "slideright" 
-			  :reveal audio_hover
+			  :reveal BAR-AUDIO_HOVER
 			  :duration "550ms"
   			(scale 
           :class "audio_slide" 
@@ -183,16 +183,17 @@
   )
 )
 
-(defwidget _battery [battery status hover empty quater half three full charge]
+(defwidget _battery [battery status empty quater half three full charge]
   (eventbox :class "bat-box" 
-    :onhover "${EWW_CMD} update battery_hover=true; ./scripts/battery"
-    :onhoverlost "${EWW_CMD} update battery_hover=false"
+    :onhover `${EWW_CMD} update BAT_HOVER=true;
+              ${EWW_CMD} update BAT_INFO="$(acpi | awk -F '%, ' '{print $2}')"`
+    :onhoverlost "${EWW_CMD} update BAT_HOVER=false"
     (box :class "bat-box" (label 
         :class {
-          hover == 'true' ? "bat-txt" : "bat-sym"
+          BAT_HOVER == 'true' ? "bat-txt" : "bat-sym"
         }
         :text {
-          hover == 'true' ? "${battery}%"
+          BAT_HOVER == 'true' ? "${battery}%"
           :status == 'Charging' ? charge
           :battery < 20 ? empty
           :battery < 40 ? quater
@@ -200,7 +201,7 @@
           :battery < 80 ? three
           :full 
         }
-        :tooltip battery_timeleft
+        :tooltip BAT_INFO
       ))
   )
 )
