@@ -24,10 +24,12 @@
 .profile-text {
   padding-top: 3rem;
   font-size: 3rem;
+  color: $foreground;
 }
 
 .profile-subtext {
   font-size: 1.5rem;
+  color: $base04;
 }
 
 .hover-text {
@@ -41,7 +43,13 @@
   padding: 2.15rem;
 }
 
-.disk-symbol, .speaker2-symbol, .speaker1-symbol, .speakerx-symbol, .brightness-symbol, .hover-symbol {
+.disk-symbol,
+.speaker2-symbol,
+.speaker1-symbol,
+.speaker0-symbol,
+.speakerx-symbol,
+.brightness-symbol,
+.hover-symbol {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.8rem;
@@ -55,6 +63,7 @@
 .disk-symbol { background-image: url("./images/disk.svg"); }
 .speaker2-symbol { background-image: url("./images/speaker2.svg"); }
 .speaker1-symbol { background-image: url("./images/speaker1.svg"); }
+.speaker0-symbol { background-image: url("./images/speaker0.svg"); }
 .speakerx-symbol { background-image: url("./images/speakerx.svg"); }
 .brightness-symbol { background-image: url("./images/brightness.svg"); }
 

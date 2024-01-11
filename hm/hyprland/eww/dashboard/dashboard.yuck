@@ -60,7 +60,12 @@
       (eventbox
         :onhover "${EWW_CMD} update AUDIO_HOVER=true"
         :onhoverlost "${EWW_CMD} update AUDIO_HOVER=false"
-        (box :class {AUDIO_HOVER ? "hover-symbol" : volume_muted != "" || current-volume == 0 ? "speakerx-symbol" : current-volume < 50 ? "speaker1-symbol" : "speaker2-symbol"}
+        (box 
+          :class {AUDIO_HOVER ? "hover-symbol" 
+            : volume_muted != "" || current-volume == 0 ? "speakerx-symbol"
+            : current-volume < 20 ? "speaker0-symbol"
+            : current-volume < 60 ? "speaker1-symbol"
+            : "speaker2-symbol"}
           (label
             :class {AUDIO_HOVER ? "hover-text" : "hidden"}
             :text current-volume
