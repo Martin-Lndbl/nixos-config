@@ -31,11 +31,8 @@
     :halign "end"
     (_network)
     (_audio)
-    (_bright)
-    (_battery :status {EWW_BATTERY.BAT0.status}
-      :battery {EWW_BATTERY.BAT0.capacity}
-      :charge "" :full "" :three "" :half "" :quater "" :empty ""
-    )
+    (_blight)
+    (_bat)
   )
 )
 
@@ -149,53 +146,33 @@
   )
 )
 
-(defwidget _bright []
-  (eventbox 
-    :onhover "${EWW_CMD} update bright_hover=true"   
-  	:onhoverlost "${EWW_CMD} update bright_hover=false"
-  	(box
-      :class "bright-box"
-			:space-evenly "false"
-			(label
-        :class "bright-sym"
-        :text ""
-      )
-  		(revealer :transition "slideright" 
-			  :reveal bright_hover
-			  :duration "550ms"
-  			(scale 
-          :class "bright_slide" 
-			    :value BLIGHT
-				  :tooltip "Brightness: ${BLIGHT}%"
-				  :onchange "brightnessctl set {}%"
-				  :max 101
-				  :min 2
+(defwidget _blight []
+  (eventbox
+    :onhover "${EWW_CMD} update BAR-BLIGHT_HOVER=true"
+    :onhoverlost "${EWW_CMD} update BAR-BLIGHT_HOVER=false"
+    (box :class "bar-item"
+      (box :class "blight-symbol")
+      (revealer :transition "slideright"
+        :reveal BAR-BLIGHT_HOVER
+        :duration "550ms"
+        (scale
+          :class "blight_slide"
+          :value BLIGHT
+          :tooltip "Brightness: ${BLIGHT}%"
+          :onchange "brightnessctl set {}%"
+          :max 101
+          :min 2
         )
       )
   	)
   )
 )
 
-(defwidget _battery [battery status empty quater half three full charge]
-  (eventbox :class "bat-box" 
-    :onhover `${EWW_CMD} update BAT_HOVER=true;
-              ${EWW_CMD} update BAT_INFO="$(acpi | awk -F '%, ' '{print $2}')"`
-    :onhoverlost "${EWW_CMD} update BAT_HOVER=false"
-    (box :class "bat-box" (label 
-        :class {
-          BAT_HOVER == 'true' ? "bat-txt" : "bat-sym"
-        }
-        :text {
-          BAT_HOVER == 'true' ? "${battery}%"
-          :status == 'Charging' ? charge
-          :battery < 20 ? empty
-          :battery < 40 ? quater
-          :battery < 60 ? half
-          :battery < 80 ? three
-          :full 
-        }
-        :tooltip BAT_INFO
-      ))
+(defwidget _bat [ ]
+  (box :class "empty"
+    (label :class "bar-text"
+      :text "${EWW_BATTERY.BAT0.capacity}%"
+    )
   )
 )
 

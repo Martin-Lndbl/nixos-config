@@ -11,8 +11,9 @@ tooltip label {
 }
 
 .layout-box {
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
+  // font-family: Phosphor, Koulen;
+  padding-right: 2rem;
+  padding-left: 2rem;
   padding-top: .4rem;
   padding-bottom: .4rem;
   border-radius: 1.5rem;
@@ -20,10 +21,20 @@ tooltip label {
   background-color: rgba($background, 1)
 }
 
-.home-symbol {
+.bar-item {
+  padding: 0rem 0rem;
+}
+
+.bar-text {
+  font-size: 1.2rem;
+}
+
+.empty,
+.home-symbol,
+.blight-symbol {
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 1.8rem;
+  background-size: 1.5rem;
   min-width: 2rem;
   min-height: 1.8rem;
   margin-top: .5rem;
@@ -32,21 +43,16 @@ tooltip label {
 
 .home-symbol {
   background-image: url("./images/home.svg");
-  padding-left: 1rem;
+  background-size: 2rem;
+  min-height: 2rem;
+  margin-right: 1rem;
 }
 
-.bat-box {
-  padding-right: 0em;
-}
+.blight-symbol { background-image: url("./images/brightness.svg"); }
 
-.bat-sym {
-  font-size: 1.5em;
-  padding-right: 2rem;
-}
 
-.muted-sym,
-.bat-txt {
-  font-size: 1.2em;
+.muted-sym {
+  font-size: 1.1em;
 }
 
 .time {
@@ -66,13 +72,13 @@ tooltip label {
 
 .network-box,
 .audio-box,
-.bright-box {
+.blight-box {
   font-size: 1.2em;
   margin: 0 1.1em 0 0em;
 }
 
 .workspace {
-  padding: 10px 10px;
+  padding: 1rem 1rem;
   border: none;
   opacity: .3;
 }
@@ -88,7 +94,7 @@ tooltip label {
 }
 
 .audio_slide trough highlight,
-.bright_slide trough highlight {
+.blight_slide trough highlight {
   background-color: $sliders;
   border-radius: 1rem;
 }
@@ -98,7 +104,7 @@ tooltip label {
 }
 
 .audio_slide trough, 
-.bright_slide trough {
+.blight_slide trough {
   background-color: $foreground;
   border-radius: 1rem;
   min-height: 1em;
