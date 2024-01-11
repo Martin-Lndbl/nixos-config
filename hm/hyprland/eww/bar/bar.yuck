@@ -115,12 +115,12 @@
 
 (defwidget _network []
   (eventbox
-    :onhover "scripts/network"
+    :onhover `scripts/network "${EWW_CMD}"`
     (box :class "network-box" (label
       :class "network-sym"
       :space-evenly "false"
       :text { "" }
-      :tooltip network_connection
+      :tooltip NET_CON
     ))
   )
 )

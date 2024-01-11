@@ -15,7 +15,7 @@
 (defvar DISK_HOVER false)
 (defvar TIME_HOVER false)
 
-(defvar network_connection "unknown")
+(defvar NET_CON "unknown")
 
 (defvar AUDIO_HOVER false)
 (defvar BAR-AUDIO_HOVER false)
