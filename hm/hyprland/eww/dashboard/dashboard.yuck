@@ -27,8 +27,8 @@
   (box :class "profile" :orientation "v"
     (box :class "profile-picture")
     (box :orientation "v" :space-evenly "false"
-      (label :class "profile-text" :text "mrtn")
-      (label :class "profile-subtext" :text "nix-nb")
+      (label :class "profile-text" :text USER)
+      (label :class "profile-subtext" :text HOST)
     )
   )
 )

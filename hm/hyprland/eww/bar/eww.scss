@@ -85,7 +85,7 @@ tooltip label {
 .audio_slide trough highlight,
 .bright_slide trough highlight {
   background-color: $sliders;
-  border-radius: 5px;
+  border-radius: 1rem;
 }
 
 .audio_slide {
@@ -95,7 +95,7 @@ tooltip label {
 .audio_slide trough, 
 .bright_slide trough {
   background-color: $foreground;
-  border-radius: 5px;
+  border-radius: 1rem;
   min-height: 1em;
   min-width: 5em;
   margin-left: .5em;
