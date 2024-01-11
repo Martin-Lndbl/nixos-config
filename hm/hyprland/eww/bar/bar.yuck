@@ -1,11 +1,9 @@
 (defwidget barmenu_layout []
   (box :class "layout-box" 
-    (box 
-      :orientation "h"
-      (left)
-      (middle)
-      (right)
-    )
+    :orientation "h"
+    (left)
+    (middle)
+    (right)
   )
 )
 
@@ -42,19 +40,14 @@
 )
 
 (defwidget _dashboard []
-  (box
-    (button
-      (label
-        :class "home-sym"
-        :text ""
-      )
-    )
+  (button 
+    :class "home-symbol"
+    :onclick "${EWW_CMD} open dashboard"
   )
 )
 
 (defwidget _workspaces []
   (box
-    :class "ws-box"
     (__workspace :nr 1 :exists ws_1)
     (__workspace :nr 2 :exists ws_2)
     (__workspace :nr 3 :exists ws_3)

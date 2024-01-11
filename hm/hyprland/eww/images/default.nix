@@ -17,6 +17,8 @@ with config.colorscheme.colors; {
 
     "eww/images/pb.png".source = ./pb.png;
 
+    "eww/images/home.svg".source = chcol base06 ./home.svg;
+
     "eww/images/brightness.svg".source = chcol base06 ./brightness.svg;
     "eww/images/disk.svg".source = chcol base06 ./disk.svg;
     "eww/images/speaker2.svg".source = chcol base06 ./speaker2.svg;

@@ -11,28 +11,37 @@ tooltip label {
 }
 
 .layout-box {
-  // font-family: Phosphor, Koulen;
-  padding-right: 15px;
-  padding-left: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  padding-top: .4rem;
+  padding-bottom: .4rem;
   border-radius: 1.5rem;
   color: rgba($foreground, 1);
   background-color: rgba($background, 1)
 }
 
+.home-symbol {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.8rem;
+  min-width: 2rem;
+  min-height: 1.8rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+
+.home-symbol {
+  background-image: url("./images/home.svg");
+  padding-left: 1rem;
+}
+
 .bat-box {
-  padding-right: 0.5em;
+  padding-right: 0em;
 }
 
 .bat-sym {
   font-size: 1.5em;
   padding-right: 2rem;
-}
-
-.home-sym {
-  padding-left: .2em;
-  font-size: 2em;
 }
 
 .muted-sym,
@@ -60,10 +69,6 @@ tooltip label {
 .bright-box {
   font-size: 1.2em;
   margin: 0 1.1em 0 0em;
-}
-
-.ws-box {
-  padding-left: 1.5rem;
 }
 
 .workspace {
