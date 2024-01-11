@@ -1,6 +1,9 @@
 { pkgs, lib, config, ... }:
 
 {
+
+  imports = [ ./images ];
+
   home.packages = with pkgs; [
     eww-wayland
   ];
@@ -16,7 +19,7 @@
     with config.colorscheme.colors; with builtins; pkgs.writeText "eww.scss"
       ''
         $background: #${base00};
-        $foreground: #${base06};
+        $foreground: #${base05};
 
         $active: #${base08};
         $sliders: #${base0D};
@@ -34,11 +37,6 @@
 
   xdg.configFile."eww/scripts" = {
     source = ./scripts;
-    recursive = true;
-  };
-
-  xdg.configFile."eww/images" = {
-    source = ./images;
     recursive = true;
   };
 }
