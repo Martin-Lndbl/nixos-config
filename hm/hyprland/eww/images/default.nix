@@ -39,7 +39,7 @@ with config.colorscheme.colors; {
     "eww/images/bat2.svg".source = chcol base06 ./bat2.svg;
     "eww/images/bat3.svg".source = chcol base06 ./bat3.svg;
     "eww/images/bat4.svg".source = chcol base06 ./bat4.svg;
-    "eww/images/bat5.svg".source = chcol base06 ./bat5.svg;
+    "eww/images/batc.svg".source = chcol base06 ./batc.svg;
 
     "eww/images/shutdown.svg".source = chcol base08 ./shutdown.svg;
     "eww/images/reboot.svg".source = chcol base0A ./reboot.svg;
