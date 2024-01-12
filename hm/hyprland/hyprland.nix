@@ -92,7 +92,7 @@ in
       "SUPER, return, exec, alacritty"
       "SUPER, d, exec, wofi --show drun"
       "SUPER, g, exec, MOZ_ENABLE_WAYLAND=1 firefox"
-      "SUPER, space, exec, eww windows | if grep -q '*dashboard'; then eww close dashboard; else eww open dashboard; fi"
+      "SUPER, space, exec, $XDG_CONFIG_HOME/eww/scripts/dashboard eww"
       "SUPER_SHIFT, Q, killactive"
       "SUPERALT, L, exec, swaylock -fel"
       "SUPERALT, S, exec, swaylock -fel; sleep 1; systemctl suspend -i"

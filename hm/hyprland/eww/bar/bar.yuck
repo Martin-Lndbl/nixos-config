@@ -40,7 +40,7 @@
   (box :class "bar-item"
     (button
       :class "bar-home-symbol"
-      :onclick "${EWW_CMD} open dashboard"
+      :onclick "./scripts/dashboard ${EWW_CMD}"
     )
   )
 )
