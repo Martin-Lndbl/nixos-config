@@ -4,6 +4,10 @@ tooltip.background { background-color: rgba($background, 1); }
 
 tooltip label { margin: 3px; }
 
+.hidden {
+  opacity: 0;
+}
+
 .bar {
   padding-right: 1.5rem;
   padding-left: 1.5rem;
@@ -27,7 +31,14 @@ tooltip label { margin: 3px; }
 .bar-speaker1-symbol,
 .bar-speaker0-symbol,
 .bar-speakerx-symbol,
-.bar-blight-symbol {
+.bar-blight-symbol,
+.bar-bat-hover,
+.bar-bat0-symbol,
+.bar-bat1-symbol,
+.bar-bat2-symbol,
+.bar-bat3-symbol,
+.bar-bat4-symbol,
+.bar-bat5-symbol {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.5rem;
@@ -46,6 +57,23 @@ tooltip label { margin: 3px; }
 .bar-speaker0-symbol { background-image: url("./images/speaker0.svg"); }
 .bar-speakerx-symbol { background-image: url("./images/speakerx.svg"); }
 .bar-blight-symbol { background-image: url("./images/brightness.svg"); }
+
+.bar-bat-hover,
+.bar-bat0-symbol,
+.bar-bat1-symbol,
+.bar-bat2-symbol,
+.bar-bat3-symbol,
+.bar-bat4-symbol,
+.bar-bat5-symbol {
+  background-size: 2rem;
+}
+
+.bar-bat0-symbol { background-image: url("./images/bat0.svg"); }
+.bar-bat1-symbol { background-image: url("./images/bat1.svg"); }
+.bar-bat2-symbol { background-image: url("./images/bat2.svg"); }
+.bar-bat3-symbol { background-image: url("./images/bat3.svg"); }
+.bar-bat4-symbol { background-image: url("./images/bat4.svg"); }
+.bar-bat5-symbol { background-image: url("./images/bat5.svg"); }
 
 .bar-workspace {
   opacity: .3;
