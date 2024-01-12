@@ -1,16 +1,16 @@
 (defpoll HOST :interval "60s" `hostname`)
 (defpoll USER :interval "60s" `echo $USER`)
 
-(defvar ws_active "1")
-(defvar ws_1 "false")
-(defvar ws_2 "false")
-(defvar ws_3 "false")
-(defvar ws_4 "false")
-(defvar ws_5 "false")
-(defvar ws_6 "false")
-(defvar ws_7 "false")
-(defvar ws_8 "false")
-(defvar ws_9 "false")
+(defvar ws_active 1)
+(defvar ws_1 false)
+(defvar ws_2 false)
+(defvar ws_3 false)
+(defvar ws_4 false)
+(defvar ws_5 false)
+(defvar ws_6 false)
+(defvar ws_7 false)
+(defvar ws_8 false)
+(defvar ws_9 false)
 
 (defvar DISK_HOVER false)
 (defvar TIME_HOVER false)
@@ -19,14 +19,14 @@
 
 (defvar AUDIO_HOVER false)
 (defvar BAR-AUDIO_HOVER false)
-(defpoll volume_muted 
+(defpoll VOL_MUTE 
   :interval "5s" 
   "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '/MUTED/ {print $1; exit}'"
 )
-(defpoll current-volume :interval "5s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2 * 100}'")
+(defpoll VOL :interval "5s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2 * 100}'")
 
 (defvar BLIGHT_HOVER false)
-(defvar bright_hover false)
+(defvar BAR-BLIGHT_HOVER false)
 (defpoll BLIGHT :interval "5s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
 
 (defvar BAT_HOVER false)

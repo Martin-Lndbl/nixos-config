@@ -1,102 +1,76 @@
 @import '/home/mrtn/.config/eww/eww.scss';
 
-tooltip.background {
-  background-color: rgba($background, 1);
-  font-size: 18;
-  border-radius: 8px;
-}
+tooltip.background { background-color: rgba($background, 1); }
 
-tooltip label {
-  margin: 3px;
-}
+tooltip label { margin: 3px; }
 
-.layout-box {
-  // font-family: Phosphor, Koulen;
-  padding-right: 15px;
-  padding-left: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+.bar {
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
   border-radius: 1.5rem;
   color: rgba($foreground, 1);
   background-color: rgba($background, 1)
 }
 
-.bat-box {
-  padding-right: 0.5em;
+.bar-item {
+  margin-left: .5rem;
+  margin-right: .5rem;
 }
 
-.bat-sym {
-  font-size: 1.5em;
-  padding-right: 2rem;
+.bar-text { font-size: 1.2em; }
+
+.bar-home-symbol,
+.bar-netw-symbol,
+.bar-speaker2-symbol,
+.bar-speaker1-symbol,
+.bar-speaker0-symbol,
+.bar-speakerx-symbol,
+.bar-blight-symbol {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.5rem;
+  min-width: 2rem;
+  min-height: 2rem;
 }
 
-.home-sym {
-  padding-left: .2em;
-  font-size: 2em;
+.bar-home-symbol {
+  background-image: url("./images/home.svg");
+  background-size: 2rem;
 }
 
-.muted-sym,
-.bat-txt {
-  font-size: 1.2em;
-}
+.bar-netw-symbol { background-image: url("./images/wifi.svg"); }
+.bar-speaker2-symbol { background-image: url("./images/speaker2.svg"); }
+.bar-speaker1-symbol { background-image: url("./images/speaker1.svg"); }
+.bar-speaker0-symbol { background-image: url("./images/speaker0.svg"); }
+.bar-speakerx-symbol { background-image: url("./images/speakerx.svg"); }
+.bar-blight-symbol { background-image: url("./images/brightness.svg"); }
 
-.time {
-  font-size: 1.2em;
-}
-
-.audio-sym,
-.bright-sym {
-  margin: 0 .5em 0 0;
-  font-size: 1.2em;
-}
-
-.network-sym {
-  margin: 0 .5em 0 0;
-  font-size: 1.1em;
-}
-
-.network-box,
-.audio-box,
-.bright-box {
-  font-size: 1.2em;
-  margin: 0 1.1em 0 0em;
-}
-
-.ws-box {
-  padding-left: 1.5rem;
-}
-
-.workspace {
-  padding: 10px 10px;
-  border: none;
+.bar-workspace {
   opacity: .3;
 }
 
-.ws_exists {
+.bar-ws_exists {
   opacity: 1;
 }
 
-.ws_active {
+.bar-ws_active {
   font-size: 1.1em;
   color: rgba($active, 1);
   opacity: 1;
 }
 
-.audio_slide trough highlight,
-.bright_slide trough highlight {
+.bar-audio_slide trough highlight,
+.bar-blight_slide trough highlight {
   background-color: $sliders;
   border-radius: 1rem;
 }
 
-.audio_slide {
-  margin-left: .4em;
-}
-
-.audio_slide trough, 
-.bright_slide trough {
+.bar-audio_slide trough, 
+.bar-blight_slide trough {
   background-color: $foreground;
   border-radius: 1rem;
   min-height: 1em;
   min-width: 5em;
-  margin-left: .5em;
 }

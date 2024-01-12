@@ -1,4 +1,7 @@
-# Current pictures from https://www.svgrepo.com/collection/wolf-kit-rounded-line-icons/
+/*
+  Vectors and icons by <a href="https://www.figma.com/@thewolfkit?ref=svgrepo.com" target="_blank">Thewolfkit</a> in CC Attribution License via <a href="https://www.svgrepo.com/" target="_blank">SVG Repo</a>
+*/
+
 { pkgs, config, ... }:
 
 let
@@ -17,8 +20,15 @@ with config.colorscheme.colors; {
 
     "eww/images/pb.png".source = ./pb.png;
 
+    "eww/images/home.svg".source = chcol base06 ./home.svg;
+
     "eww/images/brightness.svg".source = chcol base06 ./brightness.svg;
     "eww/images/disk.svg".source = chcol base06 ./disk.svg;
+
+    "eww/images/netw.svg".source = chcol base06 ./netw.svg;
+    "eww/images/wifi.svg".source = chcol base06 ./wifi.svg;
+    "eww/images/nonet.svg".source = chcol base06 ./nonet.svg;
+
     "eww/images/speaker2.svg".source = chcol base06 ./speaker2.svg;
     "eww/images/speaker1.svg".source = chcol base06 ./speaker1.svg;
     "eww/images/speaker0.svg".source = chcol base06 ./speaker0.svg;

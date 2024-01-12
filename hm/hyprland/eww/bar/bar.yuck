@@ -1,11 +1,9 @@
 (defwidget barmenu_layout []
-  (box :class "layout-box" 
-    (box 
-      :orientation "h"
-      (left)
-      (middle)
-      (right)
-    )
+  (box :class "bar" 
+    :orientation "h"
+    (left)
+    (middle)
+    (right)
   )
 )
 
@@ -33,28 +31,22 @@
     :halign "end"
     (_network)
     (_audio)
-    (_bright)
-    (_battery :status {EWW_BATTERY.BAT0.status}
-      :battery {EWW_BATTERY.BAT0.capacity}
-      :charge "" :full "" :three "" :half "" :quater "" :empty ""
-    )
+    (_blight)
+    (_bat)
   )
 )
 
 (defwidget _dashboard []
-  (box
+  (box :class "bar-item"
     (button
-      (label
-        :class "home-sym"
-        :text ""
-      )
+      :class "bar-home-symbol"
+      :onclick "${EWW_CMD} open dashboard"
     )
   )
 )
 
 (defwidget _workspaces []
   (box
-    :class "ws-box"
     (__workspace :nr 1 :exists ws_1)
     (__workspace :nr 2 :exists ws_2)
     (__workspace :nr 3 :exists ws_3)
@@ -68,14 +60,11 @@
 )
 
 (defwidget __workspace [ nr exists ]
-  (button :class "workspace 
-                  ${ws_active == nr ? "ws_active" : ""} 
-                  ${exists == 'true' ? "ws_exists" : ""}"
+  (button :class "bar-item bar-workspace 
+                  ${ws_active == nr ? "bar-ws_active" : ""} 
+                  ${exists ? "bar-ws_exists" : ""}"
     :onclick "hyprctl dispatch workspace ${nr} && scripts/workspaces ${nr}"
-    (label 
-      :class "ws-lbl"
-      :text nr
-    )
+    (label :text nr)
   )
 )
 
@@ -83,20 +72,20 @@
   (eventbox
     :onhover "${EWW_CMD} update TIME_HOVER=true"
     :onhoverlost "${EWW_CMD} update TIME_HOVER=false"
-    (box
+    (box :class "bar-item"
       :space-evenly false
       (revealer 
         :transition "slideleft" 
 			  :reveal TIME_HOVER
 			  :duration "550ms"
         (label
-          :class "time"
+          :class "bar-text"
           :text "${time.weekday}, ${time.day}.${time.month}.${time.year} - "
           :text {formattime(EWW_TIME, "%a, %d.%m.%Y -")}
         )
       )
       (label
-        :class "time"
+        :class "bar-text"
         :text {formattime(EWW_TIME, "%H:%M")}
       )
 	    (revealer 
@@ -104,7 +93,7 @@
 			  :reveal TIME_HOVER
 			  :duration "550ms"
         (label
-          :class "time"
+          :class "bar-text"
           :text {formattime(EWW_TIME, ":%S")}
         )
       )
@@ -112,16 +101,13 @@
   )
 )
 
-
 (defwidget _network []
   (eventbox
     :onhover `scripts/network "${EWW_CMD}"`
-    (box :class "network-box" (label
-      :class "network-sym"
-      :space-evenly "false"
-      :text { "" }
-      :tooltip NET_CON
-    ))
+    :tooltip NET_CON
+    (box :class "bar-item"
+      (box :class "bar-netw-symbol")
+    )
   )
 )
 
@@ -129,24 +115,22 @@
   (eventbox 
     :onhover "${EWW_CMD} update BAR-AUDIO_HOVER=true"
     :onhoverlost "${EWW_CMD} update BAR-AUDIO_HOVER=false"
-  	(box
-      :class "audio-box"
-			:space-evenly "false"
-      (button
-        :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ${EWW_CMD} update volume_muted=${volume_muted == "" ? "true" : ""}"
-			  (label 
-          :class {volume_muted == "" ? "audio-sym":"muted-sym"}
-          :text {volume_muted != "" || current-volume == 0 ? "" 
-            :current-volume < 50 ? "" : ""}
-        )
+    :tooltip "Volume: ${VOL}"
+  	(box :class "bar-item"
+      :space-evenly false
+      (box
+        :class {VOL_MUTE != "" ? "bar-speakerx-symbol"
+                : VOL < 20 ? "bar-speaker0-symbol" 
+                : VOL < 60 ? "bar-speaker1-symbol" 
+                : "bar-speaker2-symbol"}
+        (button :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ${EWW_CMD} update VOL_MUTE=${VOL_MUTE == "" ? "true" : ""}")
       )
   		(revealer :transition "slideright" 
 			  :reveal BAR-AUDIO_HOVER
 			  :duration "550ms"
   			(scale 
-          :class "audio_slide" 
-			    :value current-volume 
-				  :tooltip "Volume: ${current-volume}"
+          :class "bar-audio_slide" 
+			    :value VOL 
 				  :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
 				  :max 101 
 				  :min 0
@@ -156,53 +140,35 @@
   )
 )
 
-(defwidget _bright []
-  (eventbox 
-    :onhover "${EWW_CMD} update bright_hover=true"   
-  	:onhoverlost "${EWW_CMD} update bright_hover=false"
-  	(box
-      :class "bright-box"
-			:space-evenly "false"
-			(label
-        :class "bright-sym"
-        :text ""
-      )
-  		(revealer :transition "slideright" 
-			  :reveal bright_hover
-			  :duration "550ms"
-  			(scale 
-          :class "bright_slide" 
-			    :value BLIGHT
-				  :tooltip "Brightness: ${BLIGHT}%"
-				  :onchange "brightnessctl set {}%"
-				  :max 101
-				  :min 2
+(defwidget _blight []
+  (eventbox
+    :onhover "${EWW_CMD} update BAR-BLIGHT_HOVER=true"
+    :onhoverlost "${EWW_CMD} update BAR-BLIGHT_HOVER=false"
+    (box :class "bar-item"
+      :space-evenly false
+      (box :class "bar-blight-symbol")
+      (revealer 
+        :transition "slideright"
+        :reveal BAR-BLIGHT_HOVER
+        :duration "550ms"
+        (scale
+          :class "bar-blight_slide"
+          :value BLIGHT
+          :tooltip "Brightness: ${BLIGHT}%"
+          :onchange "brightnessctl set {}%"
+          :max 101
+          :min 2
         )
       )
   	)
   )
 )
 
-(defwidget _battery [battery status empty quater half three full charge]
-  (eventbox :class "bat-box" 
-    :onhover `${EWW_CMD} update BAT_HOVER=true;
-              ${EWW_CMD} update BAT_INFO="$(acpi | awk -F '%, ' '{print $2}')"`
-    :onhoverlost "${EWW_CMD} update BAT_HOVER=false"
-    (box :class "bat-box" (label 
-        :class {
-          BAT_HOVER == 'true' ? "bat-txt" : "bat-sym"
-        }
-        :text {
-          BAT_HOVER == 'true' ? "${battery}%"
-          :status == 'Charging' ? charge
-          :battery < 20 ? empty
-          :battery < 40 ? quater
-          :battery < 60 ? half
-          :battery < 80 ? three
-          :full 
-        }
-        :tooltip BAT_INFO
-      ))
+(defwidget _bat [ ]
+  (box :class "bar-item"
+    (label :class "bar-text"
+      :text "${EWW_BATTERY.BAT0.capacity}%"
+    )
   )
 )
 
