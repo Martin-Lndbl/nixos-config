@@ -1,7 +1,5 @@
 /*
   Vectors and icons by <a href="https://www.figma.com/@thewolfkit?ref=svgrepo.com" target="_blank">Thewolfkit</a> in CC Attribution License via <a href="https://www.svgrepo.com/" target="_blank">SVG Repo</a>
-
-  Vectors and icons by <a href="https://dazzleui.gumroad.com/l/dazzleiconsfree?ref=svgrepo.com" target="_blank">Dazzle Ui</a> in CC Attribution License via <a href="https://www.svgrepo.com/" target="_blank">SVG Repo</a>
 */
 
 { pkgs, config, ... }:
@@ -26,17 +24,15 @@ with config.colorscheme.colors; {
 
     "eww/images/brightness.svg".source = chcol base06 ./brightness.svg;
     "eww/images/disk.svg".source = chcol base06 ./disk.svg;
+
+    "eww/images/netw.svg".source = chcol base06 ./netw.svg;
+    "eww/images/wifi.svg".source = chcol base06 ./wifi.svg;
+    "eww/images/nonet.svg".source = chcol base06 ./nonet.svg;
+
     "eww/images/speaker2.svg".source = chcol base06 ./speaker2.svg;
     "eww/images/speaker1.svg".source = chcol base06 ./speaker1.svg;
     "eww/images/speaker0.svg".source = chcol base06 ./speaker0.svg;
     "eww/images/speakerx.svg".source = chcol base06 ./speakerx.svg;
-
-    "eww/images/batw.svg".source = chcol base06 ./batw.svg;
-    "eww/images/bat0.svg".source = chcol base06 ./bat0.svg;
-    "eww/images/bat1.svg".source = chcol base06 ./bat1.svg;
-    "eww/images/bat2.svg".source = chcol base06 ./bat2.svg;
-    "eww/images/bat3.svg".source = chcol base06 ./bat3.svg;
-    "eww/images/batc.svg".source = chcol base06 ./batc.svg;
 
     "eww/images/shutdown.svg".source = chcol base08 ./shutdown.svg;
     "eww/images/reboot.svg".source = chcol base0A ./reboot.svg;

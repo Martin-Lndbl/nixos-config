@@ -1,5 +1,5 @@
 (defwidget barmenu_layout []
-  (box :class "layout-box" 
+  (box :class "bar" 
     :orientation "h"
     (left)
     (middle)
@@ -37,9 +37,11 @@
 )
 
 (defwidget _dashboard []
-  (button 
-    :class "home-symbol"
-    :onclick "${EWW_CMD} open dashboard"
+  (box :class "bar-item"
+    (button
+      :class "bar-home-symbol"
+      :onclick "${EWW_CMD} open dashboard"
+    )
   )
 )
 
@@ -58,14 +60,11 @@
 )
 
 (defwidget __workspace [ nr exists ]
-  (button :class "workspace 
-                  ${ws_active == nr ? "ws_active" : ""} 
-                  ${exists == 'true' ? "ws_exists" : ""}"
+  (button :class "bar-item bar-workspace 
+                  ${ws_active == nr ? "bar-ws_active" : ""} 
+                  ${exists ? "bar-ws_exists" : ""}"
     :onclick "hyprctl dispatch workspace ${nr} && scripts/workspaces ${nr}"
-    (label 
-      :class "ws-lbl"
-      :text nr
-    )
+    (label :text nr)
   )
 )
 
@@ -73,20 +72,20 @@
   (eventbox
     :onhover "${EWW_CMD} update TIME_HOVER=true"
     :onhoverlost "${EWW_CMD} update TIME_HOVER=false"
-    (box
+    (box :class "bar-item"
       :space-evenly false
       (revealer 
         :transition "slideleft" 
 			  :reveal TIME_HOVER
 			  :duration "550ms"
         (label
-          :class "time"
+          :class "bar-text"
           :text "${time.weekday}, ${time.day}.${time.month}.${time.year} - "
           :text {formattime(EWW_TIME, "%a, %d.%m.%Y -")}
         )
       )
       (label
-        :class "time"
+        :class "bar-text"
         :text {formattime(EWW_TIME, "%H:%M")}
       )
 	    (revealer 
@@ -94,7 +93,7 @@
 			  :reveal TIME_HOVER
 			  :duration "550ms"
         (label
-          :class "time"
+          :class "bar-text"
           :text {formattime(EWW_TIME, ":%S")}
         )
       )
@@ -102,16 +101,13 @@
   )
 )
 
-
 (defwidget _network []
   (eventbox
     :onhover `scripts/network "${EWW_CMD}"`
-    (box :class "network-box" (label
-      :class "network-sym"
-      :space-evenly "false"
-      :text { "" }
-      :tooltip NET_CON
-    ))
+    :tooltip NET_CON
+    (box :class "bar-item"
+      (box :class "bar-netw-symbol")
+    )
   )
 )
 
@@ -119,24 +115,22 @@
   (eventbox 
     :onhover "${EWW_CMD} update BAR-AUDIO_HOVER=true"
     :onhoverlost "${EWW_CMD} update BAR-AUDIO_HOVER=false"
-  	(box
-      :class "audio-box"
-			:space-evenly "false"
-      (button
-        :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ${EWW_CMD} update volume_muted=${volume_muted == "" ? "true" : ""}"
-			  (label 
-          :class {volume_muted == "" ? "audio-sym":"muted-sym"}
-          :text {volume_muted != "" || current-volume == 0 ? "" 
-            :current-volume < 50 ? "" : ""}
-        )
+    :tooltip "Volume: ${VOL}"
+  	(box :class "bar-item"
+      :space-evenly false
+      (box
+        :class {VOL_MUTE != "" ? "bar-speakerx-symbol"
+                : VOL < 20 ? "bar-speaker0-symbol" 
+                : VOL < 60 ? "bar-speaker1-symbol" 
+                : "bar-speaker2-symbol"}
+        (button :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ${EWW_CMD} update VOL_MUTE=${VOL_MUTE == "" ? "true" : ""}")
       )
   		(revealer :transition "slideright" 
 			  :reveal BAR-AUDIO_HOVER
 			  :duration "550ms"
   			(scale 
-          :class "audio_slide" 
-			    :value current-volume 
-				  :tooltip "Volume: ${current-volume}"
+          :class "bar-audio_slide" 
+			    :value VOL 
 				  :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
 				  :max 101 
 				  :min 0
@@ -151,12 +145,14 @@
     :onhover "${EWW_CMD} update BAR-BLIGHT_HOVER=true"
     :onhoverlost "${EWW_CMD} update BAR-BLIGHT_HOVER=false"
     (box :class "bar-item"
-      (box :class "blight-symbol")
-      (revealer :transition "slideright"
+      :space-evenly false
+      (box :class "bar-blight-symbol")
+      (revealer 
+        :transition "slideright"
         :reveal BAR-BLIGHT_HOVER
         :duration "550ms"
         (scale
-          :class "blight_slide"
+          :class "bar-blight_slide"
           :value BLIGHT
           :tooltip "Brightness: ${BLIGHT}%"
           :onchange "brightnessctl set {}%"
@@ -169,7 +165,7 @@
 )
 
 (defwidget _bat [ ]
-  (box :class "empty"
+  (box :class "bar-item"
     (label :class "bar-text"
       :text "${EWW_BATTERY.BAT0.capacity}%"
     )
