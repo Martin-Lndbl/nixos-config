@@ -38,7 +38,7 @@ tooltip label { margin: 3px; }
 .bar-bat2-symbol,
 .bar-bat3-symbol,
 .bar-bat4-symbol,
-.bar-bat5-symbol {
+.bar-batc-symbol {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.5rem;
@@ -64,8 +64,8 @@ tooltip label { margin: 3px; }
 .bar-bat2-symbol,
 .bar-bat3-symbol,
 .bar-bat4-symbol,
-.bar-bat5-symbol {
-  background-size: 2rem;
+.bar-batc-symbol {
+  background-size: 1.8rem;
 }
 
 .bar-bat0-symbol { background-image: url("./images/bat0.svg"); }
@@ -73,7 +73,7 @@ tooltip label { margin: 3px; }
 .bar-bat2-symbol { background-image: url("./images/bat2.svg"); }
 .bar-bat3-symbol { background-image: url("./images/bat3.svg"); }
 .bar-bat4-symbol { background-image: url("./images/bat4.svg"); }
-.bar-bat5-symbol { background-image: url("./images/bat5.svg"); }
+.bar-batc-symbol { background-image: url("./images/batc.svg"); }
 
 .bar-workspace {
   opacity: .3;

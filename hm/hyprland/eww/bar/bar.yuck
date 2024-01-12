@@ -32,7 +32,9 @@
     (_network)
     (_audio)
     (_blight)
-    (_bat :cap {EWW_BATTERY.BAT0.capacity})
+    (_bat :cap {EWW_BATTERY.BAT0.capacity}
+          :status {EWW_BATTERY.BAT0.status}
+    )
   )
 )
 
@@ -164,18 +166,18 @@
   )
 )
 
-(defwidget _bat [ cap ]
+(defwidget _bat [ cap status ]
   (box :class "bar-item"
     (eventbox
       :onhover "${EWW_CMD} update BAR-BAT_HOVER=true"
       :onhoverlost "${EWW_CMD} update BAR-BAT_HOVER=false"
       :class { BAR-BAT_HOVER ? "bar-bat-hover"
-        : cap < 10 ? "bar-bat0-symbol" 
-        : cap < 30 ? "bar-bat1-symbol"
-        : cap < 50 ? "bar-bat2-symbol"
-        : cap < 70 ? "bar-bat3-symbol"
-        : cap < 90 ? "bar-bat4-symbol"
-        : "bar-bat5-symbol"}
+        : status == "Charging" ? "bar-batc-symbol"
+        : cap < 20 ? "bar-bat0-symbol" 
+        : cap < 40 ? "bar-bat1-symbol"
+        : cap < 60 ? "bar-bat2-symbol"
+        : cap < 80 ? "bar-bat3-symbol"
+        : "bar-bat4-symbol"}
       (label
         :class { BAR-BAT_HOVER ? "bar-text" : "hidden" }
         :text "${cap}%"
