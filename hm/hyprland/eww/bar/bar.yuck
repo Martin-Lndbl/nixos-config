@@ -32,7 +32,7 @@
     (_network)
     (_audio)
     (_blight)
-    (_bat)
+    (_bat :cap {EWW_BATTERY.BAT0.capacity})
   )
 )
 
@@ -40,7 +40,7 @@
   (box :class "bar-item"
     (button
       :class "bar-home-symbol"
-      :onclick "${EWW_CMD} open dashboard"
+      :onclick "./scripts/dashboard ${EWW_CMD}"
     )
   )
 )
@@ -164,10 +164,24 @@
   )
 )
 
-(defwidget _bat [ ]
+(defwidget _bat [ cap ]
   (box :class "bar-item"
-    (label :class "bar-text"
-      :text "${EWW_BATTERY.BAT0.capacity}%"
+    (eventbox
+      :onhover "${EWW_CMD} update BAR-BAT_HOVER=true"
+      :onhoverlost "${EWW_CMD} update BAR-BAT_HOVER=false"
+      :class { BAR-BAT_HOVER ? "bar-bat-hover"
+        : cap < 10 ? "bar-bat0-symbol" 
+        : cap < 30 ? "bar-bat1-symbol"
+        : cap < 50 ? "bar-bat2-symbol"
+        : cap < 70 ? "bar-bat3-symbol"
+        : cap < 90 ? "bar-bat4-symbol"
+        : "bar-bat5-symbol"}
+      (label
+        :class { BAR-BAT_HOVER ? "bar-text" : "hidden" }
+        :text "${cap}%"
+        :valign "center"
+        :halign "center"
+      )
     )
   )
 )

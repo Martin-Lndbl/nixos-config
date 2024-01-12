@@ -19,6 +19,7 @@
 
 (defvar AUDIO_HOVER false)
 (defvar BAR-AUDIO_HOVER false)
+
 (defpoll VOL_MUTE 
   :interval "5s" 
   "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '/MUTED/ {print $1; exit}'"
@@ -29,5 +30,6 @@
 (defvar BAR-BLIGHT_HOVER false)
 (defpoll BLIGHT :interval "5s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
 
+(defvar BAR-BAT_HOVER false)
 (defvar BAT_HOVER false)
 (defvar BAT_INFO "")

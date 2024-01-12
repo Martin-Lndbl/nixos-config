@@ -1,0 +1,3 @@
+#! /bin/sh
+
+$1 windows | if grep -q '*dashboard'; then $1 close dashboard; else $1 open dashboard; fi
