@@ -25,9 +25,9 @@ with config.colorscheme.colors; {
     "eww/images/brightness.svg".source = chcol base06 ./brightness.svg;
     "eww/images/disk.svg".source = chcol base06 ./disk.svg;
 
-    "eww/images/netw.svg".source = chcol base06 ./netw.svg;
-    "eww/images/wifi.svg".source = chcol base06 ./wifi.svg;
-    "eww/images/nonet.svg".source = chcol base06 ./nonet.svg;
+    "eww/images/net_wired.svg".source = chcol base06 ./net_wired.svg;
+    "eww/images/net_wifi.svg".source = chcol base06 ./net_wifi.svg;
+    "eww/images/net_none.svg".source = chcol base06 ./net_none.svg;
 
     "eww/images/speaker2.svg".source = chcol base06 ./speaker2.svg;
     "eww/images/speaker1.svg".source = chcol base06 ./speaker1.svg;

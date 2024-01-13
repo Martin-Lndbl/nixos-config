@@ -16,6 +16,7 @@
 (defvar TIME_HOVER false)
 
 (defvar NET_CON "unknown")
+(defpoll NET_TYPE :interval "10s" `echo "$(./scripts/network eww)"`)
 
 (defvar AUDIO_HOVER false)
 (defvar BAR-AUDIO_HOVER false)
