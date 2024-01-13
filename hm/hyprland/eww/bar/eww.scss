@@ -1,6 +1,10 @@
 @import '/home/mrtn/.config/eww/eww.scss';
 
-tooltip.background { background-color: rgba($background, 1); }
+tooltip.background {
+  background-color: rgba($background, 1);
+  border-radius: .5rem;
+  font-size: 1.1rem;
+}
 
 tooltip label { margin: 3px; }
 

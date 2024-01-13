@@ -31,5 +31,4 @@
 (defpoll BLIGHT :interval "5s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
 
 (defvar BAR-BAT_HOVER false)
-(defvar BAT_HOVER false)
 (defvar BAT_INFO "")
