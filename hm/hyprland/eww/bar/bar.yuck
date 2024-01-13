@@ -104,11 +104,11 @@
 )
 
 (defwidget _network []
-  (eventbox
-    :onhover `scripts/network "${EWW_CMD}"`
+  (box :class "bar-item"
     :tooltip NET_CON
-    (box :class "bar-item"
-      (box :class "bar-netw-symbol")
+    (box :class { NET_TYPE == "wired" ? "bar-net_wired-symbol"
+                : NET_TYPE == "wifi" ? "bar-net_wifi-symbol"
+                : "bar-net_none-symbol"}
     )
   )
 )
@@ -169,8 +169,10 @@
 (defwidget _bat [ cap status ]
   (box :class "bar-item"
     (eventbox
-      :onhover "${EWW_CMD} update BAR-BAT_HOVER=true"
+      :onhover `${EWW_CMD} update BAR-BAT_HOVER=true;
+                ${EWW_CMD} update BAT_INFO="$(acpi | awk -F '%, ' '{print $2}')"`
       :onhoverlost "${EWW_CMD} update BAR-BAT_HOVER=false"
+      :tooltip BAT_INFO
       :class { BAR-BAT_HOVER ? "bar-bat-hover"
         : status == "Charging" ? "bar-batc-symbol"
         : cap < 20 ? "bar-bat0-symbol" 

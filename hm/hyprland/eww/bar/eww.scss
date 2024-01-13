@@ -1,6 +1,10 @@
 @import '/home/mrtn/.config/eww/eww.scss';
 
-tooltip.background { background-color: rgba($background, 1); }
+tooltip.background {
+  background-color: rgba($background, 1);
+  border-radius: .5rem;
+  font-size: 1.1rem;
+}
 
 tooltip label { margin: 3px; }
 
@@ -26,7 +30,9 @@ tooltip label { margin: 3px; }
 .bar-text { font-size: 1.2em; }
 
 .bar-home-symbol,
-.bar-netw-symbol,
+.bar-net_wired-symbol,
+.bar-net_wifi-symbol,
+.bar-net_none-symbol,
 .bar-speaker2-symbol,
 .bar-speaker1-symbol,
 .bar-speaker0-symbol,
@@ -51,7 +57,10 @@ tooltip label { margin: 3px; }
   background-size: 2rem;
 }
 
-.bar-netw-symbol { background-image: url("./images/wifi.svg"); }
+.bar-net_wired-symbol { background-image: url("./images/net_wired.svg"); }
+.bar-net_wifi-symbol { background-image: url("./images/net_wifi.svg"); }
+.bar-net_none-symbol { background-image: url("./images/net_none.svg"); }
+
 .bar-speaker2-symbol { background-image: url("./images/speaker2.svg"); }
 .bar-speaker1-symbol { background-image: url("./images/speaker1.svg"); }
 .bar-speaker0-symbol { background-image: url("./images/speaker0.svg"); }
