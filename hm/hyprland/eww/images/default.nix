@@ -41,10 +41,10 @@ with config.colorscheme.colors; {
     "eww/images/bat4.svg".source = chcol base06 ./bat4.svg;
     "eww/images/batc.svg".source = chcol base06 ./batc.svg;
 
-    "eww/images/shutdown.svg".source = chcol base08 ./shutdown.svg;
-    "eww/images/reboot.svg".source = chcol base0A ./reboot.svg;
-    "eww/images/lock.svg".source = chcol base0E ./lock.svg;
-    "eww/images/sleep.svg".source = chcol base0B ./sleep.svg;
-    "eww/images/logout.svg".source = chcol base0C ./logout.svg;
+    "eww/images/shutdown.svg".source = chcol base06 ./shutdown.svg;
+    "eww/images/reboot.svg".source = chcol base06 ./reboot.svg;
+    "eww/images/lock.svg".source = chcol base06 ./lock.svg;
+    "eww/images/sleep.svg".source = chcol base06 ./sleep.svg;
+    "eww/images/logout.svg".source = chcol base06 ./logout.svg;
   };
 }
