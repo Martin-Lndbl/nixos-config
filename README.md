@@ -7,8 +7,6 @@ Currently I'm using
 * [Eww](https://github.com/elkowar/eww) for my widgets
 * [Neovim](https://github.com/neovim/neovim) as editor
 
-![Desktop screenshot](./images/tetris.png)
-
 ## Highlights
 * Readable approach to manage multiple hosts and users
 * Extensive NeoVim configuration based on my [module](https://github.com/Martin-Lndbl/nix-neovim-module)
@@ -21,6 +19,14 @@ Currently I'm using
   <img src="./images/chalk.png" width="32%" />
   <img src="./images/classic-light.png" width="32%" />
 </p>
+
+## How it looks
+
+<p float="center">
+  <img src="./images/default.png" width="49%" />
+  <img src="./images/widgets.png" width="49%" />
+</p>
+
 Feel free to browse!
 
 ## Thanks to
