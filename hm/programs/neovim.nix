@@ -44,5 +44,10 @@ in
     plugins = [
       base16_build
     ];
+
+    extraConfig = ''
+      set spelllang=en_us
+      set spell
+    '';
   };
 }
