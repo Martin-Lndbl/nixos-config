@@ -13,14 +13,14 @@
   };
 
   wayland.windowManager.hyprland.extraConfig = ''
-    #	Popups
-    windowrulev2 = size 578 187, title:^((?!Save)(?!Mozilla firefox).)*$,floating:1,class:^(firefox)$
-    
     #	Downloads
     windowrulev2 = size 800 400, title:^(Save)(.*)$, floating:1
 
     # Color
     windowrulev2 = size 488 316, title:^(Choose a color)$, floating:1, class:^(firefox)$
+
+    #	Popups
+    windowrulev2 = size 50% 50%, title:^((?!Save)(?!Mozilla firefox).)*$,floating:1,class:^(firefox)$
   '';
 
 }
