@@ -50,4 +50,13 @@ in
       set spell
     '';
   };
+
+  xdg.desktopEntries.neovim = {
+    name = "NeoVim";
+    genericName = "Text editor";
+    exec = "alacritty --command nvim %U";
+    terminal = false;
+    categories = [ "TextTools" ];
+    mimeType = [ ];
+  };
 }
