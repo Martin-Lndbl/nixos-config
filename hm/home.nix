@@ -2,13 +2,13 @@
   imports = [
     ./programs
     ./games
+    ./mime.nix
   ];
 
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
   colorScheme = inputs.nix-colors.colorSchemes.classic-dark;
-  # colorScheme = import ./colorschemes/spacecamp.nix;
 
   nixpkgs = {
     overlays = [
@@ -55,7 +55,6 @@
 
   xdg.enable = true;
   xdg.cacheHome = config.home.homeDirectory + "/.local/cache";
-  xdg.mimeApps.enable = true;
   xdg.userDirs = {
     enable = true;
     createDirectories = false;
