@@ -4,16 +4,13 @@
     ./eww
     ./swaylock.nix
     ./hyprland.nix
+    ./mako.nix
+    ./wofi.nix
   ];
 
   home.packages = with pkgs; [
     wl-clipboard
   ];
-
-  services.mako.enable = true; # Notifications
-
-  programs.wofi.enable = true; # Application launcher
-  xdg.configFile."wofi/style.css".source = ./wofi.css;
 
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
