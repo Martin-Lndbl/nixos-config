@@ -2,6 +2,7 @@
   imports = [
     ./users.nix
     ./security.nix
+    ./japanese.nix
   ];
 
   nixpkgs = {
@@ -56,10 +57,7 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       noto-fonts
-      noto-fonts-cjk
       noto-fonts-emoji
-      font-awesome
-      comic-mono
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
   };
