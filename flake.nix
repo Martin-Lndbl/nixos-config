@@ -16,10 +16,6 @@
 
     # Nix Colors
     nix-colors.url = "github:Misterio77/nix-colors";
-
-    # Nix Gaming
-    nix-gaming.url = "github:fufexan/nix-gaming";
-    nix-gaming.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, hm, neovim, nix-colors, ... }@inputs:
