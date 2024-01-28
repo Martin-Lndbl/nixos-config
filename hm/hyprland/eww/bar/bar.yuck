@@ -117,23 +117,23 @@
   (eventbox 
     :onhover "${EWW_CMD} update BAR-AUDIO_HOVER=true"
     :onhoverlost "${EWW_CMD} update BAR-AUDIO_HOVER=false"
-    :tooltip "Volume: ${VOL}"
+    :tooltip "Volume: ${SINK.VOL}"
   	(box :class "bar-item"
       :space-evenly false
       (box
-        :class {VOL_MUTE != "" ? "bar-speakerx-symbol"
-                : VOL < 20 ? "bar-speaker0-symbol" 
-                : VOL < 60 ? "bar-speaker1-symbol" 
+        :class {SINK.MUTE == "MUTED" ? "bar-speakerx-symbol"
+                : SINK.VOL < 20 ? "bar-speaker0-symbol"
+                : SINK.VOL < 60 ? "bar-speaker1-symbol"
                 : "bar-speaker2-symbol"}
-        (button :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ${EWW_CMD} update VOL_MUTE=${VOL_MUTE == "" ? "true" : ""}")
+        (button :onclick "${EWW_CMD} update SINK=$(./scripts/audio --toggle-sink)")
       )
   		(revealer :transition "slideright" 
 			  :reveal BAR-AUDIO_HOVER
 			  :duration "550ms"
   			(scale 
           :class "bar-audio_slide" 
-			    :value VOL 
-				  :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
+			    :value {SINK.VOL}
+				  :onchange "./scripts/audio --set-sink {}"
 				  :max 101 
 				  :min 0
         )

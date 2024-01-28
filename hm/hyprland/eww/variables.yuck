@@ -20,12 +20,10 @@
 
 (defvar AUDIO_HOVER false)
 (defvar BAR-AUDIO_HOVER false)
+(defpoll SINK :interval "5s" "./scripts/audio --get-sink")
 
-(defpoll VOL_MUTE 
-  :interval "5s" 
-  "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '/MUTED/ {print $1; exit}'"
-)
-(defpoll VOL :interval "5s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2 * 100}'")
+(defvar MIC_HOVER false)
+(defpoll SOURCE :interval "5s" "./scripts/audio --get-source")
 
 (defvar BLIGHT_HOVER false)
 (defvar BAR-BLIGHT_HOVER false)
