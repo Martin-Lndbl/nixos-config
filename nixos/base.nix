@@ -23,6 +23,7 @@
   nix.settings = {
     experimental-features = "nix-command flakes";
     auto-optimise-store = true;
+    sandbox = true;
   };
 
   networking.networkmanager.enable = true;

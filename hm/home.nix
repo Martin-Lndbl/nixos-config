@@ -2,7 +2,6 @@
   imports = [
     ./programs
     ./games
-    ./mime.nix
   ];
 
   home.username = "mrtn";

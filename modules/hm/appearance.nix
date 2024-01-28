@@ -3,7 +3,8 @@
 let
   cfg = config.appearance;
 
-  opacity = if builtins.match "[0/1].*" config.colorscheme.colors.base00 == null
+  opacity =
+    if builtins.match "[0/1].*" config.colorscheme.colors.base00 == null
     then .85
     else .7;
 
@@ -23,11 +24,11 @@ with lib;
     };
     wallpaper = mkOption {
       description = "Wallpaper";
-      type = types.str;
+      type = types.oneOf [ types.path types.str ];
     };
     lockScreen = mkOption {
       description = "Lockscreen";
-      type = types.str;
+      type = types.oneOf [ types.path types.str ];
       default = cfg.wallpaper;
     };
   };

@@ -10,10 +10,6 @@
     hm.url = "github:nix-community/home-manager";
     hm.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Neovim
-    neovim.url = "github:Martin-Lndbl/nix-neovim-module";
-    neovim.inputs.nixpkgs.follows = "nixpkgs";
-
     # Nix Colors
     nix-colors.url = "github:Misterio77/nix-colors";
   };
@@ -45,8 +41,6 @@
         modules = [
           ./nixos/base.nix
           ./nixos/machines/nix-gt.nix
-
-          # Choose any display / window - Manager
           ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;
       };
@@ -59,11 +53,9 @@
             nix-colors.homeManagerModules.default
             ./hm/home.nix
             ./hm/hyprland
+            ./hm/users/mrtn/nix-gt.nix
             {
-              config.appearance.fontSize = 18;
-              config.monitors.center = "DP-2";
-              config.monitors.right = "DP-3";
-            }
+                          }
           ] ++ import ./modules/hm;
         };
       };
@@ -77,8 +69,6 @@
           ./nixos/base.nix
           ./nixos/wireguard.nix
           ./nixos/machines/nix-nb.nix
-
-          # Choose any display / window - Manager
           ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;
       };
@@ -91,13 +81,7 @@
             nix-colors.homeManagerModules.default
             ./hm/home.nix
             ./hm/hyprland
-            {
-              config.appearance.wallpaper = "~/downloads/wallpaper/mountains.png";
-              config.appearance.lockScreen = "~/downloads/wallpaper/nix.png";
-              config.appearance.fontSize = 14;
-              config.monitors.center = "eDP-1";
-              config.monitors.right = "DP-1";
-            }
+            ./hm/users/mrtn/nix-nb.nix
           ] ++ import ./modules/hm;
         };
       };

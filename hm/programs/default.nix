@@ -9,7 +9,8 @@
     ./discord.nix
     ./firefox.nix
     ./git.nix
-    ./neovim.nix
+    ./mime.nix
+    ./nvim
     ./spotify.nix
     ./ssh.nix
     ./whatsapp.nix
