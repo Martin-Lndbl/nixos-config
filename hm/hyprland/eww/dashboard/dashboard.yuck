@@ -62,13 +62,13 @@
         :onhoverlost "${EWW_CMD} update AUDIO_HOVER=false"
         (box 
           :class {AUDIO_HOVER ? "hover-symbol" 
-            : VOL_MUTE != "" || VOL == 0 ? "speakerx-symbol"
-            : VOL < 20 ? "speaker0-symbol"
-            : VOL < 60 ? "speaker1-symbol"
+            : SINK.MUTE == "MUTED" || SINK.VOL == 0 ? "speakerx-symbol"
+            : SINK.VOL < 20 ? "speaker0-symbol"
+            : SINK.VOL < 60 ? "speaker1-symbol"
             : "speaker2-symbol"}
           (label
             :class {AUDIO_HOVER ? "hover-text" : "hidden"}
-            :text VOL
+            :text {SINK.VOL}
             :valign "center"
             :halign "center"
           )
@@ -76,8 +76,8 @@
       )
       (scale 
         :class "db-scale_audio"
-        :value VOL
-        :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
+        :value {SINK.VOL}
+        :onchange "./scripts/audio --set-sink {}"
         :max 101 
         :min 0
       )
