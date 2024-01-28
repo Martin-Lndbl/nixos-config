@@ -1,0 +1,33 @@
+#! /bin/sh
+
+set_sink(){
+  wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ "$1"%
+}
+
+get_sink(){
+  wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
+    sed -E 's/Volume: ([0-9.]+)( \[([A-Z]+)\])?/{"VOL":"\1", "MUTE":"\3"}/'
+}
+
+toggle_mute(){
+  wpctl set-mute @DEFAULT_SOURCE@ toggle
+}
+
+get_source(){
+   wpctl status | sed -E -e '0,/Sources:/d' \
+     -e '/Source endpoints/,$d' \
+     -e '/  \*   /!d' \
+     -e 's/.*\[vol: ([0-9.]+).?([A-Z]+)?.*/{"VOL":"\1", "MUTE":"\2"}/'
+}
+
+if [ "$1" == "--set-sink" ]; then
+  set_sink "$2"
+  echo "$2"
+elif [ "$1" == "--get-sink" ]; then
+  get_sink
+elif [ "$1" == "--toggle-mute" ]; then
+  toggle_mute
+  get_source
+elif [ "$1" == "--get-source" ]; then
+  get_source
+fi
