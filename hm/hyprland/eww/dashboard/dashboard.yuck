@@ -52,8 +52,8 @@
       )
       (scale 
         :class "db-scale_mic"
-        :active "false"
         :value {SOURCE.VOL}
+        :onchange "./scripts/audio --set-source {}"
         :max 101
         :min 0
       )

@@ -18,6 +18,10 @@ toggle_sink(){
   wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 }
 
+set_source(){ # THIS ONLY WORKS IF ALSA IS ALSO ACTIVE
+  amixer set Capture,0 "$1"% > /dev/null
+}
+
 get_source(){
   wpctl status | awk '
     /Sources:/ { flag = 1 }
@@ -41,6 +45,9 @@ elif [ "$1" == "--get-sink" ]; then
 elif [ "$1" == "--toggle-sink" ]; then
   toggle_sink
   get_sink
+elif [ "$1" == "--set-source" ]; then
+  set_source "$2"
+  echo "$2"
 elif [ "$1" == "--get-source" ]; then
   get_source
 elif [ "$1" == "--toggle-source" ]; then
