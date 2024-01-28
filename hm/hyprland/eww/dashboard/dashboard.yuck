@@ -37,21 +37,23 @@
   (box :class "slider" :orientation "v"
     (box :class "scale" :orientation "h" :space-evenly "false"
       (eventbox
-        :onhover "${EWW_CMD} update DISK_HOVER=true"
-        :onhoverlost "${EWW_CMD} update DISK_HOVER=false"
-        (box :class {DISK_HOVER ? "hover-symbol" : "disk-symbol"}
+        :onhover "${EWW_CMD} update MIC_HOVER=true"
+        :onhoverlost "${EWW_CMD} update MIC_HOVER=false"
+        (box :class {MIC_HOVER ? "hover-symbol"
+          : SOURCE.MUTE == "MUTED" ? "micx-symbol"
+          : "mic-symbol"}
           (label
-            :class {DISK_HOVER ? "hover-text image" : "hidden"}
-            :text  {round(EWW_DISK["/"].used_perc, 0)}
+            :class {MIC_HOVER ? "hover-text image" : "hidden"}
+            :text  {SOURCE.VOL}
             :valign "center"
             :halign "center"
           )
         )
       )
       (scale 
-        :class "db-scale_disk"
+        :class "db-scale_mic"
         :active "false"
-        :value {EWW_DISK["/"].used_perc}
+        :value {SOURCE.VOL}
         :max 101
         :min 0
       )

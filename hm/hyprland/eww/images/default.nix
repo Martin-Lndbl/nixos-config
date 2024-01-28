@@ -34,6 +34,9 @@ with config.colorscheme.colors; {
     "eww/images/speaker0.svg".source = chcol base06 ./speaker0.svg;
     "eww/images/speakerx.svg".source = chcol base06 ./speakerx.svg;
 
+    "eww/images/mic.svg".source = chcol base06 ./mic.svg;
+    "eww/images/micx.svg".source = chcol base06 ./micx.svg;
+
     "eww/images/bat0.svg".source = chcol base08 ./bat0.svg;
     "eww/images/bat1.svg".source = chcol base06 ./bat1.svg;
     "eww/images/bat2.svg".source = chcol base06 ./bat2.svg;
