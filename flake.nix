@@ -21,6 +21,7 @@
         "x86_64-linux"
       ];
     in
+
     rec {
       packages = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
@@ -54,8 +55,6 @@
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/nix-gt.nix
-            {
-                          }
           ] ++ import ./modules/hm;
         };
       };

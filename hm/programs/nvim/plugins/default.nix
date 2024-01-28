@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 let
+
   base16_build = {
     plugin = pkgs.vimPlugins.nvim-base16;
     type = "lua";
@@ -45,6 +46,9 @@ in
     vim-css-color
     BufOnly-vim
 
+    vim-vsnip
+    cmp-vsnip
+
     {
       plugin = nvim-lspconfig;
       type = "lua";
@@ -54,6 +58,14 @@ in
       plugin = lsp_signature-nvim;
       type = "lua";
       config = builtins.readFile ./lsp-signature.lua;
+    }
+    cmp-nvim-lsp
+    cmp-path
+    cmp-buffer
+    {
+      plugin = nvim-cmp;
+      type = "lua";
+      config = builtins.readFile ./nvim-cmp.lua;
     }
     {
       plugin = nerdtree;
@@ -86,7 +98,6 @@ in
           "markdown"
           "nix"
           "r"
-          "rust"
           "toml"
           "yaml"
         ];
