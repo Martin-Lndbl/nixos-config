@@ -5,6 +5,7 @@
 .profile, .slider, .shutdown, .reboot, .lock, .sleep, .logout {
   border-radius: 1rem;
   background-color: $background;
+  border: .5px solid $base07;
   margin: .5rem;
 }
 

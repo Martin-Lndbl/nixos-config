@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-
   imports = [
     ./nvim-base16.nix # colorscheme
     ./lsp.nix # language server + auto-completion
