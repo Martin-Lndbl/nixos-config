@@ -74,15 +74,15 @@
         "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
-        "lastModified": 1695388192,
-        "narHash": "sha256-2jelpE7xK+4M7jZNyWL7QYOYegQLYBDQS5bvdo8XRUQ=",
-        "owner": "Misterio77",
+        "lastModified": 1706504976,
+        "narHash": "sha256-IC8cXgSIaKvi2LASSkq/P0x3UwIEkJ/uYXufnuRibWw=",
+        "owner": "Martin-Lndbl",
         "repo": "nix-colors",
-        "rev": "37227f274b34a3b51649166deb94ce7fec2c6a4c",
+        "rev": "f53adc6d052b1a766c03056b072394d6c8872ec1",
         "type": "github"
       },
       "original": {
-        "owner": "Misterio77",
+        "owner": "Martin-Lndbl",
         "repo": "nix-colors",
         "type": "github"
       }

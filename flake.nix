@@ -10,7 +10,7 @@
     hm.inputs.nixpkgs.follows = "nixpkgs";
 
     # Nix Colors
-    nix-colors.url = "github:Misterio77/nix-colors";
+    nix-colors.url = "github:Martin-Lndbl/nix-colors";
   };
 
   outputs = { self, nixpkgs, hm, neovim, nix-colors, ... }@inputs:
