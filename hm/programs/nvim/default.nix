@@ -17,7 +17,6 @@
       set shiftwidth=2 smarttab
       set expandtab
       set mouse=a
-      set clipboard=unnamedplus
 
       set undofile
       set undodir=$HOME/.tmp/undo

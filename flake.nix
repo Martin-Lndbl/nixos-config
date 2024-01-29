@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
     fallbackpkgs.url = "github:nixos/nixpkgs/85f1ba3e51676fa8cc604a3d863d729026a6b8eb";
 
     # Home manager
