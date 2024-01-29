@@ -1,20 +1,5 @@
 { config, pkgs, lib, ... }:
 
-let
-
-  tsl = languages: builtins.foldl'
-    (
-      acc: new:
-        ''
-          vim.treesitter.language.require_language("${new}", "${
-            "${pkgs.tree-sitter.builtGrammars."tree-sitter-${new}"}/parser"
-          }")${"\n\n"}${acc}
-        ''
-    ) ""
-    languages;
-
-in
-
 {
 
   imports = [
@@ -28,10 +13,14 @@ in
 
   programs.neovim.plugins = with pkgs.vimPlugins;
     [
-      vim-commentary
       delimitMate
       vim-css-color
       BufOnly-vim
       vim-vsnip
+      {
+        plugin = comment-nvim;
+        type = "lua";
+        config = "require('Comment').setup()";
+      }
     ];
 }
