@@ -14,18 +14,18 @@ Currently I'm using
 * Highly customizable widgets implemented in [eww](https://github.com/elkowar/eww)
 * Users color scheme is built automatically from base16 colors:
 
-<p float="center">
-  <img src="./images/spacecamp.png" width="32%" />
-  <img src="./images/chalk.png" width="32%" />
-  <img src="./images/classic-light.png" width="32%" />
-</p>
-
-## How it looks
-
-<p float="center">
-  <img src="./images/default.png" width="49%" />
-  <img src="./images/widgets.png" width="49%" />
-</p>
+<!-- <p float="center"> -->
+<!--   <img src="./images/spacecamp.png" width="32%" /> -->
+<!--   <img src="./images/chalk.png" width="32%" /> -->
+<!--   <img src="./images/classic-light.png" width="32%" /> -->
+<!-- </p> -->
+<!---->
+<!-- ## How it looks -->
+<!---->
+<!-- <p float="center"> -->
+<!--   <img src="./images/default.png" width="49%" /> -->
+<!--   <img src="./images/widgets.png" width="49%" /> -->
+<!-- </p> -->
 
 Feel free to browse!
 
