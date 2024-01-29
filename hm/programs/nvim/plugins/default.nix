@@ -22,6 +22,7 @@ in
     ./lsp.nix # language server + auto-completion
     ./treesitter.nix
     ./nvim-tree.nix
+    ./undotree.nix
   ];
 
   programs.neovim.plugins = with pkgs.vimPlugins;
@@ -31,11 +32,6 @@ in
       vim-css-color
       BufOnly-vim
       vim-vsnip
-
-      {
-        plugin = undotree;
-        config = builtins.readFile ./undotree.vim;
-      }
       {
         plugin = telescope-nvim;
         type = "lua";
