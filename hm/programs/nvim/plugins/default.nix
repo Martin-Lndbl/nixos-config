@@ -23,6 +23,7 @@ in
     ./treesitter.nix
     ./nvim-tree.nix
     ./undotree.nix
+    ./telescope.nix
   ];
 
   programs.neovim.plugins = with pkgs.vimPlugins;
@@ -32,10 +33,5 @@ in
       vim-css-color
       BufOnly-vim
       vim-vsnip
-      {
-        plugin = telescope-nvim;
-        type = "lua";
-        config = builtins.readFile ./telescope.lua;
-      }
     ];
 }
