@@ -37,21 +37,23 @@
   (box :class "slider" :orientation "v"
     (box :class "scale" :orientation "h" :space-evenly "false"
       (eventbox
-        :onhover "${EWW_CMD} update DISK_HOVER=true"
-        :onhoverlost "${EWW_CMD} update DISK_HOVER=false"
-        (box :class {DISK_HOVER ? "hover-symbol" : "disk-symbol"}
+        :onhover "${EWW_CMD} update MIC_HOVER=true"
+        :onhoverlost "${EWW_CMD} update MIC_HOVER=false"
+        (box :class {MIC_HOVER ? "hover-symbol"
+          : SOURCE.MUTE == "MUTED" ? "micx-symbol"
+          : "mic-symbol"}
           (label
-            :class {DISK_HOVER ? "hover-text image" : "hidden"}
-            :text  {round(EWW_DISK["/"].used_perc, 0)}
+            :class {MIC_HOVER ? "hover-text image" : "hidden"}
+            :text  {SOURCE.VOL}
             :valign "center"
             :halign "center"
           )
         )
       )
       (scale 
-        :class "db-scale_disk"
-        :active "false"
-        :value {EWW_DISK["/"].used_perc}
+        :class "db-scale_mic"
+        :value {SOURCE.VOL}
+        :onchange "./scripts/audio --set-source {}"
         :max 101
         :min 0
       )
@@ -62,13 +64,13 @@
         :onhoverlost "${EWW_CMD} update AUDIO_HOVER=false"
         (box 
           :class {AUDIO_HOVER ? "hover-symbol" 
-            : VOL_MUTE != "" || VOL == 0 ? "speakerx-symbol"
-            : VOL < 20 ? "speaker0-symbol"
-            : VOL < 60 ? "speaker1-symbol"
+            : SINK.MUTE == "MUTED" || SINK.VOL == 0 ? "speakerx-symbol"
+            : SINK.VOL < 20 ? "speaker0-symbol"
+            : SINK.VOL < 60 ? "speaker1-symbol"
             : "speaker2-symbol"}
           (label
             :class {AUDIO_HOVER ? "hover-text" : "hidden"}
-            :text VOL
+            :text {SINK.VOL}
             :valign "center"
             :halign "center"
           )
@@ -76,8 +78,8 @@
       )
       (scale 
         :class "db-scale_audio"
-        :value VOL
-        :onchange "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ {}%" 
+        :value {SINK.VOL}
+        :onchange "./scripts/audio --set-sink {}"
         :max 101 
         :min 0
       )
