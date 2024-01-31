@@ -34,11 +34,11 @@
       margin: 0px;
     }
     #text {
-      color: #${base0A};
+      color: #${base07};
       margin: 5px;
     }
     #text:selected {
-      color: #${base0C};
+      color: #${base08};
     }
     #entry { border-radius: 16px; }
     #entry:selected {
