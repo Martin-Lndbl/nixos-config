@@ -65,7 +65,7 @@
     name = "Neovim";
     genericName = "Text Editor";
     comment = "Edit text files";
-    exec = "nvim %F";
+    exec = "alacritty --command nvim %F";
     mimeType = [
       "text/english"
       "text/plain"
@@ -83,7 +83,7 @@
       "text/x-c"
       "text/x-c++"
     ];
-    terminal = true;
+    terminal = false;
     type = "Application";
     categories = [ "Utility" "TextEditor" ];
   };

@@ -8,5 +8,6 @@
     "image/pdf" = [ "firefox.desktop" ];
     "image/webp" = [ "firefox.desktop" ];
     "image/svg+xml" = [ "firefox.desktop" ];
-   };
+    "text/html" = [ "neovim.desktop" ];
+  };
 }
