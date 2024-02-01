@@ -35,10 +35,10 @@
           };
           size = config.appearance.fontSize;
         };
-        colors = {
+        colors = with config.colorscheme.palette; {
           primary = {
-            background = "#${config.colorscheme.colors.base00}";
-            foreground = "#${config.colorscheme.colors.base07}";
+            background = "#${base00}";
+            foreground = "#${base07}";
           };
         };
       };

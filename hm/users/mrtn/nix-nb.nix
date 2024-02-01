@@ -10,8 +10,8 @@ in
     width = 1920;
     height = 1080;
     logoScale = 8;
-    logoColor1 = config.colorscheme.colors.base03;
-    logoColor2 = config.colorscheme.colors.base04;
+    logoColor1 = config.colorscheme.palette.base03;
+    logoColor2 = config.colorscheme.palette.base04;
   };
   config.appearance.lockScreen = "~/downloads/wallpaper/nix.png";
   config.appearance.fontSize = 14;

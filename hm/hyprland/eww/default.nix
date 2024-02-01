@@ -16,7 +16,7 @@
   '';
 
   xdg.configFile."eww/eww.scss".source =
-    with config.colorscheme.colors; with builtins; pkgs.writeText "eww.scss"
+    with config.colorscheme.palette; with builtins; pkgs.writeText "eww.scss"
       ''
         $background: #${base00};
         $foreground: #${base05};
@@ -25,7 +25,7 @@
         $sliders: #${base0D};
 
         ${lib.attrsets.foldlAttrs
-          (acc: n: v: acc + "\n\$${n}: #${v};") "" config.colorscheme.colors}
+          (acc: n: v: acc + "\n\$${n}: #${v};") "" config.colorscheme.palette}
 
         * { all: unset; }
 

@@ -3,7 +3,7 @@
 {
   programs.wofi.enable = true;
 
-  xdg.configFile."wofi/style.css".text = with config.colorscheme.colors; ''
+  xdg.configFile."wofi/style.css".text = with config.colorscheme.palette; ''
     window { background: unset; }
     flowboxchild { outline-width: 0; }
     #outer-box {

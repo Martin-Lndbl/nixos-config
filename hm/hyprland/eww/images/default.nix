@@ -9,7 +9,7 @@ let
     "sed 's/#ffffff/#${color}/g' ${svg} > $out";
 in
 
-with config.colorscheme.colors; {
+with config.colorscheme.palette; {
   xdg.configFile = {
 
     /*

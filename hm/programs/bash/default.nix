@@ -1,6 +1,6 @@
 { pkgs, config, lib, ... }:
 
-with config.colorscheme.colors;
+with config.colorscheme.palette;
 let
 
   R = builtins.substring 0 2 base05;

@@ -4,7 +4,7 @@ let
   cfg = config.appearance;
 
   opacity =
-    if builtins.match "[0/1].*" config.colorscheme.colors.base00 == null
+    if builtins.match "[0/1].*" config.colorscheme.palette.base00 == null
     then .85
     else .7;
 

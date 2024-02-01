@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 
 {
-  programs.swaylock = {
+  programs.swaylock = with config.colorScheme.palette; {
     enable = true;
     settings = {
       image = builtins.toString config.appearance.lockScreen;
@@ -9,9 +9,9 @@
       indicator-idle-visible = false;
       indicator-radius = 60;
       show-failed-attemps = true;
-      inside-color = config.colorScheme.colors.base00;
-      key-hl-color = config.colorScheme.colors.base05;
-      ring-color = config.colorScheme.colors.base02;
+      inside-color = base00;
+      key-hl-color = base05;
+      ring-color = base02;
     };
   };
 }

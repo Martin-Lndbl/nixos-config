@@ -2,7 +2,7 @@
   slug = "spacecamp";
   name = "SpaceCamp";
   author = "https://github.com/jaredgorski/SpaceCamp";
-  colors = {
+  palette = {
     base00 = "#121212";
     base01 = "#262626";
     base02 = "#49483E";

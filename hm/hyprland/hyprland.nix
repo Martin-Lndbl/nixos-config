@@ -49,13 +49,13 @@ in
       gaps_in = 5;
       gaps_out = 10;
       resize_on_border = true;
-      "col.active_border" = "rgb(${colors.base06})";
-      "col.inactive_border" = "rgb(${colors.base02})";
+      "col.active_border" = "rgb(${palette.base06})";
+      "col.inactive_border" = "rgb(${palette.base02})";
     };
 
     group = {
-      "col.border_active" = "rgb(${colors.base0C})";
-      "col.border_inactive" = "rgb(${colors.base0D})";
+      "col.border_active" = "rgb(${palette.base0C})";
+      "col.border_inactive" = "rgb(${palette.base0D})";
     };
 
     decoration = {
