@@ -36,7 +36,7 @@
     grim
     ripgrep
 
-    # communication
+    # meetings
     zoom-us
 
     # Notes
@@ -46,10 +46,6 @@
     # eyecandy
     neofetch
     cava
-
-    # PDF stuff
-    zathura
-    texlive.combined.scheme-full
   ];
 
   xdg.enable = true;

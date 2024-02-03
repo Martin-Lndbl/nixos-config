@@ -13,7 +13,7 @@
     nix-colors.url = "github:Misterio77/nix-colors";
   };
 
-  outputs = { self, nixpkgs, hm, neovim, nix-colors, ... }@inputs:
+  outputs = { self, nixpkgs, hm, nix-colors, ... }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -49,7 +49,6 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
-            neovim.homeManagerModules.default
             nix-colors.homeManagerModules.default
             ./hm/home.nix
             ./hm/hyprland
@@ -75,7 +74,6 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
-            neovim.homeManagerModules.default
             nix-colors.homeManagerModules.default
             ./hm/home.nix
             ./hm/hyprland
