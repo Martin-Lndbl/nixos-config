@@ -23,7 +23,7 @@
       set undolevels=1000
       set undoreload=1000
 
-      set spelllang=en_us
+      set spelllang=en,de,cjk
       set spell
 
       " Only works for lua config due to order HomeManager appends text
