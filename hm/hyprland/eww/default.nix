@@ -6,6 +6,7 @@
 
   home.packages = with pkgs; [
     eww-wayland
+    jq # Used in weather script
   ];
 
   xdg.configFile."eww/eww.yuck".source = pkgs.writeText "eww.yuck"

@@ -1,25 +1,14 @@
 (defwidget layout []
-  (box :orientation "h" :space-evenly "false" :halign "center"
+  (box :orientation "h" :space-evenly false :halign "center"
     (box :orientation "v" :space-evenly "false"
       (profile)
       (slider)
     )
+    (box :orientation "v" :space-evenly false
+      (time)
+      (weather)
+    )
     (system)
-  )
-)
-
-(defwidget system []
-  (box :orientation "v"
-    (box :class "shutdown"
-      (button :onclick "shutdown 0"))
-    (box :class "reboot"
-      (button :onclick "reboot"))
-    (box :class "lock"
-      (button :onclick "${EWW_CMD} close dashboard; swaylock -fel"))
-    (box :class "sleep"
-      (button :onclick "${EWW_CMD} close dashboard; systemctl suspend -i"))
-    (box :class "logout"
-      (button :onclick "hyprctl dispatch exit"))
   )
 )
 
@@ -105,6 +94,62 @@
         :min 2
       )
     )
+  )
+)
+
+(defwidget time []
+  (box :orientation "h"
+    (box :class "time" :space-evenly false
+      (box :class "clock")
+      (label :text {formattime(EWW_TIME, "%H:%M")})
+    )
+    (box :class "time" :space-evenly false
+      (box :class "uptime")
+      (label :text UPTIME)
+    )
+  )
+)
+
+(defwidget weather [] 
+  (box 
+    :orientation "v"
+    :class "weather"
+    :space-evenly false
+    (box :orientation "h"
+      (box :orientation "v"
+        (label
+          :class "w-city" 
+          :style "color: ${WEATHER.hex}"
+          :text "${WEATHER.city}, ${WEATHER.country}")
+        (label :class "w-temp" :text "${round(WEATHER.temp, 0)}°C")
+        (label
+          :class "w-desc"
+          :style "color: ${WEATHER.hex}"
+          :text {WEATHER.desc})
+      )
+      (box :class {WEATHER.icon}
+
+      )
+    )
+    (box :orientation "v"
+      (label :class "wq1" :text {WEATHER.wq1})
+      (label :class "wq2" :text {WEATHER.wq2})
+    )
+  )
+)
+
+(defwidget system []
+  (box :orientation "v"
+    (box :class "shutdown"
+      (button :onclick "shutdown 0"))
+    (box :class "reboot"
+      (button :onclick "reboot"))
+    (box :class "lock"
+      (button :onclick "${EWW_CMD} close dashboard; swaylock -fel"))
+    (box :class "sleep"
+      (button :onclick "${EWW_CMD} close dashboard; systemctl suspend -i"))
+    (box :class "logout"
+      (button :onclick "hyprctl dispatch exit"))
   )
 )
 

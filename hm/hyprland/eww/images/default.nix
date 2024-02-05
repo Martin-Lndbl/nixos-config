@@ -44,6 +44,20 @@ with config.colorscheme.palette; {
     "eww/images/bat4.svg".source = chcol base06 ./bat4.svg;
     "eww/images/batc.svg".source = chcol base06 ./batc.svg;
 
+    "eww/images/clock.svg".source = chcol base06 ./clock.svg;
+    "eww/images/uptime.svg".source = chcol base06 ./uptime.svg;
+
+    "eww/images/sun.svg".source = chcol base06 ./sun.svg;
+    "eww/images/star.svg".source = chcol base06 ./star.svg;
+    "eww/images/sun_cloud.svg".source = chcol base06 ./sun_cloud.svg;
+    "eww/images/moon_cloud.svg".source = chcol base06 ./moon_cloud.svg;
+    "eww/images/cloud.svg".source = chcol base06 ./cloud.svg;
+    "eww/images/cloud_broken.svg".source = chcol base06 ./cloud_broken.svg;
+    "eww/images/rain.svg".source = chcol base06 ./rain.svg;
+    "eww/images/thunderstorm.svg".source = chcol base06 ./thunderstorm.svg;
+    "eww/images/snow.svg".source = chcol base06 ./snow.svg;
+    "eww/images/snow.mist".source = chcol base06 ./mist.svg;
+
     "eww/images/shutdown.svg".source = chcol base06 ./shutdown.svg;
     "eww/images/reboot.svg".source = chcol base06 ./reboot.svg;
     "eww/images/lock.svg".source = chcol base06 ./lock.svg;

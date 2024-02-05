@@ -2,7 +2,15 @@
 
 * { all: unset; }
 
-.profile, .slider, .shutdown, .reboot, .lock, .sleep, .logout {
+.profile,
+.slider,
+.time,
+.weather,
+.shutdown,
+.reboot,
+.lock,
+.sleep,
+.logout {
   border-radius: 1rem;
   background-color: $background;
   border: .5px solid $base07;
@@ -88,6 +96,63 @@
     min-height: 1rem;
     min-width: 12rem;
 }
+
+.time {
+  font-size: 1.5rem;
+}
+
+.time,
+.weather {
+  padding: 1rem;
+}
+
+.clock, .uptime{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2rem;
+  min-height: 3rem;
+  min-width: 4rem;
+}
+
+.clock { background-image: url("./images/clock.svg"); }
+.uptime { background-image: url("./images/uptime.svg"); }
+
+.w-city { font-size: 1.4rem; }
+.w-temp { font-size: 2.5rem; }
+.w-desc { font-size: 1.3rem; }
+
+.wq1,
+.wq2 {
+  font-size: 1rem;
+  color: $base04;
+}
+
+.sun,
+.star,
+.sun_cloud,
+.moon_cloud,
+.cloud,
+.cloud_broken,
+.rain,
+.thunderstorm,
+.snow,
+.mist {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 6rem;
+  min-height: 7rem;
+  min-width: 7rem;
+}
+.sun { background-image: url("./images/sun.svg"); }
+.star { background-image: url("./images/star.svg"); }
+.sun_cloud { background-image: url("./images/sun_cloud.svg"); }
+.moon_cloud { background-image: url("./images/moon_cloud.svg"); }
+.cloud { background-image: url("./images/cloud.svg"); }
+.cloud_broken { background-image: url("./images/cloud_broken.svg"); }
+.rain { background-image: url("./images/rain.svg"); }
+.thunderstorm { background-image: url("./images/thunderstorm.svg"); }
+.snow { background-image: url("./images/snow.svg"); }
+.mist { background-image: url("./images/mist.svg"); }
 
 .shutdown, .reboot, .lock, .sleep, .logout {
   background-repeat: no-repeat;

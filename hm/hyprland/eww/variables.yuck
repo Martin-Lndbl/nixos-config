@@ -1,5 +1,6 @@
 (defpoll HOST :interval "60s" `hostname`)
 (defpoll USER :interval "60s" `echo $USER`)
+(defpoll UPTIME :interval "60s" `uptime | awk '{gsub(",", "", $3); print $3}'`)
 
 (defvar ws_active 1)
 (defvar ws_1 false)
@@ -31,3 +32,5 @@
 
 (defvar BAR-BAT_HOVER false)
 (defvar BAT_INFO "")
+
+(defpoll WEATHER :interval "15m" `scripts/weather`)
