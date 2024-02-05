@@ -84,9 +84,9 @@
 	border-radius: 1rem;
 }
 
-.db-scale_mic trough highlight { background-color: $base03; }
-.db-scale_audio trough highlight { background-color: $base03; }
-.db-scale_blight trough highlight { background-color: $base03; }
+.db-scale_mic trough highlight { background-color: $sliders; }
+.db-scale_audio trough highlight { background-color: $sliders; }
+.db-scale_blight trough highlight { background-color: $sliders; }
 
 .db-scale_mic trough,
 .db-scale_audio trough,
@@ -99,19 +99,19 @@
 
 .time {
   font-size: 1.5rem;
+  padding: .8rem 1.8rem;
 }
 
-.time,
 .weather {
   padding: 1rem;
 }
 
 .clock, .uptime{
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: left;
   background-size: 2rem;
   min-height: 3rem;
-  min-width: 4rem;
+  min-width: 3rem;
 }
 
 .clock { background-image: url("./images/clock.svg"); }

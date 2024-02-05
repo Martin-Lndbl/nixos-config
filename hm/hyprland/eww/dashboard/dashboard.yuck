@@ -99,26 +99,26 @@
 
 (defwidget time []
   (box :orientation "h"
-    (box :class "time" :space-evenly false
+    (box :class "time" :space-evenly true
       (box :class "clock")
       (label :text {formattime(EWW_TIME, "%H:%M")})
     )
-    (box :class "time" :space-evenly false
+    (box :class "time" :space-evenly true
       (box :class "uptime")
       (label :text UPTIME)
     )
   )
 )
 
-(defwidget weather [] 
-  (box 
+(defwidget weather []
+  (box
     :orientation "v"
     :class "weather"
     :space-evenly false
     (box :orientation "h"
       (box :orientation "v"
         (label
-          :class "w-city" 
+          :class "w-city"
           :style "color: ${WEATHER.hex}"
           :text "${WEATHER.city}, ${WEATHER.country}")
         (label :class "w-temp" :text "${round(WEATHER.temp, 0)}°C")
