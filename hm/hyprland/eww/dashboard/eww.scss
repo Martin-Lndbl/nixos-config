@@ -6,6 +6,7 @@
 .slider,
 .time,
 .weather,
+.spotify,
 .shutdown,
 .reboot,
 .lock,
@@ -102,7 +103,7 @@
   padding: .8rem 1.8rem;
 }
 
-.weather {
+.weather, .spotify {
   padding: 1rem;
 }
 
@@ -153,6 +154,39 @@
 .thunderstorm { background-image: url("./images/thunderstorm.svg"); }
 .snow { background-image: url("./images/snow.svg"); }
 .mist { background-image: url("./images/mist.svg"); }
+
+.title {
+  font-size: 1.4rem;
+  color: $base0A;
+  min-width: 18.5rem;
+}
+
+.artist {
+  font-size: 1.1rem;
+  color: $base04;
+}
+
+.prev, .pause, .play, .next {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2rem;
+  min-height: 2rem;
+  min-width: 2rem;
+}
+
+.prev { background-image: url("./images/prev.svg"); }
+.pause { background-image: url("./images/pause.svg"); }
+.play { background-image: url("./images/play.svg"); }
+.next { background-image: url("./images/next.svg"); }
+
+.spotify_art {
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: 6rem;
+  min-height: 6rem;
+  min-width: 6rem;
+}
+
 
 .shutdown, .reboot, .lock, .sleep, .logout {
   background-repeat: no-repeat;

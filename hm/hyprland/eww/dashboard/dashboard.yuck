@@ -5,6 +5,7 @@
       (slider)
     )
     (box :orientation "v" :space-evenly false
+      (spotify)
       (time)
       (weather)
     )
@@ -134,6 +135,30 @@
     (box :orientation "v"
       (label :class "wq1" :text {WEATHER.wq1})
       (label :class "wq2" :text {WEATHER.wq2})
+    )
+  )
+)
+
+(defwidget spotify []
+  (box :class "spotify" :orientation "h" :space-evenly false
+    (box :class "spotify_art"
+      :style `background-image: url("${SPOTIFY.artUrl}");
+`
+    )
+    (box :orientation "v"
+      (label :class "title" :text {substring(SPOTIFY.title, 0, 23)})
+      (label :class "artist" :text {substring(SPOTIFY.artist, 0, 30)})
+      (box
+        (button :class "prev"
+          :onclick `scripts/spotify prev &&
+            ${EWW_CMD} update SPOTIFY="$(scripts/spotify current)"`)
+        (button :class {SPOTIFY.status == "Playing" ? "pause" : "play" }
+          :onclick `scripts/spotify play &&
+            ${EWW_CMD} update SPOTIFY="$(scripts/spotify current)"`)
+        (button :class "next"
+          :onclick `scripts/spotify next &&
+            ${EWW_CMD} update SPOTIFY="$(scripts/spotify current)"`)
+      )
     )
   )
 )

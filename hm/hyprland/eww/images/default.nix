@@ -56,7 +56,13 @@ with config.colorscheme.palette; {
     "eww/images/rain.svg".source = chcol base06 ./rain.svg;
     "eww/images/thunderstorm.svg".source = chcol base06 ./thunderstorm.svg;
     "eww/images/snow.svg".source = chcol base06 ./snow.svg;
-    "eww/images/snow.mist".source = chcol base06 ./mist.svg;
+    "eww/images/mist.svg".source = chcol base06 ./mist.svg;
+
+    "eww/images/prev.svg".source = chcol base06 ./prev.svg;
+    "eww/images/pause.svg".source = chcol base06 ./pause.svg;
+    "eww/images/play.svg".source = chcol base06 ./play.svg;
+    "eww/images/next.svg".source = chcol base06 ./next.svg;
+    "eww/images/spotify.svg".source = chcol base06 ./spotify.svg;
 
     "eww/images/shutdown.svg".source = chcol base06 ./shutdown.svg;
     "eww/images/reboot.svg".source = chcol base06 ./reboot.svg;
