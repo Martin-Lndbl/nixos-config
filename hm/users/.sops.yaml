@@ -1,0 +1,7 @@
+keys:
+  - &mrtn age105kg9a0dk9yvm8kwut3fravfj3w7cu8n5ce4pyw0ukd0jdw34phq78fk0t
+creation_rules:
+  - path_regex: mrtn/secrets.yaml$
+    key_groups:
+    - age:
+      - *mrtn

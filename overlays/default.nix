@@ -9,8 +9,8 @@
 
   additions = final: _prev: import ../pkgs { pkgs = final; };
 
-  fallbackpkgs = final: _prev: {
-    fallback = import inputs.fallbackpkgs {
+  nixpkgs-stable = final: _prev: {
+    stable = import inputs.nixpkgs-stable {
       system = final.system;
       config.allowUnfree = true;
     };

@@ -4,6 +4,8 @@ let
     nixWallpaperFromScheme;
 in
 {
+  imports = [ ./secrets.nix ];
+
   config.appearance.wallpaper = nixWallpaperFromScheme {
     scheme = config.colorscheme;
     width = 1920;

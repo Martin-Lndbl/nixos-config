@@ -7,7 +7,7 @@
 
   nixpkgs = {
     overlays = [
-      outputs.overlays.fallbackpkgs
+      outputs.overlays.nixpkgs-stable
     ] ++ outputs.overlays.modifications;
     config.allowUnfree = true;
   };

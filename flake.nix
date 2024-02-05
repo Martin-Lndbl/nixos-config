@@ -3,11 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    fallbackpkgs.url = "github:nixos/nixpkgs/85f1ba3e51676fa8cc604a3d863d729026a6b8eb";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/release-23.05";
 
     # Home manager
     hm.url = "github:nix-community/home-manager";
     hm.inputs.nixpkgs.follows = "nixpkgs";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
 
     # Nix Colors
     nix-colors.url = "github:Misterio77/nix-colors";
