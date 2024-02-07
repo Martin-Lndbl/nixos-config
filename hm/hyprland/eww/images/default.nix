@@ -64,6 +64,13 @@ with config.colorscheme.palette; {
     "eww/images/next.svg".source = chcol base06 ./next.svg;
     "eww/images/spotify.svg".source = chcol base06 ./spotify.svg;
 
+    "eww/images/github.svg".source = chcol base06 ./github.svg;
+    "eww/images/bitbucket.svg".source = ./bitbucket.svg;
+    "eww/images/nixos.svg".source = ./nixos.svg;
+    "eww/images/outlook.svg".source = ./outlook.svg;
+    "eww/images/gmail.svg".source = ./gmail.svg;
+    "eww/images/trilium.svg".source = ./trilium.svg;
+
     "eww/images/shutdown.svg".source = chcol base06 ./shutdown.svg;
     "eww/images/reboot.svg".source = chcol base06 ./reboot.svg;
     "eww/images/lock.svg".source = chcol base06 ./lock.svg;

@@ -10,6 +10,7 @@
         (time)
         (weather)
       )
+      (apps)
       (box :class "time" :vexpand true)
     )
     (box :class "time")
@@ -157,13 +158,24 @@
   )
 )
 
+(defwidget apps []
+  (box :orientation "h" :space-evenly false
+    (button :class "button github" :onclick "")
+    (button :class "button bitbucket" :onclick "")
+    (button :class "button nixos" :onclick "")
+    (button :class "button outlook" :onclick "")
+    (button :class "button gmail" :onclick "")
+    (button :class "button trilium" :onclick "")
+  )
+)
+
 (defwidget spotify []
-  (box :class "spotify" :orientation "h" :space-evenly false
+  (box :class "spotify" :orientation "h" :space-evenly false :hexpand true
     (box :class "spotify_art"
       :style `background-image: url("${SPOTIFY.artUrl}");
 `
     )
-    (box :orientation "v"
+    (box :orientation "v" :hexpand true
       (label :class "title" :text {substring(SPOTIFY.title, 0, 40)})
       (label :class "artist" :text {substring(SPOTIFY.artist, 0, 50)})
       (box
@@ -183,16 +195,11 @@
 
 (defwidget system []
   (box :orientation "v"
-    (box :class "shutdown"
-      (button :onclick "shutdown 0"))
-    (box :class "reboot"
-      (button :onclick "reboot"))
-    (box :class "lock"
-      (button :onclick "${EWW_CMD} close dashboard; swaylock -fel"))
-    (box :class "sleep"
-      (button :onclick "${EWW_CMD} close dashboard; systemctl suspend -i"))
-    (box :class "logout"
-      (button :onclick "hyprctl dispatch exit"))
+    (button :class "button shutdown" :onclick "shutdown 0")
+    (button :class "button reboot" :onclick "reboot")
+    (button :class "button lock" :onclick "${EWW_CMD} close dashboard; swaylock -fel")
+    (button :class "button sleep" :onclick "${EWW_CMD} close dashboard; systemctl suspend -i")
+    (button :class "button logout" :onclick "hyprctl dispatch exit")
   )
 )
 

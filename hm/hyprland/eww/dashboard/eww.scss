@@ -7,11 +7,7 @@
 .time,
 .weather,
 .spotify,
-.shutdown,
-.reboot,
-.lock,
-.sleep,
-.logout {
+.button {
   border-radius: 1rem;
   background-color: $background;
   border: .5px solid $base07;
@@ -117,9 +113,7 @@
 .clock { background-image: url("./images/clock.svg"); }
 .uptime { background-image: url("./images/uptime.svg"); }
 
-.weather, .spotify {
-  padding: 1rem;
-}
+.weather { padding: 1rem 1.5rem; }
 
 .w-city { font-size: 1.4rem; }
 .w-temp { font-size: 2.5rem; }
@@ -158,10 +152,11 @@
 .snow { background-image: url("./images/snow.svg"); }
 .mist { background-image: url("./images/mist.svg"); }
 
+.spotify { padding: 1rem 2rem 1rem 1rem; }
+
 .title {
   font-size: 1.4rem;
   color: $base0A;
-  min-width: 30rem;
 }
 
 .artist {
@@ -185,11 +180,25 @@
 .spotify_art {
   background-repeat: no-repeat;
   background-position: left;
-  background-size: 6rem;
-  min-height: 6rem;
-  min-width: 6rem;
+  background-size: 6.8rem;
+  min-height: 6.8rem;
+  min-width: 6.8rem;
 }
 
+.github, .bitbucket, .nixos, .outlook, .gmail, .trilium {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 3rem;
+  min-height: 6.4rem;
+  min-width: 6.4rem;
+}
+
+.github { background-image: url("./images/github.svg"); }
+.bitbucket { background-image: url("./images/bitbucket.svg"); }
+.nixos { background-image: url("./images/nixos.svg"); }
+.outlook { background-image: url("./images/outlook.svg"); }
+.gmail { background-image: url("./images/gmail.svg"); }
+.trilium { background-image: url("./images/trilium.svg"); }
 
 .shutdown, .reboot, .lock, .sleep, .logout {
   background-repeat: no-repeat;
