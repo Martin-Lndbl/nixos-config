@@ -1,6 +1,6 @@
 (defpoll HOST :interval "60s" `hostname`)
 (defpoll USER :interval "60s" `echo $USER`)
-(defpoll UPTIME :interval "60s" `uptime | awk '{gsub(",", "", $3); print $3}'`)
+(defpoll UPTIME :interval "60s" `uptime | awk '{gsub(",",""); split($3, a, ":"); print "{\\"hours\\":\\""a[1]"\\", \\"minutes\\":\\""a[2]"\\"}"}'`)
 
 (defvar ws_active 1)
 (defvar ws_1 false)

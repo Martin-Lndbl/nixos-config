@@ -6,9 +6,13 @@
     )
     (box :orientation "v" :space-evenly false
       (spotify)
-      (time)
-      (weather)
+      (box :orientation "h" :space-evenly false
+        (time)
+        (weather)
+      )
+      (box :class "time" :vexpand true)
     )
+    (box :class "time")
     (system)
   )
 )
@@ -44,6 +48,7 @@
         :class "db-scale_mic"
         :value {SOURCE.VOL}
         :onchange "./scripts/audio --set-source {}"
+        :hexpand true
         :max 101
         :min 0
       )
@@ -70,6 +75,7 @@
         :class "db-scale_audio"
         :value {SINK.VOL}
         :onchange "./scripts/audio --set-sink {}"
+        :hexpand true
         :max 101 
         :min 0
       )
@@ -91,6 +97,7 @@
         :class "db-scale_blight"
         :value BLIGHT
         :onchange "brightnessctl set {}%"
+        :hexpand true
         :max 101
         :min 2
       )
@@ -99,14 +106,24 @@
 )
 
 (defwidget time []
-  (box :orientation "h"
-    (box :class "time" :space-evenly true
+  (box :orientation "v" :space-evenly true
+    (box :class "time" :space-evenly false
       (box :class "clock")
-      (label :text {formattime(EWW_TIME, "%H:%M")})
+      (box :orientation "v"
+        (box :halign "start"
+          (label :class "time-big" :text {formattime(EWW_TIME, "%H:%M")}))
+        (box :halign "start"
+          (label :class "time-small" :text {formattime(EWW_TIME, "%a, %b %d")}))
+      )
     )
-    (box :class "time" :space-evenly true
+    (box :class "time" :orientation "h":space-evenly false
       (box :class "uptime")
-      (label :text UPTIME)
+      (box :orientation "v"
+        (box :halign "start"
+          (label :class "time-big" :text "${UPTIME.hours} hours"))
+        (box :halign "start"
+          (label :class "time-small" :text "${UPTIME.minutes} minutes"))
+      )
     )
   )
 )
@@ -116,6 +133,7 @@
     :orientation "v"
     :class "weather"
     :space-evenly false
+    :hexpand true
     (box :orientation "h"
       (box :orientation "v"
         (label
@@ -146,8 +164,8 @@
 `
     )
     (box :orientation "v"
-      (label :class "title" :text {substring(SPOTIFY.title, 0, 23)})
-      (label :class "artist" :text {substring(SPOTIFY.artist, 0, 30)})
+      (label :class "title" :text {substring(SPOTIFY.title, 0, 40)})
+      (label :class "artist" :text {substring(SPOTIFY.artist, 0, 50)})
       (box
         (button :class "prev"
           :onclick `scripts/spotify prev &&
@@ -184,7 +202,7 @@
   :geometry ( geometry
     :x "0%"
     :y "0%"
-    :width "70%"
+    :width "60%"
     :height "55%"
     :anchor "center"
     )

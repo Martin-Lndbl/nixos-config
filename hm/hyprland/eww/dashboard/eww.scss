@@ -20,7 +20,7 @@
 
 .profile {
   padding-top: 2rem;
-  min-width: 20rem;
+  min-width: 18rem;
   min-height: 24rem;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .slider {
-  padding: 2.15rem;
+  padding: 2rem;
 }
 
 .speaker2-symbol,
@@ -95,16 +95,15 @@
     background-color: $foreground;
     border-radius: .5rem;
     min-height: 1rem;
-    min-width: 12rem;
 }
 
-.time {
-  font-size: 1.5rem;
-  padding: .8rem 1.8rem;
+.time { 
+  padding: 1rem 1.5rem;
 }
-
-.weather, .spotify {
-  padding: 1rem;
+.time-big { font-size: 1.7rem; }
+.time-small {
+  font-size: 1.1rem;
+  color: $base04;
 }
 
 .clock, .uptime{
@@ -118,13 +117,17 @@
 .clock { background-image: url("./images/clock.svg"); }
 .uptime { background-image: url("./images/uptime.svg"); }
 
+.weather, .spotify {
+  padding: 1rem;
+}
+
 .w-city { font-size: 1.4rem; }
 .w-temp { font-size: 2.5rem; }
 .w-desc { font-size: 1.3rem; }
 
 .wq1,
 .wq2 {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: $base04;
 }
 
@@ -158,7 +161,7 @@
 .title {
   font-size: 1.4rem;
   color: $base0A;
-  min-width: 18.5rem;
+  min-width: 30rem;
 }
 
 .artist {
