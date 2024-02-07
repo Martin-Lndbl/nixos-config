@@ -10,4 +10,5 @@
   sops.age.keyFile = "/home/mrtn/.config/sops/age/keys.txt";
 
   sops.secrets.openweathermap = { };
+  sops.secrets.apininja = { };
 }

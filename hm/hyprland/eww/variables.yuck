@@ -34,5 +34,7 @@
 (defvar BAT_INFO "")
 
 (defpoll WEATHER :interval "15m" `scripts/weather`)
+(defpoll QUOTES :interval "60m" `scripts/textfield --quote`)
+(defpoll JOKES :interval "60m" `scripts/textfield --joke`)
 
 (defpoll SPOTIFY :interval "5s" `scripts/spotify current`)

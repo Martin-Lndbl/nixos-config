@@ -11,7 +11,8 @@
         (weather)
       )
       (apps)
-      (box :class "time" :vexpand true)
+      ;; (quote)
+      (joke)
     )
     (box :class "time")
     (system)
@@ -166,6 +167,39 @@
     (button :class "button outlook" :onclick "")
     (button :class "button gmail" :onclick "")
     (button :class "button trilium" :onclick "")
+  )
+)
+
+(defwidget joke []
+  (box
+    :class "textfield"
+    :orientation "v"
+    :space-evenly false
+    :vexpand true
+    (label
+      :vexpand true
+      :wrap true
+      :text {JOKES[0].joke})
+  )
+)
+
+(defwidget quote []
+  (box
+    :class "textfield"
+    :orientation "v"
+    :space-evenly false
+    :vexpand true
+    (label
+      :vexpand true
+      :halign "start"
+      :valign "start"
+      :wrap true
+      :text {QUOTES[0].quote})
+    (label
+      :class "textfield-author"
+      :valign "end"
+      :halign "end"
+      :text "- ${QUOTES[0].author}")
   )
 )
 

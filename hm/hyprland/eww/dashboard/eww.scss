@@ -7,6 +7,7 @@
 .time,
 .weather,
 .spotify,
+.textfield,
 .button {
   border-radius: 1rem;
   background-color: $background;
@@ -33,21 +34,10 @@
   color: $foreground;
 }
 
-.profile-subtext {
-  font-size: 1.5rem;
-  color: $base04;
-}
+.profile-subtext { font-size: 1.5rem; color: $base04; }
 
-.hover-text {
-}
-
-.hidden {
-  opacity: 0;
-}
-
-.slider {
-  padding: 2rem;
-}
+.hidden { opacity: 0; }
+.slider { padding: 2rem; }
 
 .speaker2-symbol,
 .speaker1-symbol,
@@ -77,9 +67,7 @@
 
 .db-scale_mic trough highlight,
 .db-scale_audio trough highlight,
-.db-scale_blight trough highlight {
-	border-radius: 1rem;
-}
+.db-scale_blight trough highlight { border-radius: 1rem; }
 
 .db-scale_mic trough highlight { background-color: $sliders; }
 .db-scale_audio trough highlight { background-color: $sliders; }
@@ -93,14 +81,16 @@
     min-height: 1rem;
 }
 
-.time { 
-  padding: 1rem 1.5rem;
-}
+.time { padding: 1rem 1.5rem; }
 .time-big { font-size: 1.7rem; }
-.time-small {
+.time-small { font-size: 1.1rem; color: $base04; }
+
+.textfield {
+  padding: 1rem;
   font-size: 1.1rem;
-  color: $base04;
+  color: $base0D;
 }
+.textfield-author { color: $base04; }
 
 .clock, .uptime{
   background-repeat: no-repeat;
@@ -114,13 +104,11 @@
 .uptime { background-image: url("./images/uptime.svg"); }
 
 .weather { padding: 1rem 1.5rem; }
-
 .w-city { font-size: 1.4rem; }
 .w-temp { font-size: 2.5rem; }
 .w-desc { font-size: 1.3rem; }
 
-.wq1,
-.wq2 {
+.wq1, .wq2 {
   font-size: 1.1rem;
   color: $base04;
 }
@@ -153,16 +141,8 @@
 .mist { background-image: url("./images/mist.svg"); }
 
 .spotify { padding: 1rem 2rem 1rem 1rem; }
-
-.title {
-  font-size: 1.4rem;
-  color: $base0A;
-}
-
-.artist {
-  font-size: 1.1rem;
-  color: $base04;
-}
+.title { font-size: 1.4rem; color: $base0A; }
+.artist { font-size: 1.1rem; color: $base04; }
 
 .prev, .pause, .play, .next {
   background-repeat: no-repeat;

@@ -1,0 +1,13 @@
+#! /bin/sh
+
+KEY=`cat $XDG_RUNTIME_DIR/secrets/apininja`
+
+if [ "$1" = "--quote" ]; then
+  curl -sf -G \
+    --data-urlencode "X-Api-Key=$KEY" \
+    https://api.api-ninjas.com/v1/quotes
+elif [ "$1" = "--joke" ]; then
+  curl -sf -G \
+    --data-urlencode "X-Api-Key=$KEY" \
+    https://api.api-ninjas.com/v1/jokes
+fi
