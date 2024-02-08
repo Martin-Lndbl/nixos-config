@@ -173,13 +173,8 @@
 (defwidget joke []
   (box
     :class "textfield"
-    :orientation "v"
-    :space-evenly false
     :vexpand true
-    (label
-      :vexpand true
-      :wrap true
-      :text {JOKES[0].joke})
+    (label :text {JOKES.joke})
   )
 )
 
@@ -194,12 +189,12 @@
       :halign "start"
       :valign "start"
       :wrap true
-      :text {QUOTES[0].quote})
+      :text {QUOTES.quote})
     (label
       :class "textfield-author"
       :valign "end"
       :halign "end"
-      :text "- ${QUOTES[0].author}")
+      :text "- ${QUOTES.author}")
   )
 )
 
