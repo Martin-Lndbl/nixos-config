@@ -2,6 +2,10 @@
 (defpoll USER :interval "60s" `echo $USER`)
 (defpoll UPTIME :interval "60s" `uptime | awk '{gsub(",",""); split($3, a, ":"); print "{\\"hours\\":\\""a[1]"\\", \\"minutes\\":\\""a[2]"\\"}"}'`)
 
+(defpoll RAM :interval "2s" `scripts/performance --mem`)
+(defpoll CPU :interval "2s" `scripts/performance --cpu`)
+(defpoll DISK :interval "5m" `scripts/performance --disk`)
+
 (defvar ws_active 1)
 (defvar ws_1 false)
 (defvar ws_2 false)

@@ -5,16 +5,23 @@
       (slider)
     )
     (box :orientation "v" :space-evenly false
-      (spotify)
       (box :orientation "h" :space-evenly false
-        (time)
-        (weather)
+        (box :orientation "v" :space-evenly false
+          (spotify)
+          (box :orientation "h" :space-evenly false :vexpand true
+            (time)
+            (weather)
+          )
+          (apps)
+        )
+        (box :orientation "v" :space-evenly true
+          (performance)
+          (files)
+        )
       )
-      (apps)
-      ;; (quote)
-      (joke)
+    ;; (quote)
+    (joke)
     )
-    (box :class "time")
     (system)
   )
 )
@@ -220,6 +227,42 @@
       )
     )
   )
+)
+
+(defwidget files []
+  (box :orientation "v" :class "files" :space-evenly false
+    (box :class "disk" :halign "center")
+    (label :class "disk-size" :text "Available:")
+    (label :class "disk-avail" :text "${DISK.avail}GB")
+    (label :class "disk-size" :text "of ${DISK.size}")
+  )
+)
+
+(defwidget performance []
+  (box
+    :orientation "v" 
+    :class "performance"
+    :space-evenly false
+    :halign "center"
+    (_performance :name "CPU usage" :value CPU) 
+    (box :style "padding-bottom: 2.5rem;")
+    (_performance :name "RAM usage" :value {round(RAM.used*100/RAM.total, 0)})
+  )
+)
+
+(defwidget _performance [ name value ]
+  (box :orientation "v" :class "perf-item"
+    (label :text name)
+    (box :hexpand true :style "padding-top: .5rem;"
+      (circular-progress 
+        :class "circ-prog"
+        :value value
+        :start-at 25
+        :thickness 7
+      )
+      (label :class "perf-text" :text "${value}%")
+    )
+  ) 
 )
 
 (defwidget system []

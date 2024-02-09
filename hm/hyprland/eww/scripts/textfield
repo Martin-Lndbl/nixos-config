@@ -7,4 +7,4 @@ curl -sf -G \
   --data-urlencode "X-Api-Key=$KEY" \
   https://api.api-ninjas.com/v1/$1 \
   | jq '.[0]' \
-  | sed '2s/.\{70\} /&\\n/g'
+  | sed '2s/.\{95\} /&\\n/g'

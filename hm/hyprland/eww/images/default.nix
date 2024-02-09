@@ -71,10 +71,10 @@ with config.colorscheme.palette; {
     "eww/images/gmail.svg".source = ./gmail.svg;
     "eww/images/trilium.svg".source = ./trilium.svg;
 
-    "eww/images/shutdown.svg".source = chcol base06 ./shutdown.svg;
-    "eww/images/reboot.svg".source = chcol base06 ./reboot.svg;
-    "eww/images/lock.svg".source = chcol base06 ./lock.svg;
-    "eww/images/sleep.svg".source = chcol base06 ./sleep.svg;
-    "eww/images/logout.svg".source = chcol base06 ./logout.svg;
+    "eww/images/shutdown.svg".source = chcol base05 ./shutdown.svg;
+    "eww/images/reboot.svg".source = chcol base05 ./reboot.svg;
+    "eww/images/lock.svg".source = chcol base05 ./lock.svg;
+    "eww/images/sleep.svg".source = chcol base05 ./sleep.svg;
+    "eww/images/logout.svg".source = chcol base05 ./logout.svg;
   };
 }
