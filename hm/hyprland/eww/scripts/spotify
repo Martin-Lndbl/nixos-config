@@ -4,6 +4,7 @@ SP_VERSION="0.1"
 SP_DEST="org.mpris.MediaPlayer2.spotify"
 SP_PATH="/org/mpris/MediaPlayer2"
 SP_MEMB="org.mpris.MediaPlayer2.Player"
+ART_DIR="$XDG_CACHE_HOME/eww/spotify"
 
 # SHELL OPTIONS
 
@@ -54,19 +55,19 @@ function sp-art {
 
 function sp-current {
 
-  mkdir -p $XDG_CACHE_HOME/eww/spotify
+  mkdir -p $ART_DIR
   eval $(sp-eval)
   HASH=$(echo $SPOTIFY_ARTURL | sed 's/.*\///')
 
-  if [[ ! -f "$XDG_CACHE_HOME/eww/spotify/$HASH.png" ]]; then
-    curl -s "$(sp-art)" -o "$XDG_CACHE_HOME/eww/spotify/$HASH.png"
+  if [[ ! -f "$ART_DIR/$HASH.png" ]]; then
+    curl -s "$(sp-art)" -o "$ART_DIR/$HASH.png"
   fi
 
   echo "{
     \"title\":\"$SPOTIFY_TITLE\",
     \"artist\":\"$SPOTIFY_ARTIST\",
-    \"status\":\"${SPOTIFY_PLAYBACKSTATUS}\",
-    \"artUrl\":\"$XDG_CACHE_HOME/eww/spotify/$HASH.png\"
+    \"status\":\"$SPOTIFY_PLAYBACKSTATUS\",
+    \"artUrl\":\"$ART_DIR/$HASH.png\"
   }"
 }
 
