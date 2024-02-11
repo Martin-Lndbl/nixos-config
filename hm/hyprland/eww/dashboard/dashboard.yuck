@@ -168,12 +168,18 @@
 
 (defwidget apps []
   (box :orientation "h" :space-evenly false
-    (button :class "button github" :onclick "")
-    (button :class "button bitbucket" :onclick "")
-    (button :class "button nixos" :onclick "")
-    (button :class "button outlook" :onclick "")
-    (button :class "button gmail" :onclick "")
-    (button :class "button trilium" :onclick "")
+    (button :class "button github"
+      :onclick "xdg-open https://github.com")
+    (button :class "button bitbucket"
+      :onclick "xdg-open https://bitbucket.org")
+    (button :class "button nixos"
+      :onclick "xdg-open https://nixos.org")
+    (button :class "button outlook"
+      :onclick "xdg-open https://outlook.live.com/calendar/0")
+    (button :class "button gmail"
+      :onclick "xdg-open https://mail.google.com")
+    (button :class "button trilium"
+      :onclick "exec trilium &")
   )
 )
 
