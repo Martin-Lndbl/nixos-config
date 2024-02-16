@@ -218,8 +218,8 @@
 `
     )
     (box :orientation "v" :hexpand true
-      (label :class "title" :text {substring(SPOTIFY.title, 0, 40)})
-      (label :class "artist" :text {substring(SPOTIFY.artist, 0, 50)})
+      (label :class "title" :text {SPOTIFY.title} :limit-width 40)
+      (label :class "artist" :text {SPOTIFY.artist} :limit-width 50)
       (box
         (button :class "prev"
           :onclick `scripts/spotify prev &&
