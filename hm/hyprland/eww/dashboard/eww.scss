@@ -11,8 +11,9 @@
 .performance,
 .files,
 .button {
-  border-radius: 1rem;
+  color: $foreground;
   background-color: $background;
+  border-radius: 1rem;
   border: .5px solid $base07;
   margin: .5rem;
 }
