@@ -26,8 +26,11 @@
 .profile-picture {
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 10rem;
-  background-image: url("./images/pb.png");
+  background-size: 11rem;
+  min-width: 10rem;
+  min-height: 10rem;
+  background-image: $profile;
+  border-radius: 11rem;
 }
 
 .profile-text {

@@ -25,6 +25,8 @@
         $active: #${base08};
         $sliders: #${base09};
 
+        $profile: url("${config.appearance.profile.picture}");
+
         ${lib.attrsets.foldlAttrs
           (acc: n: v: acc + "\n\$${n}: #${v};") "" config.colorscheme.palette}
 

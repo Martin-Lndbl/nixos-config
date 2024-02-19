@@ -18,8 +18,6 @@ with config.colorscheme.palette; {
       changes only contain the color #ffffff
     */
 
-    "eww/images/pb.png".source = ./pb.png;
-
     "eww/images/home.svg".source = chcol base06 ./home.svg;
 
     "eww/images/brightness.svg".source = chcol base06 ./brightness.svg;

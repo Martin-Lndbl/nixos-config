@@ -27,9 +27,13 @@ with lib;
       type = types.oneOf [ types.path types.str ];
     };
     lockScreen = mkOption {
-      description = "Lockscreen";
+      description = "Lockscreen wallpaper";
       type = types.oneOf [ types.path types.str ];
       default = cfg.wallpaper;
+    };
+    profile.picture = mkOption {
+      description = "Profile picture";
+      type = types.oneOf [ types.path types.str ];
     };
   };
 }

@@ -28,7 +28,8 @@
 
 (defwidget profile []
   (box :class "profile" :orientation "v"
-    (box :class "profile-picture")
+    (box :space-evenly false :halign "center" :valign "center"
+      (box :hexpand false :vexpand false :class "profile-picture" ))
     (box :orientation "v" :space-evenly "false"
       (label :class "profile-text" :text USER)
       (label :class "profile-subtext" :text HOST)

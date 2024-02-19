@@ -6,6 +6,7 @@
     ./hyprland.nix
     ./mako.nix
     ./wofi.nix
+    ./grim.nix
   ];
 
   home.packages = with pkgs; [

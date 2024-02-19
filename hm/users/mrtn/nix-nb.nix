@@ -14,7 +14,7 @@ in
     logoColor1 = config.colorscheme.palette.base03;
     logoColor2 = config.colorscheme.palette.base04;
   };
-  config.appearance.lockScreen = "~/downloads/wallpaper/nix.png";
+  config.appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
   config.appearance.fontSize = 14;
   config.monitors.center = "eDP-1";
   config.monitors.right = "DP-1";
