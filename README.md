@@ -29,8 +29,8 @@ Currently I'm using
 
 ### Eww dashboard
  <p float="center">
-   <img src="https://github.com/Martin-Lndbl/nixos-config/assets/77677509/a21b50c9-6a7b-48fd-a360-80faaeb52674" width="49%" />
-   <img src="https://github.com/Martin-Lndbl/nixos-config/assets/77677509/c937f62f-c70f-44ea-b51c-b71d21158d62" width="49%" />
+   <img src="https://github.com/Martin-Lndbl/nixos-config/assets/77677509/dccc14ae-8c2a-4b53-ba60-2969d2636bf1" width="49%" />
+   <img src="https://github.com/Martin-Lndbl/nixos-config/assets/77677509/48082a77-0304-4954-ab11-9020395b5221" width="49%" />
 </p>
 
 Feel free to browse!
