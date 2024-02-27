@@ -16,6 +16,7 @@
       vim-css-color
       BufOnly-vim
       vim-vsnip
+
       {
         plugin = comment-nvim;
         type = "lua";

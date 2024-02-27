@@ -99,7 +99,7 @@ SPOTIFY_PID="$(pidof -s spotify || pidof -s .spotify-wrapped)"
 
 if [[ -z "$SPOTIFY_PID" ]]; then
   echo "{
-    \"title\":\"Spotify is not running\",
+    \"title\":\"Spotify is unreachable\",
     \"artist\":\"\",
     \"status\":\"Paused\",
     \"artUrl\":\"./images/spotify.svg\"
