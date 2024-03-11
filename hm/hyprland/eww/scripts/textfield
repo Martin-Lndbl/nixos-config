@@ -1,10 +1,23 @@
 #! /bin/sh
 
+CACHE="$XDG_CACHE_HOME/eww/$1"
+KEY=$(cat "$XDG_RUNTIME_DIR/secrets/apininja")
+LIMIT=30
 
-KEY=`cat $XDG_RUNTIME_DIR/secrets/apininja`
+if [ ! -e "$CACHE" ] || [ "$(wc -c < "$CACHE")" -lt 8 ]; then
 
-curl -sf -G \
-  --data-urlencode "X-Api-Key=$KEY" \
-  https://api.api-ninjas.com/v1/$1 \
-  | jq '.[0]' \
-  | sed '2s/.\{95\} /&\\n/g'
+  # limit can not be set for quotes without API premium access
+  if [ "$1" = "jokes" ]; then
+    set -- "jokes?limit=$LIMIT"
+  fi
+
+  TEXTS=$(curl --silent --fail --get \
+    --data-urlencode "X-Api-Key=$KEY" \
+    https://api.api-ninjas.com/v1/"$1")
+
+else
+  TEXTS=$(cat "$CACHE")
+fi
+
+echo "$TEXTS" | jq '.[0]' | sed '2s/.\{95\} /&\\n/g'
+echo "$TEXTS" | jq 'del(.[0])' > "$CACHE"
