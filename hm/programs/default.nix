@@ -13,6 +13,7 @@
     ./nvim
     ./spotify.nix
     ./ssh.nix
+    ./vscode.nix
     ./whatsapp.nix
   ];
 
