@@ -130,9 +130,9 @@
       (box :class "uptime")
       (box :orientation "v"
         (box :halign "start"
-          (label :class "time-big" :text "${UPTIME.hours} hours"))
+          (label :class "time-big" :text "${UPTIME.big}"))
         (box :halign "start"
-          (label :class "time-small" :text "${UPTIME.minutes} minutes"))
+          (label :class "time-small" :text "${UPTIME.small}"))
       )
     )
   )

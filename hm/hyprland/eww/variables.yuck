@@ -1,6 +1,6 @@
-(defpoll HOST :interval "60s" `hostname`)
-(defpoll USER :interval "60s" `echo $USER`)
-(defpoll UPTIME :interval "60s" `uptime | awk '{gsub(",",""); split($3, a, ":"); print "{\\"hours\\":\\""a[1]"\\", \\"minutes\\":\\""a[2]"\\"}"}'`)
+(defpoll HOST :interval "60s" `scripts/system --host`)
+(defpoll USER :interval "60s" `scripts/system --user`)
+(defpoll UPTIME :interval "60s" `scripts/system --uptime`)
 
 (defpoll RAM :interval "2s" `scripts/performance --mem`)
 (defpoll CPU :interval "2s" `scripts/performance --cpu`)
