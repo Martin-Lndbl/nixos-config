@@ -11,4 +11,5 @@
 
   sops.secrets.openweathermap = { };
   sops.secrets.apininja = { };
+  sops.secrets.wakatime = { };
 }
