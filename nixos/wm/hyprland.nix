@@ -4,7 +4,7 @@ let
     ''
       input * xkb_layout de
       exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-      exec "${pkgs.greetd.gtkgreet}/bin/gtkgreet -l; swaymsg exit"
+      exec "${pkgs.greetd.gtkgreet}/bin/gtkgreet -l -s ${./gtkgreet.css}; swaymsg exit"
       bindsym Mod4+shift+e exec swaynag \
         -t warning \
         -m 'What do you want to do?' \
