@@ -2,7 +2,7 @@
 {
   imports = [
     ./alacritty.nix
-    ./ape.nix
+    # ./ape.nix
     ./bash
     ./calc.nix
     ./cava.nix
