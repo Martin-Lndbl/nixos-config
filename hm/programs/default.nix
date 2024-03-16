@@ -2,13 +2,11 @@
 {
   imports = [
     ./alacritty.nix
-    # ./ape.nix
     ./bash
     ./calc.nix
     ./cava.nix
     ./discord.nix
     ./firefox.nix
-    ./fcitx
     ./git.nix
     ./mime.nix
     ./nvim
