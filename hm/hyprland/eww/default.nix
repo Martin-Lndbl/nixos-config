@@ -1,7 +1,6 @@
 { pkgs, lib, config, ... }:
 
 {
-
   imports = [ ./images ];
 
   home.packages = with pkgs; [
@@ -42,4 +41,6 @@
     source = ./scripts;
     recursive = true;
   };
+
+  # TODO: add hyprland binds to pause/play spotify with <space>
 }

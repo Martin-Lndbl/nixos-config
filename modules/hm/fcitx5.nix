@@ -334,6 +334,8 @@ in
       ];
     };
 
+    # TODO: prevent fcitx5 from starting on startup
+
     # whole folder needs to be linked, since fcitx5 overwrites symlinks otherwise
     xdg.configFile.fcitx5.source = pkgs.runCommand "fcitx5-config" { } ''
       mkdir $out
