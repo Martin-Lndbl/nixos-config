@@ -30,5 +30,19 @@
       Default = 0;
       Japanese = 1;
     };
+
+    config.Hotkey = {
+      TriggerKeys = [ ];
+      EnumerateWithTriggerKeys = false;
+      AltTriggerKeys = [ ];
+      EnumerateForwardKeys = [ ];
+      EnumerateBackwardKeys = [ ];
+      EnumerateGroupBackwardKeys = [ ];
+      ActivateKeys = [ ];
+      DeactivateKeys = [ ];
+      PrevPage = [ ];
+      NextPage = [ ];
+      TogglePreedit = [ ];
+    };
   };
 }

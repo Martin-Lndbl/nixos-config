@@ -6,7 +6,7 @@
     ./calc.nix
     ./cava.nix
     ./discord.nix
-    ./fcitx5
+    ./fcitx5.nix
     ./firefox.nix
     ./git.nix
     ./mime.nix

@@ -8,9 +8,6 @@ let
 
   refactor = parent: name: value:
     if isList value then
-    # With this line, the output looks exactly like
-    # the one created by Fcitx5 Configuration
-    # if length value == 0 then { ${parent}.${name} = ""; } else
       {
         "${parent}/${name}" = listToAttrs
           (lists.imap0 (i: v: { name = toString i; value = v; }) value);
