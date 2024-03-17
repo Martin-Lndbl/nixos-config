@@ -2,7 +2,6 @@
   imports = [
     ./users.nix
     ./security.nix
-    ./japanese.nix
   ];
 
   nixpkgs = {

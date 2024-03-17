@@ -4,7 +4,7 @@
     enable = true;
     profile.groups = {
       Default = {
-        DefaultLayout = "de";
+        "Default Layout" = "de";
         DefaultIM = "keyboard-de";
         item = [
           {
@@ -15,7 +15,7 @@
       };
 
       Japanese = {
-        DefaultLayout = "de";
+        "Default Layout" = "de";
         DefaultIM = "mozc";
         item = [
           {

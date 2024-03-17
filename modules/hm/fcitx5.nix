@@ -274,7 +274,7 @@ in
               { name, options, config, ... }:
               {
                 options = {
-                  DefaultLayout = mkOption {
+                  "Default Layout" = mkOption {
                     description = "Layout";
                     type = str;
                     example = "us";
@@ -327,6 +327,13 @@ in
     };
   };
   config = mkIf cfg.enable {
+    i18n.inputMethod = {
+      enabled = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+      ];
+    };
+
     # whole folder needs to be linked, since fcitx5 overwrites symlinks otherwise
     xdg.configFile.fcitx5.source = pkgs.runCommand "fcitx5-config" { } ''
       mkdir $out
