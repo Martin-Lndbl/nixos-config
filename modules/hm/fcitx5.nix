@@ -1,59 +1,83 @@
 { pkgs, config, lib, ... }:
 
+with lib;
+with builtins;
 let
   cfg = config.fcitx5;
   iniFormat = pkgs.formats.ini { };
 
-  refactor = with builtins; parent: name: value:
+  refactor = parent: name: value:
     if isList value then
-    # With this line, the output looks exactly like 
+    # With this line, the output looks exactly like
     # the one created by Fcitx5 Configuration
     # if length value == 0 then { ${parent}.${name} = ""; } else
       {
         "${parent}/${name}" = listToAttrs
-          (lib.lists.imap0 (i: v: { name = toString i; value = v; }) value);
+          (lists.imap0 (i: v: { name = toString i; value = v; }) value);
       }
     else { ${parent}.${name} = value; };
 
   configFile = iniFormat.generate "config"
-    (lib.attrsets.foldlAttrs
-      (acc: name: value: lib.recursiveUpdate acc (refactor "Hotkey" name value))
+    (attrsets.foldlAttrs
+      (acc: name: value: recursiveUpdate acc (refactor "Hotkey" name value))
       { inherit (cfg.config) Behaviour; }
       cfg.config.Hotkey);
 
   expand = name: value:
-    lib.attrsets.foldlAttrs
+    attrsets.foldlAttrs
       (acc: n: v:
-        lib.recursiveUpdate acc (
+        recursiveUpdate acc (
           if n != "item"
           then
             { ${name} = { ${n} = v; }; }
           else
             builtins.listToAttrs
-              (lib.lists.imap0
+              (lists.imap0
                 (index: val:
-                  lib.nameValuePair
+                  nameValuePair
                     "${name}/Items/${toString val.index}"
-                    (lib.attrsets.filterAttrs (a: b: a != "index") val))
+                    (attrsets.filterAttrs (a: b: a != "index") val))
                 v)
         )
       )
       { }
       value;
 
-  profileFile = with lib.attrsets;
-    lib.pipe cfg.profile.groupOrder
+  profileFile = with attrsets;
+    pipe cfg.profile.groupOrder
       [
-        (mapAttrs' (name: value: nameValuePair "Groups/${toString value}" (cfg.profile.groups.${name})))
+        (# Merge active groups from groupOrder with config
+          mapAttrs'
+            (name: value: nameValuePair
+              "Groups/${toString value}"
+              (cfg.profile.groups.${name}))
+        )
 
-        (foldlAttrs (acc: name: value: lib.recursiveUpdate acc (expand name value)) { })
-        (acm: foldlAttrs (acc: name: value: lib.recursiveUpdate acc { "GroupOrder" = { ${toString value} = name; }; }) acm cfg.profile.groupOrder)
+        (# Rename "item" list of every group and move to toplevel
+          foldlAttrs
+            (acc: name: value:
+              recursiveUpdate
+                acc
+                (expand name value))
+            { }
+        )
+
+        (
+          # Include reversed groupOrder in config
+          acm:
+          foldlAttrs
+            (acc: name: value:
+              recursiveUpdate
+                acc
+                { "GroupOrder" = { ${toString value} = name; }; })
+            acm
+            cfg.profile.groupOrder
+        )
 
         (iniFormat.generate "profile")
       ];
 
 in
-with lib;
 {
   options.fcitx5 = with types; {
     enable = mkEnableOption "Fcitx5 configuration with home-manager";
