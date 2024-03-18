@@ -1,8 +1,5 @@
 { config, lib, ... }:
 
-let
-  cfg = config.monitors;
-in
 with lib;
 {
   options.monitors = {
@@ -21,5 +18,10 @@ with lib;
       type = types.str;
       default = "";
     };
+  };
+  options.workspaces = mkOption {
+    description = "Workspace definition";
+    type = with types; listOf str;
+    default = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
   };
 }

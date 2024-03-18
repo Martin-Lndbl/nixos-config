@@ -1,5 +1,16 @@
 { pkgs, lib, config, ... }:
 
+let
+  eww_trigger_ws =
+    (builtins.map
+      (ws: "SUPER, ${ws}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${ws}")
+      config.workspaces) ++
+    (builtins.map
+      (ws: "SUPER_SHIFT, ${ws}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${ws}")
+      config.workspaces
+    );
+
+in
 {
   imports = [ ./images ];
 
@@ -43,4 +54,25 @@
   };
 
   # TODO: add hyprland binds to pause/play spotify with <space>
+  wayland.windowManager.hyprland = {
+    settings = with config.colorScheme; {
+      exec-once = [
+        "eww open bar"
+      ];
+
+      bind = [
+        "SUPER, escape, exec, eww open dashboard"
+      ] ++ eww_trigger_ws;
+    };
+    extraConfig = ''
+      bind = SUPER, escape, submap, dashboard
+
+      submap = dashboard
+      bind = , space, exec, ${./scripts/spotify} play
+      bind = SUPER, escape, exec, eww close dashboard
+      bind = , escape, exec, eww close dashboard
+      bind = , escape, submap, reset
+      submap = reset
+    '';
+  };
 }

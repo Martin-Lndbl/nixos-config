@@ -1,33 +1,21 @@
 { pkgs, config, ... }:
 
 let
-  workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
-
   switch_workspace = builtins.map
     (ws: "SUPER, ${ws}, workspace, ${ws}")
-    workspaces;
+    config.workspaces;
 
   move_workspace = builtins.map
     (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}")
-    workspaces;
+    config.workspaces;
 
-  eww_trigger_ws =
-    (builtins.map
-      (ws: "SUPER, ${ws}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${ws}")
-      workspaces) ++
-    (builtins.map
-      (ws: "SUPER_SHIFT, ${ws}, exec, $XDG_CONFIG_HOME/eww/scripts/workspaces ${ws}")
-      workspaces
-    );
 in
 {
   wayland.windowManager.hyprland.enable = true;
-  # wayland.windowManager.hyprland.systemd.enable = false;
 
   wayland.windowManager.hyprland.settings = with config.colorScheme; {
     exec-once = [
       "swaybg -i ${config.appearance.wallpaper}"
-      "eww open bar"
       "[workspace 9 silent; noanim; fakefullscreen] firefox -p autostart https://outlook.live.com/calendar/0/view/week"
       "[workspace 9 silent; noanim; fakefullscreen] firefox -p autostart https://discord.com/app/"
       "[workspace 9 silent; noanim; fakefullscreen] firefox -p autostart https://web.whatsapp.com/"
@@ -92,7 +80,6 @@ in
       "SUPER, return, exec, alacritty"
       "SUPER, d, exec, wofi --show drun"
       "SUPER, g, exec, MOZ_ENABLE_WAYLAND=1 firefox"
-      "SUPER, escape, exec, $XDG_CONFIG_HOME/eww/scripts/dashboard eww"
       "SUPER_SHIFT, Q, killactive"
       "SUPERALT, L, exec, swaylock -fel"
       "SUPERALT, S, exec, swaylock -fel; sleep 1; systemctl suspend -i"
@@ -108,8 +95,7 @@ in
       "SUPER, k, movefocus, u"
       "SUPER, j, movefocus, d"
 
-      "SUPER_SHIFT, left, movewindow, l"
-      "SUPER_SHIFT, right, movewindow, r"
+      "SUPER_SHIFT, left, movewindow, l" "SUPER_SHIFT, right, movewindow, r"
       "SUPER_SHIFT, up, movewindow, u"
       "SUPER_SHIFT, down, movewindow, d"
 
@@ -142,8 +128,7 @@ in
       ", XF86Calculator, exec, alacritty  -t popup -e calc"
     ]
     ++ switch_workspace
-    ++ move_workspace
-    ++ eww_trigger_ws;
+    ++ move_workspace;
 
     bindm = [ "SUPER, mouse:272, movewindow" ];
 
