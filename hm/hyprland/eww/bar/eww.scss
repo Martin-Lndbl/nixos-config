@@ -67,6 +67,7 @@ tooltip label { margin: 3px; }
 .bar-speakerx-symbol { background-image: url("./images/speakerx.svg"); }
 .bar-blight-symbol { background-image: url("./images/brightness.svg"); }
 
+// TODO: Battery icon min-width too small if battery < 10%
 .bar-bat-hover,
 .bar-bat0-symbol,
 .bar-bat1-symbol,
