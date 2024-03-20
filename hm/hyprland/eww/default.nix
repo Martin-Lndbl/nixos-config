@@ -53,6 +53,10 @@ in
     recursive = true;
   };
 
+  programs.bash.shellAliases = {
+    switch = "home-manager switch --flake ~/.config/nixos-config#mrtn@$(hostname); $XDG_CONFIG_HOME/eww/scripts/workspaces";
+  };
+
   # TODO: add hyprland binds to pause/play spotify with <space>
   wayland.windowManager.hyprland = {
     settings = with config.colorScheme; {
@@ -72,6 +76,7 @@ in
       bind = SUPER, escape, exec, eww close dashboard
       bind = , escape, exec, eww close dashboard
       bind = , escape, submap, reset
+      bind = SUPER, escape, submap, reset
       submap = reset
     '';
   };
