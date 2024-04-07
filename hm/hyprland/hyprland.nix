@@ -30,7 +30,8 @@ in
 
     monitor = [
       "eDP-1, 1920x1080@60,0x0,1"
-      ",highres,auto,1"
+      # ", highres, auto, 1, mirror, eDP1"
+      ", highres, auto, 1"
     ];
 
     general = {
@@ -95,7 +96,8 @@ in
       "SUPER, k, movefocus, u"
       "SUPER, j, movefocus, d"
 
-      "SUPER_SHIFT, left, movewindow, l" "SUPER_SHIFT, right, movewindow, r"
+      "SUPER_SHIFT, left, movewindow, l"
+      "SUPER_SHIFT, right, movewindow, r"
       "SUPER_SHIFT, up, movewindow, u"
       "SUPER_SHIFT, down, movewindow, d"
 
