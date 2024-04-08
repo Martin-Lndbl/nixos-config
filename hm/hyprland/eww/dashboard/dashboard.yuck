@@ -149,7 +149,8 @@
         (label
           :class "w-city"
           :style "color: ${WEATHER.hex}"
-          :text "${WEATHER.city}, ${WEATHER.country}")
+          :text "${WEATHER.city}, ${WEATHER.country}"
+          :limit-width 15)
         (label :class "w-temp" :text "${round(WEATHER.temp, 0)}°C")
         (label
           :class "w-desc"

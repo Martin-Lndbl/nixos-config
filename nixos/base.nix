@@ -28,8 +28,8 @@
   networking.networkmanager.enable = true;
   networking.firewall.enable = true;
 
-  # time.timeZone = "Europe/Berlin";
-  time.timeZone = "Asia/Tokyo";
+  time.timeZone = "Europe/Berlin";
+  # time.timeZone = "Asia/Tokyo";
 
   i18n.defaultLocale = "en_US.UTF-8";
   console = {

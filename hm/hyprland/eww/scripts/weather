@@ -1,7 +1,10 @@
 #!/bin/sh
 
+KYOTO="1857910"
+GARMISCH="2922530"
+
 KEY=`cat $XDG_RUNTIME_DIR/secrets/openweathermap`
-ID="1857910"
+ID=$GARMISCH
 UNIT="metric"
 
 read -d '\n' weather_mapping << EndOfText
