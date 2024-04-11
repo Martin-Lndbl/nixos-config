@@ -21,6 +21,9 @@
 
     #	Popups
     windowrulev2 = size 50% 50%, title:^((?!Save)(?!Mozilla firefox).)*$,floating:1,class:^(firefox)$
+
+    # Streaming
+    windowrulev2 = opacity 1, title:^(Netflix — Mozilla Firefox)
   '';
 
 }
