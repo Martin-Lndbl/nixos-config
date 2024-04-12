@@ -128,6 +128,10 @@ in
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
       ", XF86Calculator, exec, alacritty  -t popup -e calc"
+
+      # Flip screen
+      ", XF86TouchpadOff, exec, ${pkgs.hyprland}/bin/hyprctl keyword monitor eDP-1,transform,2"
+      ", XF86TouchpadOn, exec, ${pkgs.hyprland}/bin/hyprctl keyword monitor eDP-1,transform,0"
     ]
     ++ switch_workspace
     ++ move_workspace;
