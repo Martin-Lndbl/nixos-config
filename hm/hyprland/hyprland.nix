@@ -130,8 +130,8 @@ in
       ", XF86Calculator, exec, alacritty  -t popup -e calc"
 
       # Flip screen
-      ", XF86TouchpadOff, exec, ${pkgs.hyprland}/bin/hyprctl keyword monitor eDP-1,transform,2"
-      ", XF86TouchpadOn, exec, ${pkgs.hyprland}/bin/hyprctl keyword monitor eDP-1,transform,0"
+      # ", XF86TouchpadOff, exec, ${pkgs.hyprland}/bin/hyprctl keyword monitor eDP-1,transform,2"
+      # ", XF86TouchpadOn, exec, ${pkgs.hyprland}/bin/hyprctl keyword monitor eDP-1,transform,0"
     ]
     ++ switch_workspace
     ++ move_workspace;

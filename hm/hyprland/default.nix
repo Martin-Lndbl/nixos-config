@@ -13,6 +13,8 @@
     wl-clipboard
   ];
 
+  programs.bash.shellAliases.rotate = "hyprctl keyword monitor eDP-1, transform,";
+
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
     MOZ_ENABLE_WAYLAND = "1";
