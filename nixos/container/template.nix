@@ -19,6 +19,8 @@ in
         "/nix/var/nix/gcroots/per-container/${containerName}:/nix/var/nix/gcroots"
       ];
     };
+    networkConfig = {
+      Private = true;
+    };
   };
-
 }
