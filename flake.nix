@@ -69,6 +69,7 @@
         modules = [
           ./nixos/base.nix
           ./nixos/wireguard.nix
+          ./nixos/container/template.nix
           ./nixos/machines/nix-nb.nix
           ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;
