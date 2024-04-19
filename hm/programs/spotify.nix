@@ -7,7 +7,7 @@
   xdg.desktopEntries.spotify = {
     name = "Spotify";
     genericName = "Spotify";
-    exec = "spotifywm";
+    exec = "spotify";
     terminal = false;
     categories = [ "Application" "Network" "Audio" ];
   };
