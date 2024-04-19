@@ -123,20 +123,17 @@
           flags = lsp_flags,
           capabilities = capabilities,
         }
-
         require('lspconfig')['bashls'].setup {
           on_attach = on_attach,
           flags = lsp_flags,
           capabilities = capabilities,
         }
-
-        require('lspconfig')['rnix'].setup {
+        require('lspconfig')['ccls'].setup {
           on_attach = on_attach,
           flags = lsp_flags,
           capabilities = capabilities,
         }
-
-        require('lspconfig')['ccls'].setup {
+        require('lspconfig')['nixd'].setup {
           on_attach = on_attach,
           flags = lsp_flags,
           capabilities = capabilities,

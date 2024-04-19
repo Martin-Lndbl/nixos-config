@@ -55,8 +55,9 @@
 
     extraPackages = with pkgs; [
       nodePackages.bash-language-server
+      nixd
+      nixpkgs-fmt
       sumneko-lua-language-server
-      rnix-lsp
       texlab
     ];
   };

@@ -1,0 +1,11 @@
+[
+  ./audio.nix
+  ./dashboard.nix
+  ./network.nix
+  ./performance.nix
+  ./spotify.nix
+  ./system.nix
+  ./textfield.nix
+  ./weather.nix
+  ./workspaces.nix
+]

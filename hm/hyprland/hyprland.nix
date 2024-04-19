@@ -31,7 +31,7 @@ in
     monitor = [
       "eDP-1, 1920x1080@60,0x0,1"
       # ", highres, auto, 1, mirror, eDP1"
-      ", highres, auto, 1"
+      ", preffered, auto, 1"
     ];
 
     general = {

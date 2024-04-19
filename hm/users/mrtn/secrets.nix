@@ -5,11 +5,13 @@
 
   home.packages = [ pkgs.sops ];
 
-  sops.defaultSopsFile = ./secrets.yaml;
-  sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "/home/mrtn/.config/sops/age/keys.txt";
+  sops = {
+    age.keyFile = "/home/mrtn/.config/sops/age/keys.txt";
+    defaultSopsFile = ./secrets.yaml;
+    defaultSopsFormat = "yaml";
 
-  sops.secrets.openweathermap = { };
-  sops.secrets.apininja = { };
-  sops.secrets.wakatime = { };
+    secrets.openweathermap = { };
+    secrets.apininja = { };
+    secrets.wakatime = { };
+  };
 }

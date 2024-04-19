@@ -11,9 +11,8 @@
 
   home.packages = with pkgs; [
     wl-clipboard
+    hyprctl-rotate
   ];
-
-  programs.bash.shellAliases.rotate = "hyprctl keyword monitor eDP-1, transform,";
 
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";

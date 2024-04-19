@@ -1,11 +1,4 @@
 { pkgs, config, ... }:
-
-let
-  vault_cmd = pkgs.writeScript "vault_cmd"
-    #!/bin/sh
-    "cat $XDG_RUNTIME_DIR/secrets/wakatime";
-in
-
 {
   programs.neovim.plugins = [ pkgs.vimPlugins.vim-wakatime ];
 
@@ -24,7 +17,7 @@ in
           PULLREQ_EDITMSG$
           MERGE_MSG$
           TAG_EDITMSG$
-      api_key_vault_cmd = sh -c ${vault_cmd}
+      api_key_vault_cmd = "cat ${config.sops.secrets.wakatime.path}"
     '';
   };
 }

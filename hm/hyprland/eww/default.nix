@@ -12,10 +12,10 @@ let
 
 in
 {
-  imports = [ ./images ];
+  imports = [ ./images ] ++ (import ./scripts);
 
   home.packages = with pkgs; [
-    eww-wayland
+    eww
     jq # Used in weather script
   ];
 
@@ -48,16 +48,10 @@ in
         /*removes import of itself in production*/}
       '';
 
-  xdg.configFile."eww/scripts" = {
-    source = ./scripts;
-    recursive = true;
-  };
-
   programs.bash.shellAliases = {
     switch = "home-manager switch --flake ~/.config/nixos-config#mrtn@$(hostname); $XDG_CONFIG_HOME/eww/scripts/workspaces";
   };
 
-  # TODO: add hyprland binds to pause/play spotify with <space>
   wayland.windowManager.hyprland = {
     settings = with config.colorScheme; {
       exec-once = [
@@ -65,19 +59,8 @@ in
       ];
 
       bind = [
-        "SUPER, escape, exec, eww open dashboard"
+        "SUPER, escape, exec, $XDG_CONFIG_HOME/eww/scripts/dashboard eww"
       ] ++ eww_trigger_ws;
     };
-    extraConfig = ''
-      bind = SUPER, escape, submap, dashboard
-
-      submap = dashboard
-      bind = , space, exec, ${./scripts/spotify} play
-      bind = SUPER, escape, exec, eww close dashboard
-      bind = , escape, exec, eww close dashboard
-      bind = , escape, submap, reset
-      bind = SUPER, escape, submap, reset
-      submap = reset
-    '';
   };
 }

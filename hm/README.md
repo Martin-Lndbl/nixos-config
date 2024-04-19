@@ -17,5 +17,5 @@ Distictions between host and user config happens in `../flake.nix`. There user- 
 ## Dependencies
 You are welcome to copy parts of my config to build your own. Be aware, however, that while it is designed to work out-of-the-box, by copying parts of the config, you might need to look into the following dependencies:
 * `nix-colors` is a HomeManager module designed to help with theming. A lot of programs rely on `config.colorscheme` to be present.
-* `$XDG_RUNTIME_DIR/secrets/` is the directory `sops-nix` puts api-keys, etc. Make sure to have the right keys at the right place or change the config accordingly.
+* `config.sops.secrets.<name>` needs to exists, since it is the directory `sops-nix` puts api-keys, etc. Make sure to have the right keys at the right place or change the config accordingly.
 * Make sure to also check out my modules
