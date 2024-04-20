@@ -50,8 +50,6 @@
     };
   };
 
-  services.xserver.wacom.enable = true;
-
   services.udev.extraRules = lib.mkMerge [
     # autosuspend USB devices
     ''ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"''

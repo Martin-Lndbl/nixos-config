@@ -159,7 +159,7 @@
           :tooltip "Brightness: ${BLIGHT}%"
           :onchange "brightnessctl set {}%"
           :max 101
-          :min 2
+          :min 1
         )
       )
   	)
