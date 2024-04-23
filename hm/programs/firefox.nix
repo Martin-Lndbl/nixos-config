@@ -24,6 +24,7 @@
 
     # Streaming
     windowrulev2 = opacity 1, title:^(Netflix — Mozilla Firefox)
+    windowrulev2 = opacity 1, title:^(TUM-Live).*
   '';
 
 }
