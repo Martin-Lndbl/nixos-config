@@ -1,7 +1,9 @@
 keys:
-  - &mrtn age105kg9a0dk9yvm8kwut3fravfj3w7cu8n5ce4pyw0ukd0jdw34phq78fk0t
+- &mrtn-nix_nb age105kg9a0dk9yvm8kwut3fravfj3w7cu8n5ce4pyw0ukd0jdw34phq78fk0t
+- &mrtn-nix_gt age1vyqt0rdc369da73rzn0g7kmkyfct8ec7cg2jzh2ddqkkr4zmq4pqwaff2s
 creation_rules:
   - path_regex: mrtn/secrets.yaml$
     key_groups:
     - age:
-      - *mrtn
+      - *mrtn-nix_nb
+      - *mrtn-nix_gt
