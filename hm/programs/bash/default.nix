@@ -7,7 +7,7 @@ let
   G = builtins.substring 2 2 base05;
   B = builtins.substring 4 2 base05;
 in
-  #TODO: Clean up PS1 as soon as this issue is implemented: https://github.com/NixOS/nix/issues/7578
+#TODO: Clean up PS1 as soon as this issue is implemented: https://github.com/NixOS/nix/issues/7578
 {
   programs.bash = {
     enable = true;
@@ -26,5 +26,15 @@ in
       rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos-config#$(hostname)";
       rebuild-boot = "sudo nixos-rebuild boot --flake ~/.config/nixos-config#$(hostname)";
     };
+  };
+
+  programs.dircolors = {
+
+    enable = true;
+    enableBashIntegration = true;
+    extraConfig = ''
+      STICKY_OTHER_WRITABLE 01;34
+      OTHER_WRITABLE 01;34
+    '';
   };
 }
