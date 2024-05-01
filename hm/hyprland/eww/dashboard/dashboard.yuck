@@ -19,8 +19,8 @@
           (files)
         )
       )
-    ;; (quote)
-    (joke)
+      ;; (quote)
+      (joke)
     )
     (system)
   )
@@ -289,8 +289,8 @@
   :geometry ( geometry
     :x "0%"
     :y "0%"
-    :width "60%"
-    :height "55%"
+    :width "1152px"
+    :height "594px"
     :anchor "center"
     )
 		(layout)
