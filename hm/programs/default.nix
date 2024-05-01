@@ -11,6 +11,7 @@
     ./git.nix
     ./mime.nix
     ./nvim
+    ./oci.nix
     ./spotify.nix
     ./ssh.nix
     ./vscode.nix
