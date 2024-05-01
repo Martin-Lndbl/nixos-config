@@ -27,14 +27,4 @@ in
       rebuild-boot = "sudo nixos-rebuild boot --flake ~/.config/nixos-config#$(hostname)";
     };
   };
-
-  programs.dircolors = {
-
-    enable = true;
-    enableBashIntegration = true;
-    extraConfig = ''
-      STICKY_OTHER_WRITABLE 01;34
-      OTHER_WRITABLE 01;34
-    '';
-  };
 }
