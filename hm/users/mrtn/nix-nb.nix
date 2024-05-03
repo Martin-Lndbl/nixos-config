@@ -6,7 +6,7 @@ in
 {
   imports = [ ./secrets.nix ];
 
-  config.appearance.wallpaper = nixWallpaperFromScheme {
+  appearance.wallpaper = nixWallpaperFromScheme {
     scheme = config.colorscheme;
     width = 1920;
     height = 1080;
@@ -14,8 +14,10 @@ in
     logoColor1 = config.colorscheme.palette.base03;
     logoColor2 = config.colorscheme.palette.base04;
   };
-  config.appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
-  config.appearance.fontSize = 14;
-  config.monitors.center = "eDP-1";
-  config.monitors.right = "DP-1";
+  appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
+  appearance.fontSize = 14;
+  monitors.center = "eDP-1";
+  monitors.right = "DP-1";
+
+  programs.git.userName = "martin-lndbl-NBL";
 }
