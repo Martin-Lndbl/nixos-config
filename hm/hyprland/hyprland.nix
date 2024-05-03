@@ -136,6 +136,15 @@ in
     ++ switch_workspace
     ++ move_workspace;
 
+    workspace = [
+      "1,monitor:${config.monitors.center}"
+      "2,monitor:${config.monitors.center}"
+      "3,monitor:${config.monitors.center}"
+
+      "8,monitor:${config.monitors.right}"
+      "9,monitor:${config.monitors.right}"
+    ];
+
     bindm = [ "SUPER, mouse:272, movewindow" ];
 
     binde = [
