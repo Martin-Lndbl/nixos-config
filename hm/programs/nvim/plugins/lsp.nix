@@ -128,10 +128,23 @@
           flags = lsp_flags,
           capabilities = capabilities,
         }
-        require('lspconfig')['ccls'].setup {
+        require('lspconfig')['clangd'].setup {
           on_attach = on_attach,
           flags = lsp_flags,
           capabilities = capabilities,
+         cmd = {
+           "clangd",
+           "--compile-commands-dir=/local/home/washbug/padb",
+           "--all-scopes-completion",
+           "--recovery-ast",
+           "--clang-tidy",
+           "--background-index",
+           "-j=64",
+           "--log=verbose",
+           "--cross-file-rename",
+           "--suggest-missing-includes",
+           "--enable-config"
+          },
         }
         require('lspconfig')['nixd'].setup {
           on_attach = on_attach,
