@@ -10,6 +10,7 @@
       "scanner"
       "networkmanager"
       "docker"
+      "dialout"
     ];
   };
 }

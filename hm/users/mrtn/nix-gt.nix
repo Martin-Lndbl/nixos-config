@@ -38,6 +38,10 @@ in
     extraConfig.safe.directory = [
       "/D/docs/03_sem"
       "/D/docs/04_sem"
+      "/D/docs/05_sem"
+      "/D/docs/uni/06_sem"
+      "/D/docs/uni/06_sem/ar/projects/bouncy/native/build/_deps/godot_api-src"
+      "/D/docs/uni/06_sem/ar/projects/ar-exercise-2/native/build/_deps/godot_api-src"
       "/D/docs/uni/ASP/task4-concurrency-Martin-Lndbl"
       "/D/docs/uni/06_sem/parprog/published-assignments"
     ];

@@ -2,7 +2,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   networking.hostName = "nix-gt";
@@ -16,17 +17,20 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/0644a504-eaac-4c2a-8922-113473ba3d7c";
+    {
+      device = "/dev/disk/by-uuid/0644a504-eaac-4c2a-8922-113473ba3d7c";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/82BE-02D5";
+    {
+      device = "/dev/disk/by-uuid/82BE-02D5";
       fsType = "vfat";
     };
 
-  fileSystems."/D" = 
-    { device = "/dev/disk/by-uuid/C016DAF416DAEA84";
+  fileSystems."/D" =
+    {
+      device = "/dev/disk/by-uuid/C016DAF416DAEA84";
       fsType = "ntfs";
     };
 
@@ -36,4 +40,11 @@
 
   networking.useDHCP = lib.mkDefault true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
 }
