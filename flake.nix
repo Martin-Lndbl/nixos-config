@@ -44,6 +44,7 @@
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./nixos/base.nix
+          ./nixos/wireguard.nix
           ./nixos/machines/nix-gt.nix
           ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;

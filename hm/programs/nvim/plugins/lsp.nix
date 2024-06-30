@@ -134,7 +134,6 @@
           capabilities = capabilities,
          cmd = {
            "clangd",
-           "--compile-commands-dir=/local/home/washbug/padb",
            "--all-scopes-completion",
            "--recovery-ast",
            "--clang-tidy",
@@ -143,7 +142,7 @@
            "--log=verbose",
            "--cross-file-rename",
            "--suggest-missing-includes",
-           "--enable-config"
+           "--enable-config",
           },
         }
         require('lspconfig')['nixd'].setup {
@@ -161,6 +160,13 @@
           flags = lsp_flags,
           filetypes = { "tex", "lytex" },
           capabilities = capabilities,
+        }
+        local pid = vim.fn.getpid()
+        require('lspconfig')['omnisharp'].setup {
+          on_attach = on_attach,
+          flags = lsp_flags,
+          capabilities = capabilities,
+          cmd = { "OmniSharp", "--languageserver" , "--hostPID", tostring(pid) },
         }
         vim.diagnostic.config({
           virtual_text = {

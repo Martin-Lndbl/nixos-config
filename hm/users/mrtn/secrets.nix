@@ -13,5 +13,6 @@
     secrets.openweathermap = { };
     secrets.apininja = { };
     secrets.wakatime = { };
+    secrets.arproject = { };
   };
 }

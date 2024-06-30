@@ -35,6 +35,7 @@
     swaybg
     brightnessctl
     ripgrep
+    unityhub
 
     # meetings
     zoom-us
