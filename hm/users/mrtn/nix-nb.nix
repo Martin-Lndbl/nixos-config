@@ -16,8 +16,8 @@ in
   };
   appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
   appearance.fontSize = 14;
-  monitors.center = "eDP-1";
-  monitors.left = "DP-1";
+  monitors.center = "DP-1";
+  monitors.right = "eDP-1";
 
   programs.git.userName = "martin-lndbl-NBL";
 }
