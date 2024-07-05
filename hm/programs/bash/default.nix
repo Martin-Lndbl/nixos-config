@@ -3,9 +3,9 @@
 with config.colorscheme.palette;
 let
 
-  R = builtins.substring 0 2 base05;
-  G = builtins.substring 2 2 base05;
-  B = builtins.substring 4 2 base05;
+  R = builtins.substring 0 2 base0B;
+  G = builtins.substring 2 2 base0B;
+  B = builtins.substring 4 2 base0B;
 in
 #TODO: Clean up PS1 as soon as this issue is implemented: https://github.com/NixOS/nix/issues/7578
 {
@@ -25,6 +25,8 @@ in
       switch = lib.mkDefault "home-manager switch --flake ~/.config/nixos-config#mrtn@$(hostname)";
       rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos-config#$(hostname)";
       rebuild-boot = "sudo nixos-rebuild boot --flake ~/.config/nixos-config#$(hostname)";
+
+      osvbuild = "docker run -it -v ~/documents/uni/bsc-thesis/osv:/git-repos/host -w /git-repos/host --privileged osv/builder";
+        };
     };
-  };
-}
+  }
