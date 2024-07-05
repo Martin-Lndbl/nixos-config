@@ -13,11 +13,14 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
 
+    envfs.url = "github:Mic92/envfs";
+    envfs.inputs.nixpkgs.follows = "nixpkgs";
+
     # Nix Colors
     nix-colors.url = "github:Misterio77/nix-colors";
   };
 
-  outputs = { self, nixpkgs, hm, nix-colors, ... }@inputs:
+  outputs = { self, nixpkgs, hm, nix-colors, envfs, ... }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -43,7 +46,9 @@
       nixosConfigurations.nix-gt = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [
+          envfs.nixosModules.envfs
           ./nixos/base.nix
+          ./nixos/wireguard.nix
           ./nixos/machines/nix-gt.nix
           ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;
