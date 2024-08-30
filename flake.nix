@@ -72,6 +72,7 @@
       nixosConfigurations.nix-nb = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [
+          envfs.nixosModules.envfs
           ./nixos/base.nix
           ./nixos/wireguard.nix
           ./nixos/container/template.nix
