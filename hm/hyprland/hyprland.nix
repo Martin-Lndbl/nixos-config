@@ -70,8 +70,6 @@ in
       preserve_split = true;
     };
 
-    master.new_is_master = true;
-
     windowrule = [
       "opacity 0.94 override ${builtins.toString config.appearance.opacity} override, .*"
     ];

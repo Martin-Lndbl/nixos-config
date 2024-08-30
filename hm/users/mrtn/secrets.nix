@@ -14,5 +14,6 @@
     secrets.apininja = { };
     secrets.wakatime = { };
     secrets.arproject = { };
+    secrets.gemini = { };
   };
 }
