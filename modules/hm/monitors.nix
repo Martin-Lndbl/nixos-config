@@ -22,6 +22,18 @@ with lib;
   options.workspaces = mkOption {
     description = "Workspace definition";
     type = with types; listOf str;
-    default = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
+    default = [
+      "1"
+      "2"
+      "3"
+      "4"
+      "5"
+      "6"
+      "7"
+      "8"
+      "9"
+    ];
   };
+
+  # TODO: Apply monitor config directly
 }

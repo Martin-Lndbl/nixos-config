@@ -1,4 +1,10 @@
-{ inputs, pkgs, lib, config, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
 
   imports = [
@@ -56,7 +62,7 @@
     extraPackages = with pkgs; [
       nodePackages.bash-language-server
       nixd
-      nixpkgs-fmt
+      nixfmt-rfc-style
       sumneko-lua-language-server
       texlab
     ];
@@ -86,6 +92,9 @@
     ];
     terminal = false;
     type = "Application";
-    categories = [ "Utility" "TextEditor" ];
+    categories = [
+      "Utility"
+      "TextEditor"
+    ];
   };
 }

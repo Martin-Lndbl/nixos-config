@@ -1,24 +1,22 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 
 let
-  switch_workspace = builtins.map
-    (ws: "SUPER, ${ws}, workspace, ${ws}")
-    config.workspaces;
+  switch_workspace = builtins.map (ws: "SUPER, ${ws}, workspace, ${ws}") config.workspaces;
 
-  move_workspace = builtins.map
-    (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}")
-    config.workspaces;
+  move_workspace = builtins.map (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}") config.workspaces;
 
 in
 {
+  programs.hyprcursor-phinger.enable = true;
+
   wayland.windowManager.hyprland.enable = true;
 
   wayland.windowManager.hyprland.settings = with config.colorScheme; {
     exec-once = [
       "swaybg -i ${config.appearance.wallpaper}"
-      "[workspace 9 silent; noanim; fakefullscreen] firefox -p autostart https://outlook.live.com/calendar/0/view/week"
-      "[workspace 9 silent; noanim; fakefullscreen] firefox -p autostart https://discord.com/app/"
-      "[workspace 9 silent; noanim; fakefullscreen] firefox -p autostart https://web.whatsapp.com/"
+      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-window https://calendar.google.com/calendar/u/0/r"
+      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-window https://discord.com/app/"
+      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-window https://web.whatsapp.com/"
       "[workspace 1; noanim] alacritty"
       "[workspace 1; noanim] alacritty"
     ];
@@ -27,12 +25,6 @@ in
       kb_layout = "de";
       follow_mouse = 1;
     };
-
-    monitor = [
-      "eDP-1, 1920x1080@60,1920x0,1"
-      # ", highres, auto, 1, mirror, e1P1"
-      # "DP-1, 1920x1080@60,0x0, 1"
-    ];
 
     general = {
       gaps_in = 5;
@@ -108,7 +100,7 @@ in
       "SUPER, v, togglefloating,"
       "SUPER, v, centerwindow,"
       "SUPER, f, fullscreen,"
-      "SUPER_SHIFT, f, fakefullscreen"
+      "SUPER_SHIFT, f, fullscreenstate, -1 2"
 
       # Groups
       "SUPER_CTRL, g, togglegroup,"
@@ -126,13 +118,7 @@ in
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
       ", XF86Calculator, exec, alacritty  -t popup -e calc"
-
-      # Flip screen
-      # ", XF86TouchpadOff, exec, ${pkgs.hyprland}/bin/hyprctl keyword monitor eDP-1,transform,2"
-      # ", XF86TouchpadOn, exec, ${pkgs.hyprland}/bin/hyprctl keyword monitor eDP-1,transform,0"
-    ]
-    ++ switch_workspace
-    ++ move_workspace;
+    ] ++ switch_workspace ++ move_workspace;
 
     workspace = [
       "1,monitor:${config.monitors.center}"

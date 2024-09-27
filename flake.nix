@@ -16,26 +16,42 @@
     envfs.url = "github:Mic92/envfs";
     envfs.inputs.nixpkgs.follows = "nixpkgs";
 
+    hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
+    hyprcursor-phinger.inputs.nixpkgs.follows = "nixpkgs";
+
     # Nix Colors
     nix-colors.url = "github:Misterio77/nix-colors";
   };
 
-  outputs = { self, nixpkgs, hm, nix-colors, envfs, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      hm,
+      nix-colors,
+      envfs,
+      hyprcursor-phinger,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-      ];
-    in
+      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
 
+    in
     rec {
-      packages = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./pkgs { inherit pkgs; }
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./pkgs { inherit pkgs; }
       );
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; }
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./shell.nix { inherit pkgs; }
       );
 
       overlays = import ./overlays { inherit inputs; };
@@ -44,7 +60,9 @@
       #                   nix-gt 
       # -----------------------------------------------
       nixosConfigurations.nix-gt = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
+        specialArgs = {
+          inherit inputs outputs;
+        };
         modules = [
           envfs.nixosModules.envfs
           ./nixos/base.nix
@@ -56,9 +74,12 @@
       homeConfigurations = {
         "mrtn@nix-gt" = hm.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
           modules = [
             nix-colors.homeManagerModules.default
+            hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/nix-gt.nix
@@ -70,7 +91,9 @@
       #                   nix-nb 
       # -----------------------------------------------
       nixosConfigurations.nix-nb = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
+        specialArgs = {
+          inherit inputs outputs;
+        };
         modules = [
           ./nixos/base.nix
           ./nixos/wireguard.nix
@@ -82,9 +105,12 @@
       homeConfigurations = {
         "mrtn@nix-nb" = hm.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
           modules = [
             nix-colors.homeManagerModules.default
+            hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/nix-nb.nix
