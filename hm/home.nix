@@ -1,4 +1,12 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./programs
     ./games
@@ -35,7 +43,6 @@
     swaybg
     brightnessctl
     ripgrep
-    unityhub
 
     # meetings
     zoom-us
@@ -48,6 +55,12 @@
     neofetch
     cava
   ];
+
+  home.pointerCursor = {
+    name = "phinger-cursors-light";
+    package = pkgs.phinger-cursors;
+    size = 28;
+  };
 
   xdg.enable = true;
   xdg.cacheHome = config.home.homeDirectory + "/.local/cache";

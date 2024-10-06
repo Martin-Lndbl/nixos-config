@@ -16,9 +16,6 @@
     envfs.url = "github:Mic92/envfs";
     envfs.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprcursor-phinger.url = "github:jappie3/hyprcursor-phinger";
-    hyprcursor-phinger.inputs.nixpkgs.follows = "nixpkgs";
-
     # Nix Colors
     nix-colors.url = "github:Misterio77/nix-colors";
   };
@@ -30,7 +27,6 @@
       hm,
       nix-colors,
       envfs,
-      hyprcursor-phinger,
       ...
     }@inputs:
     let
@@ -79,7 +75,6 @@
           };
           modules = [
             nix-colors.homeManagerModules.default
-            hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/nix-gt.nix
@@ -111,7 +106,6 @@
           };
           modules = [
             nix-colors.homeManagerModules.default
-            hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/nix-nb.nix
