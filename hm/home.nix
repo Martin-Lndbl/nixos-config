@@ -47,6 +47,7 @@
     # meetings
     zoom-us
     teams-for-linux
+    slack
 
     # Notes
     trilium-desktop
