@@ -19,6 +19,10 @@
             User linm
             RequestTTY force
             RemoteCommand bash
+
+          Host cpp
+            HostName cppprog.db.in.tum.de
+            User git
         	'';
     };
 }
