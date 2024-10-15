@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, config, ... }:
 
 let
   switch_workspace = builtins.map (ws: "SUPER, ${ws}, workspace, ${ws}") config.workspaces;
@@ -7,8 +7,6 @@ let
 
 in
 {
-  programs.hyprcursor-phinger.enable = true;
-
   wayland.windowManager.hyprland.enable = true;
 
   wayland.windowManager.hyprland.settings = with config.colorScheme; {
