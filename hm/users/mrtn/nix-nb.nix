@@ -1,9 +1,16 @@
-{ inputs, pkgs, lib, config, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   inherit (inputs.nix-colors.lib-contrib { inherit pkgs; })
-    nixWallpaperFromScheme;
+    nixWallpaperFromScheme
+    ;
 in
-{
+rec {
   imports = [ ./secrets.nix ];
 
   appearance.wallpaper = nixWallpaperFromScheme {
@@ -16,8 +23,14 @@ in
   };
   appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
   appearance.fontSize = 14;
-  monitors.center = "DP-1";
-  monitors.right = "eDP-1";
+  monitors.center = "eDP-1";
+  monitors.left = "DP-1";
+
+  wayland.windowManager.hyprland.settings = {
+    monitor = [
+      "${monitors.center}, 1920x1080@60, 0x0, 1"
+    ];
+  };
 
   programs.git.userName = "martin-lndbl-NBL";
 }
