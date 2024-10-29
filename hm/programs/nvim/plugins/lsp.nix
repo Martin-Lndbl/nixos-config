@@ -144,9 +144,6 @@
            "--suggest-missing-includes",
            "--enable-config",
           },
-          init_options = {
-            fallbackFlags = { '-std=c++23' },
-          },
         }
         require('lspconfig')['nixd'].setup {
           on_attach = on_attach,
