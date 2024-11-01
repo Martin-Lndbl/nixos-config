@@ -1,4 +1,7 @@
-{ inputs, outputs, lib, config, pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   imports = [
     ./eww
@@ -13,6 +16,15 @@
     wl-clipboard
     hyprctl-rotate
   ];
+
+  programs.bash.bashrcExtra = ''
+    ccat() {
+      cat "$1" | wl-copy
+    }
+  '';
+  programs.bash.shellAliases = {
+    cpwd = "pwd | wl-copy";
+  };
 
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";

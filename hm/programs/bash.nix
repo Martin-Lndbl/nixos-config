@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 with config.colorscheme.palette;
 let
@@ -11,11 +16,10 @@ in
 {
   programs.bash = {
     enable = true;
-    bashrcExtra =
-      ''
-        export EDITOR="vim"
-        PS1="\[\e[1m\e[38;2;$((16#${R}));$((16#${G}));$((16#${B}))m\][\u@\h:\w]$ \[\e[0m\]"
-      '';
+    bashrcExtra = ''
+      export EDITOR="vim"
+      PS1="\[\e[1m\e[38;2;$((16#${R}));$((16#${G}));$((16#${B}))m\][\u@\h:\w]$ \[\e[0m\]"
+    '';
     shellAliases = {
       ".." = "cd ..";
       "..." = ".. && ..";
@@ -27,6 +31,6 @@ in
       rebuild-boot = "sudo nixos-rebuild boot --flake ~/.config/nixos-config#$(hostname)";
 
       osvbuild = "docker run -it -v ~/documents/uni/bsc-thesis/osv:/git-repos/host -w /git-repos/host --privileged osv/builder";
-        };
     };
-  }
+  };
+}

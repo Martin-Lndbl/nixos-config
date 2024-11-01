@@ -1,8 +1,8 @@
-{ inputs, outputs, lib, config, pkgs, ... }:
+{ ... }:
 {
   imports = [
     ./alacritty.nix
-    ./bash
+    ./bash.nix
     ./calc.nix
     ./cava.nix
     ./discord.nix

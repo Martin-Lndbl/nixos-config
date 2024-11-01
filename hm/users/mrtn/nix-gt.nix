@@ -21,7 +21,7 @@ in
   monitors.right = "DP-3";
 
   programs.bash.shellAliases = {
-    uni = "cd /D/docs/uni/06_sem/";
+    cdsem = "cd /D/docs/bsc_info/07_sem/";
   };
 
   programs.dircolors = {
@@ -34,7 +34,7 @@ in
   };
 
   programs.git = {
-    userName = "martin-lndbl-GTL";
+    userName = "martin_lndbl-GTL";
     extraConfig.safe.directory = [
       "*"
     ];
