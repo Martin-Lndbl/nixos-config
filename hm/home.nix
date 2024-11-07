@@ -48,6 +48,7 @@
     zoom-us
     teams-for-linux
     slack
+    discord
 
     # Notes
     trilium-desktop
