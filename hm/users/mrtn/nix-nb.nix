@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  lib,
   config,
   ...
 }:
@@ -32,5 +31,9 @@ rec {
     ];
   };
 
-  programs.git.userName = "martin-lndbl-NBL";
+  programs.bash.shellAliases = {
+    cdsem = "cd ~/documents/bsc_info/07_sem/";
+  };
+
+  programs.git.userName = "martin_lndbl-NBL";
 }
