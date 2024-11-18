@@ -3,4 +3,5 @@
   ape = pkgs.callPackage ./ApE { };
   atlauncher = pkgs.callPackage ./atlaucher { };
   hyprctl-rotate = pkgs.callPackage ./hyprctl-rotate.nix { };
+  hm = pkgs.home-manager;
 }

@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   config,
   ...
@@ -7,7 +8,7 @@
   imports = [
     ./secrets.nix
     ../../programs/bash.nix
-    ../../programs/nvim/
+    ../../programs/nvim
   ];
 
   home.username = "martinLi";
@@ -17,7 +18,15 @@
     xclip
   ];
 
+  home.sessionVariables = {
+    TERM = "xterm";
+  };
+
+  colorScheme = inputs.nix-colors.colorSchemes.classic-dark;
+
   programs.git.userName = "martinLi-irene";
+  programs.home-manager.enable = true;
+  programs.direnv.enable = true;
 
   xdg.enable = true;
   xdg.cacheHome = config.home.homeDirectory + "/.local/cache";

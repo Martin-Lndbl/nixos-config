@@ -26,9 +26,9 @@ in
       "...." = "... && ..";
       "cfg" = "cd ~/.config/nixos-config";
       c = "clear";
-      switch = lib.mkDefault "home-manager switch --flake ~/.config/nixos-config#mrtn@$(hostname)";
-      rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos-config#$(hostname)";
-      rebuild-boot = "sudo nixos-rebuild boot --flake ~/.config/nixos-config#$(hostname)";
+      switch = lib.mkDefault "home-manager switch --flake ~/.config/nixos-config";
+      rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos-config";
+      rebuild-boot = "sudo nixos-rebuild boot --flake ~/.config/nixos-config";
 
       osvbuild = "docker run -it -v ~/documents/uni/bsc-thesis/osv:/git-repos/host -w /git-repos/host --privileged osv/builder";
     };

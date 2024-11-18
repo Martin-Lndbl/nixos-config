@@ -1,9 +1,14 @@
 keys:
 - &mrtn-nix_nb age105kg9a0dk9yvm8kwut3fravfj3w7cu8n5ce4pyw0ukd0jdw34phq78fk0t
 - &mrtn-nix_gt age1vyqt0rdc369da73rzn0g7kmkyfct8ec7cg2jzh2ddqkkr4zmq4pqwaff2s
+- &martinLi-irene age1xallt6yr7le7a0dymlxg27njj8tc0au2u2edvxyplxhzu3k7pphqcyn458
 creation_rules:
   - path_regex: mrtn/secrets.yaml$
     key_groups:
     - age:
       - *mrtn-nix_nb
       - *mrtn-nix_gt
+  - path_regex: martinLi/secrets.yaml$
+    key_groups:
+    - age:
+      - *martinLi-irene

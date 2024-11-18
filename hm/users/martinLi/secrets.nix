@@ -14,6 +14,6 @@
     defaultSopsFile = ./secrets.yaml;
     defaultSopsFormat = "yaml";
 
-    secrets.test = { };
+    secrets.hello = { };
   };
 }
