@@ -112,5 +112,22 @@
           ] ++ import ./modules/hm;
         };
       };
+
+      # -----------------------------------------------
+      #                   irene
+      # -----------------------------------------------
+      homeConfigurations = {
+        "martinLi@irene" = hm.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            nix-colors.homeManagerModules.default
+            ./hm/users/martinLi/irene.nix
+          ];
+        };
+      };
+
     };
 }

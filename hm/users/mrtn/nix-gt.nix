@@ -1,8 +1,15 @@
-{ inputs, pkgs, lib, config, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   inherit (inputs.nix-colors.lib-contrib { inherit pkgs; })
-    nixWallpaperFromScheme;
+    nixWallpaperFromScheme
+    ;
 in
 {
   imports = [ ./secrets.nix ];
@@ -15,6 +22,8 @@ in
     logoColor1 = config.colorscheme.palette.base03;
     logoColor2 = config.colorscheme.palette.base04;
   };
+
+  appearance.opacity = 0.96;
 
   appearance.fontSize = 18;
   monitors.center = "DP-2";
