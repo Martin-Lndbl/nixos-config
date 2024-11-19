@@ -63,6 +63,7 @@
           envfs.nixosModules.envfs
           ./nixos/base.nix
           ./nixos/wireguard.nix
+          ./nixos/printer.nix
           ./nixos/machines/nix-gt.nix
           ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;
@@ -93,6 +94,7 @@
           envfs.nixosModules.envfs
           ./nixos/base.nix
           ./nixos/wireguard.nix
+          ./nixos/printer.nix
           ./nixos/container/template.nix
           ./nixos/machines/nix-nb.nix
           ./nixos/wm/hyprland.nix
