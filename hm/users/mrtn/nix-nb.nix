@@ -22,15 +22,15 @@ rec {
   };
   appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
   appearance.fontSize = 18;
-  monitors.center = "DP-5";
+  monitors.center = "DP-6";
   monitors.left = "eDP-1";
-  monitors.right = "DP-6";
+  monitors.right = "DP-7";
 
   wayland.windowManager.hyprland.settings = {
     monitor = [
       "${monitors.left}, 1920x1080@60, -1920x1080, 1"
       "${monitors.center}, 3840x2160@60, 0x0, 1"
-      "${monitors.right}, 1920x1080@60, 3840x0, 1"
+      "${monitors.right}, 1920x1080@60, 3840x540, 1"
     ];
   };
 

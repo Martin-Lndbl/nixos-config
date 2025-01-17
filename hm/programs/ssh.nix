@@ -27,6 +27,8 @@
           HostName irene.dos.cit.tum.de
           User martinLi
           ProxyCommand ssh tunnel@login.dos.cit.tum.de -W %h:%p
+          RequestTTY yes
+          ForwardX11 no
     '';
   };
 }

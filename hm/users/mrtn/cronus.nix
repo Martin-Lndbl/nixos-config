@@ -1,0 +1,38 @@
+{
+  inputs,
+  pkgs,
+  config,
+  ...
+}:
+
+let
+  inherit (inputs.nix-colors.lib-contrib { inherit pkgs; })
+    nixWallpaperFromScheme
+    ;
+in
+{
+  imports = [ ./secrets.nix ];
+
+  appearance.wallpaper = nixWallpaperFromScheme {
+    scheme = config.colorscheme;
+    width = 1920;
+    height = 1080;
+    logoScale = 8;
+    logoColor1 = config.colorscheme.palette.base03;
+    logoColor2 = config.colorscheme.palette.base04;
+  };
+
+  appearance.opacity = 0.96;
+
+  appearance.fontSize = 18;
+  monitors.center = "DP-2";
+  monitors.right = "DP-3";
+
+  programs.git = {
+    userName = "Martin-Lindbuechl@cronus";
+  };
+
+  wayland.windowManager.hyprland.settings.monitor = [
+    ", highres, auto, 1"
+  ];
+}
