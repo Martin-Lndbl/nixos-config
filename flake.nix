@@ -143,7 +143,7 @@
           ./nixos/base.nix
           ./nixos/wireguard.nix
           ./nixos/printer.nix
-          # ./nixos/machines/nix-gt.nix
+          ./nixos/machines/cronus.nix
           ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;
       };
