@@ -131,5 +131,35 @@
         };
       };
 
+      # -----------------------------------------------
+      #                   cronus
+      # -----------------------------------------------
+      nixosConfigurations.cronus = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs outputs;
+        };
+        modules = [
+          envfs.nixosModules.envfs
+          ./nixos/base.nix
+          ./nixos/wireguard.nix
+          ./nixos/printer.nix
+          # ./nixos/machines/nix-gt.nix
+          ./nixos/wm/hyprland.nix
+        ] ++ import ./modules/nixos;
+      };
+      homeConfigurations = {
+        "mrtn@cronus" = hm.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            nix-colors.homeManagerModules.default
+            ./hm/home.nix
+            ./hm/hyprland
+            ./hm/users/mrtn/cronus.nix
+          ] ++ import ./modules/hm;
+        };
+      };
     };
 }
