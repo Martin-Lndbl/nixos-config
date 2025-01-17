@@ -1,19 +1,7 @@
-{ pkgs, config, ... }:
-let
-  undotree = pkgs.vimUtils.buildVimPlugin rec {
-    pname = "undotree";
-    version = "80552a0180b49e5ba072c89ae91ce5d4e3aed36b";
-    src = pkgs.fetchFromGitHub {
-      owner = "jiaoshijie";
-      repo = pname;
-      rev = version;
-      sha256 = "sha256-clxoKM5kusRz8OR5+Z+4NS0WsoMx9tdyi9GG+sE6r3s=";
-    };
-  };
-in
+{ pkgs, ... }:
 {
   programs.neovim.plugins = [{
-    plugin = undotree;
+    plugin = pkgs.vimPlugins.undotree;
     type = "lua";
     config = ''
       local undotree = require('undotree')
