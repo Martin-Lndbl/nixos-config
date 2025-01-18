@@ -26,7 +26,8 @@ in
 
   appearance.fontSize = 18;
   monitors.center = "DP-2";
-  monitors.right = "DP-3";
+  monitors.right = "HDMI-A-1";
+  monitors.primary_id = 1;
 
   programs.git = {
     userName = "Martin-Lindbuechl@cronus";

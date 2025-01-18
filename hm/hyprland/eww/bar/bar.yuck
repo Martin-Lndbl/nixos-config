@@ -191,17 +191,3 @@
     )
   )
 )
-
-(defwindow bar
-  :exclusive true
-  :monitor 0
-  :windowtype "dock"
-	:focusable false
-  :stacking "fg"
-  :geometry (geometry :x "0%"
-                      :y "0.5%"
-                      :width "99.5%"
-                      :height "2%"
-                      :anchor "bottom center")
-  (barmenu_layout)
-)

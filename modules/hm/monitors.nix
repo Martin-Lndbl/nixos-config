@@ -18,6 +18,11 @@ with lib;
       type = types.str;
       default = "";
     };
+    primary_id = mkOption {
+      description = "ID of primary monitor";
+      type = types.int;
+      default = 0;
+    };
   };
   options.workspaces = mkOption {
     description = "Workspace definition";

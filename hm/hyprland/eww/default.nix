@@ -23,7 +23,33 @@ in
     ''${builtins.readFile ./variables.yuck}
 
     (include "${./bar/bar.yuck}")
+    (defwindow bar
+      :exclusive true
+      :monitor ${builtins.toString config.monitors.primary_id}
+      :windowtype "dock"
+      :focusable false
+      :stacking "fg"
+      :geometry (geometry :x "0%"
+                          :y "0.5%"
+                          :width "99.5%"
+                          :height "2%"
+                          :anchor "bottom center")
+      (barmenu_layout)
+    )
+
     (include "${./dashboard/dashboard.yuck}")
+    (defwindow dashboard
+      :monitor ${builtins.toString config.monitors.primary_id}
+      :stacking "overlay"
+      :geometry ( geometry
+        :x "0%"
+        :y "0%"
+        :width "1152px"
+        :height "594px"
+        :anchor "center"
+        )
+        (layout)
+    )
   '';
 
   xdg.configFile."eww/eww.scss".source =
