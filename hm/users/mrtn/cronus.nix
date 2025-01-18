@@ -25,7 +25,7 @@ in
   appearance.opacity = 0.96;
 
   appearance.fontSize = 18;
-  monitors.center = "DP-2";
+  monitors.center = "DP-1";
   monitors.right = "HDMI-A-1";
   monitors.primary_id = 1;
 
@@ -34,6 +34,7 @@ in
   };
 
   wayland.windowManager.hyprland.settings.monitor = [
-    ", highres, auto, 1"
+    "${config.monitors.center}, 3840x2160, 0x0, 1"
+    "${config.monitors.right}, 3840x2160, 3840x0, 1"
   ];
 }
