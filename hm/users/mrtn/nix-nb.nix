@@ -21,13 +21,16 @@ rec {
     logoColor2 = config.colorscheme.palette.base04;
   };
   appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
-  appearance.fontSize = 14;
-  monitors.center = "eDP-1";
-  monitors.left = "DP-1";
+  appearance.fontSize = 18;
+  monitors.center = "DP-6";
+  monitors.left = "eDP-1";
+  monitors.right = "DP-7";
 
   wayland.windowManager.hyprland.settings = {
     monitor = [
-      "${monitors.center}, 1920x1080@60, 0x0, 1"
+      "${monitors.left}, 1920x1080@60, -1920x1080, 1"
+      "${monitors.center}, 3840x2160@60, 0x0, 1"
+      "${monitors.right}, 1920x1080@60, 3840x540, 1"
     ];
   };
 

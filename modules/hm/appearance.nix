@@ -3,10 +3,7 @@
 let
   cfg = config.appearance;
 
-  opacity =
-    if builtins.match "[0/1].*" config.colorscheme.palette.base00 == null
-    then .85
-    else .7;
+  opacity = if builtins.match "[0/1].*" config.colorscheme.palette.base00 == null then 0.85 else 0.95;
 
 in
 with lib;
@@ -24,16 +21,25 @@ with lib;
     };
     wallpaper = mkOption {
       description = "Wallpaper";
-      type = types.oneOf [ types.path types.str ];
+      type = types.oneOf [
+        types.path
+        types.str
+      ];
     };
     lockScreen = mkOption {
       description = "Lockscreen wallpaper";
-      type = types.oneOf [ types.path types.str ];
+      type = types.oneOf [
+        types.path
+        types.str
+      ];
       default = cfg.wallpaper;
     };
     profile.picture = mkOption {
       description = "Profile picture";
-      type = types.oneOf [ types.path types.str ];
+      type = types.oneOf [
+        types.path
+        types.str
+      ];
     };
   };
 }

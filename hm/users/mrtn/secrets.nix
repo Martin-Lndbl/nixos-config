@@ -15,5 +15,6 @@
     secrets.wakatime = { };
     secrets.arproject = { };
     secrets.gemini = { };
+    secrets.sharelatex_token = { };
   };
 }

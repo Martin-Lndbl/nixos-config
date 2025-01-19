@@ -282,16 +282,3 @@
     (button :class "button logout" :onclick "hyprctl dispatch exit")
   )
 )
-
-(defwindow dashboard
-  :monitor 0
-  :stacking "overlay"
-  :geometry ( geometry
-    :x "0%"
-    :y "0%"
-    :width "1152px"
-    :height "594px"
-    :anchor "center"
-    )
-		(layout)
-)

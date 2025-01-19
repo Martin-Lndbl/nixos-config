@@ -10,7 +10,7 @@
     $1 update NET_CON="''${NET_CON}"
     type="none"
 
-    if [[ "$active_network" == *"Wired connection"* ]]; then
+    if [[ "$active_network" == *"Wired"* ]]; then
       type="wired"
     elif [[ "$active_network" == *"wireless"* ]]; then
       type="wifi"

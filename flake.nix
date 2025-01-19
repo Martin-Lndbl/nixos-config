@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/release-23.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/release-24.11";
 
     # Home manager
     hm.url = "github:nix-community/home-manager";
@@ -11,7 +11,6 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
 
     envfs.url = "github:Mic92/envfs";
     envfs.inputs.nixpkgs.follows = "nixpkgs";
@@ -63,6 +62,7 @@
           envfs.nixosModules.envfs
           ./nixos/base.nix
           ./nixos/wireguard.nix
+          ./nixos/printer.nix
           ./nixos/machines/nix-gt.nix
           ./nixos/wm/hyprland.nix
         ] ++ import ./modules/nixos;
@@ -93,6 +93,7 @@
           envfs.nixosModules.envfs
           ./nixos/base.nix
           ./nixos/wireguard.nix
+          ./nixos/printer.nix
           ./nixos/container/template.nix
           ./nixos/machines/nix-nb.nix
           ./nixos/wm/hyprland.nix
@@ -129,5 +130,35 @@
         };
       };
 
+      # -----------------------------------------------
+      #                   cronus
+      # -----------------------------------------------
+      nixosConfigurations.cronus = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs outputs;
+        };
+        modules = [
+          envfs.nixosModules.envfs
+          ./nixos/base.nix
+          ./nixos/wireguard.nix
+          ./nixos/printer.nix
+          ./nixos/machines/cronus.nix
+          ./nixos/wm/hyprland.nix
+        ] ++ import ./modules/nixos;
+      };
+      homeConfigurations = {
+        "mrtn@cronus" = hm.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            nix-colors.homeManagerModules.default
+            ./hm/home.nix
+            ./hm/hyprland
+            ./hm/users/mrtn/cronus.nix
+          ] ++ import ./modules/hm;
+        };
+      };
     };
 }
