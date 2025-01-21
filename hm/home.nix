@@ -43,6 +43,7 @@
     swaybg
     brightnessctl
     ripgrep
+    btop
 
     # meetings
     zoom-us
