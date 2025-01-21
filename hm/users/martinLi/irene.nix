@@ -15,7 +15,8 @@
   home.homeDirectory = "/home/martinLi";
 
   home.packages = with pkgs; [
-    xclip
+    mdcat
+    clipboard-jh
   ];
 
   home.sessionVariables = {
@@ -29,7 +30,8 @@
   programs.direnv.enable = true;
 
   xdg.enable = true;
-  xdg.cacheHome = config.home.homeDirectory + "/.local/cache";
+  xdg.cacheHome = "/scratch/${config.home.username}/.cache";
+  xdg.stateHome = "/scratch/${config.home.username}/.local/share";
   xdg.userDirs = {
     enable = true;
     createDirectories = false;
