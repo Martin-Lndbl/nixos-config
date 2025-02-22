@@ -17,7 +17,7 @@ in
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.sway}/bin/sway --config ${swayConfig}";
+        command = "${pkgs.sway}/bin/sway --config ${swayConfig} --unsupported-gpu";
       };
     };
   };
