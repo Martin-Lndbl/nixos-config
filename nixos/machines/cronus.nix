@@ -54,11 +54,12 @@
     gsp.enable = config.hardware.nvidia.open;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "570.86.16";
-      sha256_64bit = "sha256-RWPqS7ZUJH9JEAWlfHLGdqrNlavhaR1xMyzs8lJhy9U=";
-      openSha256 = "sha256-DuVNA63+pJ8IB7Tw2gM4HbwlOh1bcDg2AN2mbEU9VPE=";
-      settingsSha256 = "sha256-9rtqh64TyhDF5fFAYiWl3oDHzKJqyOW3abpcf2iNRT8=";
-      usePersistenced = false;
+      version = "570.124.04";
+      sha256_64bit = "sha256-G3hqS3Ei18QhbFiuQAdoik93jBlsFI2RkWOBXuENU8Q=";
+      openSha256 = "sha256-KCGUyu/XtmgcBqJ8NLw/iXlaqB9/exg51KFx0Ta5ip0=";
+      settingsSha256 = "sha256-LNL0J/sYHD8vagkV1w8tb52gMtzj/F0QmJTV1cMaso8=";
+      persistencedSha256 = "";
+      usePersistenced = true;
     };
   };
 
@@ -69,12 +70,29 @@
 
   boot = {
     kernelParams = [
-      "nvidia.NVreg_UsePageAttributeTable=1" # why this isn't default is beyond me.
-      "nvidia_modeset.disable_vrr_memclk_switch=1" # stop really high memclk when vrr is in use.
+      # To allow cooler control
+      "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
+      "nvidia.NVreg_UsePageAttributeTable=1"
+      "nvidia_modeset.disable_vrr_memclk_switch=1"
+      # for suspend/wakeup issues, recommended by https://wiki.hyprland.org/Nvidia/
+      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      # for wayland issues, but breaks tty
+      # see https://github.com/NixOS/nixpkgs/issues/343774#issuecomment-2370293678
+      # "initcall_blacklist=simpledrm_platform_driver_init"
     ];
   };
 
   programs.gamemode.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    egl-wayland
+    nvidia-system-monitor-qt
+  ];
+
+  environment.variables = {
+    LIBVA_DRIVER_NAME = "nvidia";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/3663bb6e-d508-409d-8fc3-2f245326fc0d";

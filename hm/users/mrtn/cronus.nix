@@ -24,7 +24,7 @@ in
 
   appearance.opacity = 0.96;
 
-  appearance.fontSize = 14;
+  appearance.fontSize = 18;
   monitors.center = "DP-3";
   monitors.right = "HDMI-A-2";
   monitors.primary_id = 1;

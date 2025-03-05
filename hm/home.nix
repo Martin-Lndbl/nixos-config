@@ -48,7 +48,7 @@
     # meetings
     zoom-us
     teams-for-linux
-    slack
+    stable.slack
     discord
 
     # Notes
