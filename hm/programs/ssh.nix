@@ -2,10 +2,11 @@
 {
   programs.ssh = {
     enable = true;
+    includes = [ "~/.ssh/private-config" ];
     extraConfig = ''
-      Host itsec
-        HostName sandkasten.sec.in.tum.de
-        User team-116
+        Host itsec
+          HostName sandkasten.sec.in.tum.de
+          User team-116
 
         Host oci
           HostName 141.144.251.241
