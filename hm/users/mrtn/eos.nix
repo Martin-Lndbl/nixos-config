@@ -11,7 +11,6 @@
 
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
-
   home.sessionVariables = {
     TERM = "xterm";
   };
@@ -21,6 +20,7 @@
   programs.git.userName = "Martin-Lndbl";
   programs.home-manager.enable = true;
   programs.direnv.enable = true;
+  programs.bash.bashrcExtra = "source ~/.profile";
 
   xdg.enable = true;
   xdg.userDirs = {
