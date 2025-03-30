@@ -131,6 +131,22 @@
       };
 
       # -----------------------------------------------
+      #                   eos
+      # -----------------------------------------------
+      homeConfigurations = {
+        "mrtn@eos" = hm.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            nix-colors.homeManagerModules.default
+            ./hm/users/mrtn/eos.nix
+          ];
+        };
+      };
+
+      # -----------------------------------------------
       #                   cronus
       # -----------------------------------------------
       nixosConfigurations.cronus = nixpkgs.lib.nixosSystem {
