@@ -8,11 +8,12 @@
           HostName sandkasten.sec.in.tum.de
           User team-116
 
-        Host oci
-          HostName 141.144.251.241
-          User opc
+        Host eos
+          HostName lndbl.de
+          User mrtn
           RequestTTY force
           RemoteCommand bash
+          IdentityFile ~/.ssh/id_eos
 
         Host rgb
           HostName lxhalle.in.tum.de

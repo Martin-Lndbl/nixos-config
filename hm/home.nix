@@ -50,6 +50,7 @@
     teams-for-linux
     stable.slack
     discord
+    element-desktop
 
     # Notes
     trilium-desktop
