@@ -53,7 +53,7 @@
     element-desktop
 
     # Notes
-    trilium-desktop
+    trilium-next-desktop
     anki
 
     # eyecandy
