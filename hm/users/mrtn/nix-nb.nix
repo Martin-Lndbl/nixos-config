@@ -21,7 +21,7 @@ rec {
     logoColor2 = config.colorscheme.palette.base04;
   };
   appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
-  appearance.fontSize = 18;
+  appearance.fontSize = 14;
   monitors.center = "DP-6";
   monitors.left = "eDP-1";
   monitors.right = "DP-7";
