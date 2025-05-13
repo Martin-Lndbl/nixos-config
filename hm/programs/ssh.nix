@@ -9,7 +9,7 @@
           User team-116
 
         Host eos
-          HostName lndbl.de
+          HostName 10.10.0.1
           User mrtn
           RequestTTY force
           RemoteCommand bash
