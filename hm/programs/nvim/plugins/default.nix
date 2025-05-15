@@ -8,6 +8,7 @@
     ./nvim-tree.nix
     ./undotree.nix
     ./telescope.nix
+    ./jdtls-nvim.nix
 #    ./wakatime.nix
   ];
 
