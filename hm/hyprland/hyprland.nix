@@ -61,7 +61,7 @@ in
     };
 
     windowrule = [
-      "opacity 0.99 override ${builtins.toString config.appearance.opacity} override, .*"
+      # "opacity 0.99 override ${builtins.toString config.appearance.opacity} override, .*"
     ];
 
     bind = [
