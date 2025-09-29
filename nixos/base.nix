@@ -1,4 +1,12 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./users.nix
     ./security.nix
@@ -7,7 +15,8 @@
   nixpkgs = {
     overlays = [
       outputs.overlays.nixpkgs-stable
-    ] ++ outputs.overlays.modifications;
+    ]
+    ++ outputs.overlays.modifications;
     config.allowUnfree = true;
   };
 
@@ -37,7 +46,7 @@
     useXkbConfig = true;
   };
 
-  # Sound 
+  # Sound
   services.pipewire = {
     enable = true;
     alsa.enable = true;
