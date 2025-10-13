@@ -73,5 +73,9 @@
     vim
   ];
 
+  security.pki.certificateFiles = [
+    ./eos.pem
+  ];
+
   system.stateVersion = "22.11";
 }
