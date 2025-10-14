@@ -7,5 +7,5 @@
   atlauncher = pkgs.callPackage ./atlaucher { };
   hyprctl-rotate = pkgs.callPackage ./hyprctl-rotate.nix { };
   hm = pkgs.home-manager;
-  # trilium-next-desktop = pkgs.callPackage ./trilium/trilium-next-desktop.nix { };
+  trilium-desktop-pkg = pkgs.callPackage ./trilium/trilium-desktop.nix { };
 }

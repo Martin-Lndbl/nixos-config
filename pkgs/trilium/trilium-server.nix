@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "0.97.1";
+  version = "0.99.0";
 
   serverSource_x64.url = "https://github.com/TriliumNext/Trilium/releases/download/v${version}/TriliumNotes-Server-v${version}-linux-x64.tar.xz";
   serverSource_x64.sha256 = "1y0ass5b3c8qx28b31x2h7i1rlvdyjimsklgjpv8d47micsg6m7z";
