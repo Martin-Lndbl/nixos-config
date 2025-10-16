@@ -12,7 +12,7 @@ in
   wayland.windowManager.hyprland.settings = with config.colorScheme; {
     exec-once = [
       "swaybg -i ${config.appearance.wallpaper}"
-      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-window https://calendar.google.com/calendar/u/0/r"
+      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox --new-window https://nextcloud.home/apps/calendar/timeGridWeek/now"
       "[workspace 9 silent; noanim] discord"
       "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-window https://web.whatsapp.com/"
       "[workspace 1; noanim] alacritty"
