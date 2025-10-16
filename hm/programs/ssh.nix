@@ -3,38 +3,24 @@
   services.ssh-agent.enable = true;
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     includes = [ "~/.ssh/private-config" ];
-    extraConfig = ''
-      Host itsec
-        HostName sandkasten.sec.in.tum.de
-        User team-116
-
-     Host eos
-        HostName 10.10.0.1
-        User mrtn
-        RequestTTY force
-        RemoteCommand bash
-        IdentityFile ~/.ssh/id_eos
-
-      Host rgb
-        HostName lxhalle.in.tum.de
-        User linm
-        RequestTTY force
-        RemoteCommand bash
-
-      Host cpp
-        HostName cppprog.db.in.tum.de
-        User git
-
-      Host irene
-        HostName irene.dos.cit.tum.de
-        User martinLi
-        ProxyCommand ssh tunnel@login.dos.cit.tum.de -W %h:%p
-        RequestTTY yes
-        ForwardX11 no
-
-      Host cronus
-        HostName 192.168.1.105
-    '';
+    matchBlocks = {
+      "*" = {
+        userKnownHostsFile = "~/.ssh/known_hosts";
+      };
+      "eos" = {
+        hostname = "10.10.0.1";
+        user = "mrtn";
+        identityFile = "~/.ssh/id_eos";
+      };
+      "rgb" = {
+        hostname = "lxhalle.in.tum.de";
+        user = "linm";
+      };
+      "cronus" = {
+        hostname = "192.168.1.105";
+      };
+    };
   };
 }
