@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 
 let
   switch_workspace = builtins.map (ws: "SUPER, ${ws}, workspace, ${ws}") config.workspaces;
@@ -13,7 +13,6 @@ in
     exec-once = [
       "swaybg -i ${config.appearance.wallpaper}"
       "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox --new-window https://nextcloud.home/apps/calendar/timeGridWeek/now"
-      "[workspace 9 silent; noanim] discord"
       "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-window https://web.whatsapp.com/"
       "[workspace 1; noanim] alacritty"
       "[workspace 1; noanim] alacritty"
@@ -116,7 +115,9 @@ in
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
       ", XF86Calculator, exec, alacritty  -t popup -e calc"
-    ] ++ switch_workspace ++ move_workspace;
+    ]
+    ++ switch_workspace
+    ++ move_workspace;
 
     workspace = [
       "1,monitor:${config.monitors.center}"
