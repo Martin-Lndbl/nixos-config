@@ -43,14 +43,12 @@
     btop
 
     # meetings
-    zoom-us
-    teams-for-linux
-    stable.slack
     discord
     element-desktop
 
     # Notes
     trilium-desktop-pkg
+    xournalpp
     anki
 
     # eyecandy

@@ -11,9 +11,10 @@
     ./git.nix
     ./mime.nix
     ./nvim
-    ./oci.nix
     ./spotify.nix
     ./ssh.nix
+    ./thunderbird.nix
+    ./oci.nix
     ./vscode.nix
     ./whatsapp.nix
   ];
