@@ -63,6 +63,7 @@ in
     windowrule = [
       # "opacity 0.99 override ${builtins.toString config.appearance.opacity} override, .*"
       "float, class:thunderbird, title:Edit Item"
+      "float, class:thunderbird, title:^$"
       "float, class:thunderbird, title:Select Calendar"
       "suppressevent maximize, class:thunderbird, title:Select Calendar"
       "size 600 400, class:thunderbird, title:Select Calendar"
