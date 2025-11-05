@@ -125,7 +125,8 @@ in
 
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
-      ", XF86Calculator, exec, alacritty  -t popup -e calc"
+      ", XF86Calculator, exec, alacritty -t popup -e calc"
+      "SUPER_SHIFT, s, exec, grimblast copy area"
     ]
     ++ switch_workspace
     ++ move_workspace;
