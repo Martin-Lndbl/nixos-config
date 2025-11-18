@@ -5,6 +5,6 @@
 
     enable = true;
     lfs.enable = true;
-    userEmail = "lblsolutions@outlook.de";
+    settings.user.email = "lblsolutions@outlook.de";
   };
 }

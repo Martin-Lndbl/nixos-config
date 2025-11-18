@@ -1,16 +1,15 @@
-{ inputs, outputs, lib, config, pkgs, ... }:
+{ lib, pkgs, ... }:
 let
-  swayConfig = pkgs.writeText "greetd-sway-config"
-    ''
-      input * xkb_layout de
-      exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-      exec "${pkgs.greetd.gtkgreet}/bin/gtkgreet -l -s ${./gtkgreet.css}; swaymsg exit"
-      bindsym Mod4+shift+e exec swaynag \
-        -t warning \
-        -m 'What do you want to do?' \
-        -b 'Poweroff' 'systemctl poweroff' \
-        -b 'Reboot' 'systemctl reboot'
-    '';
+  swayConfig = pkgs.writeText "greetd-sway-config" ''
+    input * xkb_layout de
+    exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+    exec "${pkgs.gtkgreet}/bin/gtkgreet -l -s ${./gtkgreet.css}; swaymsg exit"
+    bindsym Mod4+shift+e exec swaynag \
+      -t warning \
+      -m 'What do you want to do?' \
+      -b 'Poweroff' 'systemctl poweroff' \
+      -b 'Reboot' 'systemctl reboot'
+  '';
 in
 {
   services.greetd = {
@@ -28,7 +27,9 @@ in
   '';
 
   nix.settings.substituters = [ "https://hyprland.cachix.org" ];
-  nix.settings.trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+  nix.settings.trusted-public-keys = [
+    "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+  ];
 
   hardware = {
     graphics = {
@@ -46,7 +47,10 @@ in
       ];
       config = {
         "Hyprland" = {
-          default = [ "hyprland" "gtk" ];
+          default = [
+            "hyprland"
+            "gtk"
+          ];
         };
         "common" = {
           default = [ "gtk" ];
