@@ -1,5 +1,12 @@
-{ config, pkgs, lib, ... }: {
-
+{
+  pkgs,
+  ...
+}:
+{
+  environment.systemPackages = with pkgs; [
+    eduvpn-client
+  ];
+  networking.networkmanager.plugins = with pkgs; [ networkmanager-openvpn ];
   networking.firewall = {
     # if packets are still dropped, they will show up in dmesg
     logReversePathDrops = true;
@@ -18,4 +25,3 @@
     '';
   };
 }
-
