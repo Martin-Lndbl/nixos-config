@@ -13,8 +13,7 @@ in
     exec-once = [
       "swaybg -i ${config.appearance.wallpaper}"
       "[workspace 9 silent; noanim] thunderbird"
-      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-tab https://web.whatsapp.com/"
-      "[workspace 9 silent; noanim] firefox -p autostart --new-tab https://app.element.io"
+      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-tab https://app.element.io"
       "[workspace 1; noanim] alacritty"
       "[workspace 1; noanim] alacritty"
     ];
@@ -125,7 +124,8 @@ in
 
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
-      ", XF86Calculator, exec, alacritty  -t popup -e calc"
+      ", XF86Calculator, exec, alacritty -t popup -e calc"
+      "SUPER_SHIFT, s, exec, grimblast copy area"
     ]
     ++ switch_workspace
     ++ move_workspace;

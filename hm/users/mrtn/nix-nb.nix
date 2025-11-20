@@ -38,5 +38,5 @@ rec {
     cdsem = "cd ~/documents/bsc_info/07_sem/";
   };
 
-  programs.git.userName = "martin_lndbl-NBL";
+  programs.git.settings.user.name = "martin_lndbl-NBL";
 }

@@ -110,75 +110,84 @@
 
           local capabilities = require('cmp_nvim_lsp').default_capabilities()
           local lsp_flags = { debounce_text_changes = 150, }
-          require('lspconfig')['pyright'].setup {
+          vim.lsp.enable('pyright')
+          vim.lsp.config('pyright', {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
-          }
-          require('lspconfig')['ts_ls'].setup {
+          })
+          vim.lsp.enable('ts_ls')
+          vim.lsp.config('ts_ls', {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
-          }
-          require('lspconfig')['rust_analyzer'].setup {
+          })
+          vim.lsp.enable('rust_analyzer')
+          vim.lsp.config('rust_analyzer', {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
-            -- Server-specific settings...
             settings = {
               ["rust-analyzer"] = {}
             }
-          }
-          require('lspconfig')['lua_ls'].setup {
+          })
+          vim.lsp.enable('lua_ls')
+          vim.lsp.config('lua_ls', {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
-          }
-          require('lspconfig')['bashls'].setup {
+          })
+          vim.lsp.enable('bashls')
+          vim.lsp.config('bashls', {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
-          }
-          require('lspconfig')['clangd'].setup {
+          })
+          vim.lsp.enable('clangd')
+          vim.lsp.config('clangd', {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
-           cmd = {
-             "clangd",
-             "--all-scopes-completion",
-             "--recovery-ast",
-             "--clang-tidy",
-             "--background-index",
-             "-j=64",
-             "--log=verbose",
-             "--cross-file-rename",
-             "--suggest-missing-includes",
-             "--enable-config",
+            cmd = {
+               "clangd",
+               "--all-scopes-completion",
+               "--recovery-ast",
+               "--clang-tidy",
+               "--background-index",
+               "-j=64",
+               "--log=verbose",
+               "--cross-file-rename",
+               "--suggest-missing-includes",
+               "--enable-config",
             },
-          }
-          require('lspconfig')['nixd'].setup {
+          })
+          vim.lsp.enable('nixd')
+          vim.lsp.config('nixd', {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
-          }
-          require('lspconfig')['r_language_server'].setup {
+          })
+          vim.lsp.enable('r_language_server')
+          vim.lsp.config('r_language_server', {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
-          }
-          require('lspconfig')['texlab'].setup {
+          })
+          vim.lsp.enable('texlab')
+          vim.lsp.config('texlab', {
             on_attach = on_attach,
             flags = lsp_flags,
             filetypes = { "tex", "lytex" },
             capabilities = capabilities,
-          }
+          })
           local pid = vim.fn.getpid()
-          require('lspconfig')['omnisharp'].setup {
+          vim.lsp.enable('omnisharp')
+          vim.lsp.config('omnisharp', {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
             cmd = { "OmniSharp", "--languageserver" , "--hostPID", tostring(pid) },
-          }
+          })
           vim.diagnostic.config({
             virtual_text = {
               -- source = "always",  -- Or "if_many"

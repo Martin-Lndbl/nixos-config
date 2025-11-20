@@ -63,7 +63,7 @@
       nodePackages.bash-language-server
       nixd
       nixfmt-rfc-style
-      sumneko-lua-language-server
+      lua-language-server
       texlab
     ];
   };
