@@ -1,10 +1,14 @@
-# security tweaks borrowed from @hlissner
+{ lib, ... }:
 {
   boot.kernel.sysctl = {
     # The Magic SysRq key is a key combo that allows users connected to the
     # system console of a Linux kernel to perform some low-level commands.
     # Disable it, since we don't need it, and is a potential security concern.
     "kernel.sysrq" = 0;
+
+    # allow perf as user
+    "kernel.perf_event_paranoid" = -1;
+    "kernel.kptr_restrict" = lib.mkForce 0;
 
     ## TCP hardening
     # Prevent bogus ICMP errors from filling up logs.
