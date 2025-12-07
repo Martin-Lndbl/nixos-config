@@ -1,6 +1,7 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   home.packages = with pkgs; [
+    feishin
     spotifywm
   ];
 
@@ -9,6 +10,10 @@
     genericName = "Spotify";
     exec = "spotify";
     terminal = false;
-    categories = [ "Application" "Network" "Audio" ];
+    categories = [
+      "Application"
+      "Network"
+      "Audio"
+    ];
   };
 }
