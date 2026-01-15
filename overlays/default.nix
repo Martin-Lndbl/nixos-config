@@ -4,7 +4,7 @@
     # (import ./bash.nix)
     (import ./code.nix)
     # (import ./discord.nix)
-    (import ./trilium.nix)
+    # (import ./trilium.nix)
     (import ./waybar.nix)
   ];
 

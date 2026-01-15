@@ -31,6 +31,7 @@ rec {
       "${monitors.left}, 1920x1080@60, -1920x1080, 1"
       "${monitors.center}, 3840x2160@60, 0x0, 1"
       "${monitors.right}, 1920x1080@60, 3840x540, 1"
+      " , preferred, auto, 1, mirror, eDP-1"
     ];
   };
 

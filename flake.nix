@@ -91,6 +91,7 @@
         };
         modules = [
           envfs.nixosModules.envfs
+          ./nixos/xen.nix
           ./nixos/base.nix
           ./nixos/wireguard.nix
           ./nixos/printer.nix
