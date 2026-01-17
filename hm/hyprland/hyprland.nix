@@ -13,7 +13,7 @@ in
     exec-once = [
       "swaybg -i ${config.appearance.wallpaper}"
       "[workspace 9 silent; noanim] thunderbird"
-      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-tab https://app.element.io"
+      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-tab https://matrix.tum.de"
       "[workspace 1; noanim] alacritty"
       "[workspace 1; noanim] alacritty"
     ];

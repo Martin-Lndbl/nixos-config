@@ -47,7 +47,7 @@
     element-desktop
 
     # Notes
-    trilium-desktop-pkg
+    trilium-desktop
     xournalpp
     anki
 
