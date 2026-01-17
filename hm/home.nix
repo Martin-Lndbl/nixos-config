@@ -51,6 +51,9 @@
     xournalpp
     anki
 
+    # Browser
+    tor-browser
+
     # eyecandy
     neofetch
     cava
