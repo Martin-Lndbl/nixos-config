@@ -68,6 +68,8 @@ with config.colorscheme.palette; {
     "eww/images/outlook.svg".source = ./outlook.svg;
     "eww/images/gmail.svg".source = ./gmail.svg;
     "eww/images/trilium.svg".source = ./trilium.svg;
+    "eww/images/nextcloud.svg".source = ./nextcloud.svg;
+    "eww/images/xournalpp.svg".source = ./xournalpp.svg;
 
     "eww/images/shutdown.svg".source = chcol base05 ./shutdown.svg;
     "eww/images/reboot.svg".source = chcol base05 ./reboot.svg;

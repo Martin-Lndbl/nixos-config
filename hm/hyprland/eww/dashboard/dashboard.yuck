@@ -176,12 +176,12 @@
       :onclick "xdg-open https://bitbucket.org")
     (button :class "button nixos"
       :onclick "xdg-open https://nixos.org")
-    (button :class "button outlook"
-      :onclick "xdg-open https://outlook.live.com/calendar/0")
-    (button :class "button gmail"
-      :onclick "xdg-open https://mail.google.com")
+    (button :class "button nextcloud"
+      :onclick "xdg-open https://nextcloud.home")
     (button :class "button trilium"
       :onclick "exec trilium &")
+    (button :class "button xournalpp"
+      :onclick "exec xournalpp &")
   )
 )
 

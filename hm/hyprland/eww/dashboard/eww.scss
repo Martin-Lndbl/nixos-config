@@ -185,7 +185,7 @@
 .perf-text { font-size: 1.6rem; color: $base0E; }
 .circ-prog { background-color: $base02; color: $base0E; }
 
-.github, .bitbucket, .nixos, .outlook, .gmail, .trilium {
+.github, .bitbucket, .nixos, .outlook, .gmail, .trilium, .nextcloud, .xournalpp {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 3rem;
@@ -199,6 +199,8 @@
 .outlook { background-image: url("./images/outlook.svg"); }
 .gmail { background-image: url("./images/gmail.svg"); }
 .trilium { background-image: url("./images/trilium.svg"); }
+.nextcloud { background-image: url("./images/nextcloud.svg"); }
+.xournalpp { background-image: url("./images/xournalpp.svg"); }
 
 .shutdown, .reboot, .lock, .sleep, .logout {
   background-repeat: no-repeat;
