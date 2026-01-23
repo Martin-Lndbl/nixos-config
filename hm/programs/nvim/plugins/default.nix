@@ -4,6 +4,7 @@
   imports = [
     ./base16-nvim.nix # colorscheme
     ./lsp.nix # language server + auto-completion
+    ./lualine.nix
     ./treesitter.nix
     ./nvim-tree.nix
     ./undotree.nix
