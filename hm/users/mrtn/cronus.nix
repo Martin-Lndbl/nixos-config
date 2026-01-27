@@ -29,10 +29,6 @@ in
   monitors.right = "DP-4";
   monitors.primary_id = 0;
 
-  programs.git = {
-    userName = "Martin-Lindbuechl@cronus";
-  };
-
 wayland.windowManager.hyprland.settings.monitor = [
     "${config.monitors.center}, 3840x2160, 0x0, 1"
     "${config.monitors.right}, 3840x2160, 3840x0, 1"
