@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ ... }:
 
 {
   stylix.targets.alacritty.enable = true;
@@ -15,6 +15,7 @@
           general = "Alacritty";
         };
         padding.x = 4;
+        padding.y = 8;
       };
     };
   };
