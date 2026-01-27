@@ -17,9 +17,6 @@
 
     envfs.url = "github:Mic92/envfs";
     envfs.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Nix Colors
-    nix-colors.url = "github:Misterio77/nix-colors";
   };
 
   outputs =
@@ -27,7 +24,6 @@
       self,
       nixpkgs,
       hm,
-      nix-colors,
       stylix,
       envfs,
       ...
@@ -114,7 +110,6 @@
           };
           modules = [
             stylix.homeModules.stylix
-            nix-colors.homeManagerModules.default
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/nix-nb.nix
@@ -133,7 +128,6 @@
             inherit inputs outputs;
           };
           modules = [
-            nix-colors.homeManagerModules.default
             ./hm/users/martinLi/irene.nix
           ];
         };
@@ -149,7 +143,6 @@
             inherit inputs outputs;
           };
           modules = [
-            nix-colors.homeManagerModules.default
             ./hm/users/mrtn/eos.nix
           ];
         };
@@ -180,7 +173,6 @@
           };
           modules = [
             stylix.homeModules.stylix
-            nix-colors.homeManagerModules.default
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/cronus.nix
