@@ -13,9 +13,14 @@
   stylix.targets.hyprpanel.enable = true;
   programs.hyprpanel = {
     enable = true;
-    settings.theme = {
-      font.size = "16px";
-      bar.transparent = true;
+    settings = {
+      bar.bluetooth.label = false;
+      bar.clock.format = "%d.%m | %H:%M:%S";
+      theme = {
+        font.size = "16px";
+        bar.transparent = true;
+        bar.location = "bottom";
+      };
     };
   };
 
