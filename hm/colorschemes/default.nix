@@ -3,10 +3,12 @@
   stylix.enable = true;
   stylix.polarity = "dark";
   stylix.image = pkgs.fetchurl {
-    url = "https://getwallpapers.com/wallpaper/download/168517";
-    hash = "sha256-EUxtQ2y5c92BzTR605re7rJTIyEx+Hy+5O3q3Y2PprM=";
+    url = "https://4kwallpapers.com/images/wallpapers/cozy-winterscape-3840x2160-21319.jpg";
+    hash = "sha256-knweYThXi1bhUBz2sjjdwhbyRE5Jni1y9A1TWIbO0do=";
   };
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
+
+  stylix.opacity.terminal = 0.95;
 
   stylix.targets.firefox.profileNames = [ "default" ];
 }
