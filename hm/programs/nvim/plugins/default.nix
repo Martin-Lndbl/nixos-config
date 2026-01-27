@@ -1,21 +1,14 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   imports = [
-    # ./base16-nvim.nix # colorscheme
-    ./lsp.nix # language server + auto-completion
+    ./lsp.nix
     ./lualine.nix
     ./treesitter.nix
     ./nvim-tree.nix
     ./undotree.nix
     ./telescope.nix
     ./jdtls-nvim.nix
-    #    ./wakatime.nix
   ];
 
   programs.neovim.plugins = with pkgs.vimPlugins; [
