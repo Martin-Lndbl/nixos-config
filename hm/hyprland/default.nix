@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   ...
 }:
 {
@@ -15,7 +16,42 @@
     enable = true;
     settings = {
       bar.bluetooth.label = false;
-      bar.clock.format = "%d.%m | %H:%M:%S";
+      bar.clock.format = "%a %b %d %H:%M:%S";
+      bar.layouts."${config.monitors.center}" = {
+        left = [
+          "dashboard"
+          "workspaces"
+          "windowtitle"
+        ];
+        middle = [
+          "media"
+        ];
+        right = [
+          "volume"
+          "network"
+          "clock"
+          "systray"
+          (if config.appearance.hasBattery then "battery" else "")
+          "notifications"
+        ];
+      };
+      bar.layouts."${config.monitors.right}" = {
+        left = [
+          "dashboard"
+          "workspaces"
+          "windowtitle"
+        ];
+        middle = [
+          "media"
+        ];
+        right = [
+          "volume"
+          "clock"
+          (if config.appearance.hasBattery then "battery" else "")
+          "notifications"
+        ];
+      };
+
       theme = {
         font.size = "16px";
         bar.transparent = true;

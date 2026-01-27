@@ -41,5 +41,10 @@ with lib;
         types.str
       ];
     };
+    hasBattery = mkOption {
+      description = "Used to display battery information in status bar";
+      type = types.bool;
+      default = false;
+    };
   };
 }
