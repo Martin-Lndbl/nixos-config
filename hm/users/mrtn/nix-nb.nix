@@ -38,6 +38,4 @@ rec {
   programs.bash.shellAliases = {
     cdsem = "cd ~/documents/bsc_info/07_sem/";
   };
-
-  programs.git.settings.user.name = "martin_lndbl-NBL";
 }

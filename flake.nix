@@ -96,7 +96,7 @@
           ./nixos/printer.nix
           ./nixos/container/template.nix
           ./nixos/machines/nix-nb.nix
-          ./nixos/wm/hyprland.nix
+          ./nixos/wm/gnome.nix
         ] ++ import ./modules/nixos;
       };
       homeConfigurations = {
