@@ -9,6 +9,7 @@
 
   appearance.opacity = 0.95;
 
+  appearance.fontSize = 16;
   stylix.fonts.sizes.terminal = 16;
 
   monitors.center = "DP-3";

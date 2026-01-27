@@ -6,7 +6,6 @@
 }:
 
 {
-
   stylix.targets.neovim.enable = false;
   programs.neovim.plugins = [
     {
@@ -21,7 +20,6 @@
             acc + "  ${n} = '#${v}',\n"
           ) "" config.stylix.generated.palette
         }})
-        vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
       '';
     }
   ];
