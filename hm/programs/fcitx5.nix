@@ -1,48 +1,33 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
-  fcitx5 = {
-    enable = true;
-    profile.groups = {
-      Default = {
-        "Default Layout" = "de";
-        DefaultIM = "keyboard-de";
-        item = [
-          {
-            Name = "keyboard-de";
-            index = 0;
-          }
-        ];
-      };
-
-      Japanese = {
-        "Default Layout" = "de";
-        DefaultIM = "mozc";
-        item = [
-          {
-            Name = "mozc";
-            index = 0;
-          }
-        ];
-      };
+  # i18n.inputMethod.enable = true;
+  i18n.inputMethod.fcitx5.addons = [ pkgs.fcitx5-mozc ];
+  i18n.inputMethod.fcitx5.waylandFrontend = true;
+  i18n.inputMethod.fcitx5.settings.inputMethod = {
+    GroupOrder."0" = "Default";
+    GroupOrder."1" = "Japanese";
+    "Groups/0" = {
+      Name = "Default";
+      "Default Layout" = "de";
+      DefaultIM = "keyboard-de";
+      item = [
+        {
+          Name = "keyboard-de";
+          index = 0;
+        }
+      ];
     };
 
-    profile.groupOrder = {
-      Default = 0;
-      Japanese = 1;
-    };
-
-    config.Hotkey = {
-      TriggerKeys = [ ];
-      EnumerateWithTriggerKeys = false;
-      AltTriggerKeys = [ ];
-      EnumerateForwardKeys = [ ];
-      EnumerateBackwardKeys = [ ];
-      EnumerateGroupBackwardKeys = [ ];
-      ActivateKeys = [ ];
-      DeactivateKeys = [ ];
-      PrevPage = [ ];
-      NextPage = [ ];
-      TogglePreedit = [ ];
+    "Groups/1" = {
+      Name = "Japanese";
+      "Default Layout" = "de";
+      DefaultIM = "mozc";
+      item = [
+        {
+          Name = "mozc";
+          index = 0;
+        }
+      ];
     };
   };
 }

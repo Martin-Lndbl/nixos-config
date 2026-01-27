@@ -51,24 +51,7 @@
     # enable wifi power saving (keep uapsd off to maintain low latencies)
     "options iwlwifi power_save=1 uapsd_disable=1"
   ];
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      # Reduce sustained and short-term turbo power limits (Watts)
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
-      CPU_MAX_PERF_ON_AC = 80; # percent, 100 = full, 80 = cooler
-      CPU_BOOST_ON_AC = 1; # keep turbo on but limited
-
-      # Platform profiles
-      PLATFORM_PROFILE_ON_AC = "balanced";
-    };
-  };
-
   services.thermald.enable = true;
-  powerManagement.cpuFreqGovernor = "performance";
 
   services.udev.extraRules = lib.mkMerge [
     # autosuspend USB devices

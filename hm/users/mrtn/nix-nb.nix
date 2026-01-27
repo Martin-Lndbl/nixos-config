@@ -20,6 +20,7 @@ rec {
     logoColor1 = config.colorscheme.palette.base03;
     logoColor2 = config.colorscheme.palette.base04;
   };
+  appearance.opacity = 0.95;
   appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
   appearance.fontSize = 14;
   monitors.center = "DP-6";
