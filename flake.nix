@@ -12,6 +12,9 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    stylix.url = "github:nix-community/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+
     envfs.url = "github:Mic92/envfs";
     envfs.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -25,6 +28,7 @@
       nixpkgs,
       hm,
       nix-colors,
+      stylix,
       envfs,
       ...
     }@inputs:
@@ -52,7 +56,7 @@
       overlays = import ./overlays { inherit inputs; };
 
       # -----------------------------------------------
-      #                   nix-gt 
+      #                   nix-gt
       # -----------------------------------------------
       nixosConfigurations.nix-gt = nixpkgs.lib.nixosSystem {
         specialArgs = {
@@ -65,7 +69,8 @@
           ./nixos/printer.nix
           ./nixos/machines/nix-gt.nix
           ./nixos/wm/hyprland.nix
-        ] ++ import ./modules/nixos;
+        ]
+        ++ import ./modules/nixos;
       };
       homeConfigurations = {
         "mrtn@nix-gt" = hm.lib.homeManagerConfiguration {
@@ -74,16 +79,17 @@
             inherit inputs outputs;
           };
           modules = [
-            nix-colors.homeManagerModules.default
+            stylix.homeModules.stylix
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/nix-gt.nix
-          ] ++ import ./modules/hm;
+          ]
+          ++ import ./modules/hm;
         };
       };
 
       # -----------------------------------------------
-      #                   nix-nb 
+      #                   nix-nb
       # -----------------------------------------------
       nixosConfigurations.nix-nb = nixpkgs.lib.nixosSystem {
         specialArgs = {
@@ -97,7 +103,8 @@
           ./nixos/container/template.nix
           ./nixos/machines/nix-nb.nix
           ./nixos/wm/hyprland.nix
-        ] ++ import ./modules/nixos;
+        ]
+        ++ import ./modules/nixos;
       };
       homeConfigurations = {
         "mrtn@nix-nb" = hm.lib.homeManagerConfiguration {
@@ -106,11 +113,13 @@
             inherit inputs outputs;
           };
           modules = [
+            stylix.homeModules.stylix
             nix-colors.homeManagerModules.default
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/nix-nb.nix
-          ] ++ import ./modules/hm;
+          ]
+          ++ import ./modules/hm;
         };
       };
 
@@ -160,7 +169,8 @@
           ./nixos/printer.nix
           ./nixos/machines/cronus.nix
           ./nixos/wm/gnome.nix
-        ] ++ import ./modules/nixos;
+        ]
+        ++ import ./modules/nixos;
       };
       homeConfigurations = {
         "mrtn@cronus" = hm.lib.homeManagerConfiguration {
@@ -169,11 +179,13 @@
             inherit inputs outputs;
           };
           modules = [
+            stylix.homeModules.stylix
             nix-colors.homeManagerModules.default
             ./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/cronus.nix
-          ] ++ import ./modules/hm;
+          ]
+          ++ import ./modules/hm;
         };
       };
     };

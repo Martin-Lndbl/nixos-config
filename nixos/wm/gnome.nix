@@ -2,7 +2,7 @@
 
 {
   services.displayManager.gdm.enable = true;
-  services.displayManager.defaultSession = "hyprland-uwsm";
+  services.displayManager.defaultSession = "hyprland";
 
   services.desktopManager.gnome.enable = true;
   services.gnome.core-apps.enable = true;
@@ -30,6 +30,26 @@
 
   programs.hyprland.enable = true;
   programs.hyprland.withUWSM = true;
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-hyprland
+        xdg-desktop-portal-gtk
+      ];
+      config = {
+        "Hyprland" = {
+          default = [
+            "hyprland"
+            "gtk"
+          ];
+        };
+        "common" = {
+          default = [ "gtk" ];
+        };
+      };
+    };
+  };
 
   nix.settings.substituters = [ "https://hyprland.cachix.org" ];
   nix.settings.trusted-public-keys = [

@@ -1,9 +1,9 @@
 { config, ... }:
 
 let
-  switch_workspace = builtins.map (ws: "SUPER, ${ws}, workspace, ${ws}") config.workspaces;
+  switch_workspace = map (ws: "SUPER, ${ws}, workspace, ${ws}") config.workspaces;
 
-  move_workspace = builtins.map (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}") config.workspaces;
+  move_workspace = map (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}") config.workspaces;
 
 in
 {
@@ -11,9 +11,9 @@ in
 
   wayland.windowManager.hyprland.settings = with config.colorScheme; {
     exec-once = [
-      "swaybg -i ${config.appearance.wallpaper}"
       "[workspace 9 silent; noanim] thunderbird"
-      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-tab https://matrix.tum.de"
+      "[workspace 9 silent; noanim] element-desktop --password-store=\"gnome-libsecret\" "
+      "[workspace 9 silent; noanim] feishin"
       "[workspace 1; noanim] alacritty"
       "[workspace 1; noanim] alacritty"
     ];
@@ -27,13 +27,6 @@ in
       gaps_in = 5;
       gaps_out = 10;
       resize_on_border = true;
-      "col.active_border" = "rgb(${palette.base06})";
-      "col.inactive_border" = "rgb(${palette.base02})";
-    };
-
-    group = {
-      "col.border_active" = "rgb(${palette.base0C})";
-      "col.border_inactive" = "rgb(${palette.base0D})";
     };
 
     decoration = {
@@ -60,10 +53,11 @@ in
     };
 
     windowrule = [
-      # "opacity 0.99 override ${builtins.toString config.appearance.opacity} override, .*"
+      "opacity 0.98 override ${toString config.appearance.opacity}, match:tag code"
       "float yes, match:class thunderbird, match:title Edit Item"
       "float yes, match:class thunderbird, match:title ^$"
       "float yes, match:class thunderbird, match:title Select Calendar"
+      "suppress_event maximize, match:class feishin"
       "suppress_event maximize, match:class thunderbird, match:title Select Calendar"
       "size 600 400, match:class thunderbird, match:title Select Calendar"
       "center yes, match:class thunderbird, match:title Select Calendar"

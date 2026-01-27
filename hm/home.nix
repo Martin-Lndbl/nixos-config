@@ -1,7 +1,6 @@
 {
   inputs,
   outputs,
-  lib,
   config,
   pkgs,
   ...
@@ -9,13 +8,13 @@
 {
   imports = [
     ./programs
+    ./colorschemes
     ./games
   ];
 
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
-  colorScheme = inputs.nix-colors.colorSchemes.classic-dark;
   appearance.profile.picture = "${config.xdg.userDirs.pictures}/profile.jpeg";
 
   nixpkgs = {

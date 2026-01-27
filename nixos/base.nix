@@ -73,6 +73,8 @@
     vim
   ];
 
+  services.gnome.gnome-keyring.enable = true;
+
   security.pki.certificateFiles = [
     ./eos.pem
   ];

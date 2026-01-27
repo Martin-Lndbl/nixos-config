@@ -4,18 +4,28 @@
 }:
 {
   imports = [
-    ./eww
-    ./swaylock.nix
     ./hyprland.nix
-    ./mako.nix
     ./wofi.nix
     ./grim.nix
   ];
+
+  stylix.targets.hyprland.enable = true;
+  stylix.targets.hyprpanel.enable = true;
+  programs.hyprpanel = {
+    enable = true;
+    settings.theme = {
+      font.size = "16px";
+      bar.transparent = true;
+    };
+  };
 
   home.packages = with pkgs; [
     wl-clipboard
     hyprctl-rotate
   ];
+
+  programs.hyprlock.enable = true;
+  stylix.targets.hyprlock.colors.enable = true;
 
   programs.bash.bashrcExtra = ''
     ccat() {
