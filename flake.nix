@@ -159,7 +159,7 @@
           ./nixos/wireguard.nix
           ./nixos/printer.nix
           ./nixos/machines/cronus.nix
-          ./nixos/wm/hyprland.nix
+          ./nixos/wm/gnome.nix
         ] ++ import ./modules/nixos;
       };
       homeConfigurations = {

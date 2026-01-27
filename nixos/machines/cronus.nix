@@ -59,17 +59,9 @@
   hardware.nvidia = {
     modesetting.enable = true;
     open = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     gsp.enable = config.hardware.nvidia.open;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "575.57.08";
-      sha256_64bit = "sha256-KqcB2sGAp7IKbleMzNkB3tjUTlfWBYDwj50o3R//xvI=";
-      openSha256 = "sha256-DOJw73sjhQoy+5R0GHGnUddE6xaXb/z/Ihq3BKBf+lg=";
-      settingsSha256 = "sha256-AIeeDXFEo9VEKCgXnY3QvrW5iWZeIVg4LBCeRtMs5Io=";
-      persistencedSha256 = "";
-      usePersistenced = true;
-    };
   };
 
   services.xserver = {
