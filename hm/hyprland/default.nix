@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   ...
 }:
 {
@@ -14,7 +15,7 @@
   programs.hyprpanel = {
     enable = true;
     settings.theme = {
-      font.size = "16px";
+      font.size = config.appearance.fontSize;
       bar.transparent = true;
     };
   };
