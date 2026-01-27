@@ -9,7 +9,7 @@ in
 {
   wayland.windowManager.hyprland.enable = true;
 
-  wayland.windowManager.hyprland.settings = with config.colorScheme; {
+  wayland.windowManager.hyprland.settings = {
     exec-once = [
       "[workspace 9 silent; noanim] thunderbird"
       "[workspace 9 silent; noanim] element-desktop --password-store=\"gnome-libsecret\" "
