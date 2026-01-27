@@ -6,15 +6,6 @@
     {
       plugin = pkgs.vimPlugins.nvim-treesitter;
       type = "lua";
-      config = ''
-        require'nvim-treesitter.configs'.setup{
-        	ensure_installed = {},
-        	highlight = {
-        		enable = true,
-        		additional_vim_regex_highlighting = true,
-        	},
-        }
-      '';
     }
     bash
     c
