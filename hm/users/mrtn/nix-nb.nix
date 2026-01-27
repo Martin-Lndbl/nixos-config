@@ -23,6 +23,7 @@ rec {
   appearance.opacity = 0.95;
   appearance.lockScreen = "${config.xdg.userDirs.pictures}/wallpaper/nix.png";
   appearance.fontSize = 14;
+  appearance.hasBattery = true;
   monitors.center = "DP-6";
   monitors.left = "eDP-1";
   monitors.right = "DP-7";
