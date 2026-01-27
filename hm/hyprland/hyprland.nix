@@ -61,16 +61,16 @@ in
 
     windowrule = [
       # "opacity 0.99 override ${builtins.toString config.appearance.opacity} override, .*"
-      "float, class:thunderbird, title:Edit Item"
-      "float, class:thunderbird, title:^$"
-      "float, class:thunderbird, title:Select Calendar"
-      "suppressevent maximize, class:thunderbird, title:Select Calendar"
-      "size 600 400, class:thunderbird, title:Select Calendar"
-      "center, class:thunderbird, title:Select Calendar"
+      "float yes, match:class thunderbird, match:title Edit Item"
+      "float yes, match:class thunderbird, match:title ^$"
+      "float yes, match:class thunderbird, match:title Select Calendar"
+      "suppress_event maximize, match:class thunderbird, match:title Select Calendar"
+      "size 600 400, match:class thunderbird, match:title Select Calendar"
+      "center yes, match:class thunderbird, match:title Select Calendar"
 
-      "size 400 500, class:thunderbird, title:Uninvited guest"
+      "size 400 500, match:class thunderbird, match:title Uninvited guest"
 
-      "float, size 400 660, class:anki"
+      "float yes, size 400 660, match:class anki"
     ];
 
     bind = [
@@ -145,5 +145,7 @@ in
       ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+"
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
     ];
+
+    ecosystem.no_update_news = true;
   };
 }
