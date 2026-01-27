@@ -21,7 +21,8 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.nixpkgs-stable
-    ] ++ outputs.overlays.modifications;
+    ]
+    ++ outputs.overlays.modifications;
     config = {
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
@@ -59,6 +60,7 @@
   ];
 
   home.pointerCursor = {
+    enable = true;
     name = "phinger-cursors-light";
     package = pkgs.phinger-cursors;
     size = 28;

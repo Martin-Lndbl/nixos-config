@@ -1,15 +1,25 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   programs.firefox.enable = true;
+
+  stylix.targets.firefox.enable = false;
+  stylix.targets.firefox.profileNames = [ ];
 
   xdg.desktopEntries.firefox = {
     name = "Firefox";
     genericName = "Web Browser";
     exec = "firefox %U";
     terminal = false;
-    categories = [ "Application" "Network" "WebBrowser" ];
-    mimeType = [ "text/html" "text/xml" ];
+    categories = [
+      "Application"
+      "Network"
+      "WebBrowser"
+    ];
+    mimeType = [
+      "text/html"
+      "text/xml"
+    ];
   };
 
   wayland.windowManager.hyprland.extraConfig = ''

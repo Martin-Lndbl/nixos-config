@@ -8,7 +8,5 @@
   };
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
 
-  stylix.opacity.terminal = 0.95;
-
-  stylix.targets.firefox.profileNames = [ "default" ];
+  stylix.opacity.terminal = 0.97;
 }
