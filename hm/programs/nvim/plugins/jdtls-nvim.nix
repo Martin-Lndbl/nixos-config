@@ -25,7 +25,7 @@ in
     neovim = {
       extraPackages = javaPkgs;
 
-      extraLuaConfig =
+      initLua =
         # lua
         ''
           vim.api.nvim_create_autocmd('FileType', {
