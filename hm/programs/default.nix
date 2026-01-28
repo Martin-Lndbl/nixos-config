@@ -17,6 +17,7 @@
     ./oci.nix
     ./vscode.nix
     ./whatsapp.nix
+    ./xournalpp.nix
   ];
 
   programs = {

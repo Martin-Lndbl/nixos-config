@@ -48,7 +48,6 @@
 
     # Notes
     trilium-desktop
-    xournalpp
 
     # Browser
     tor-browser
