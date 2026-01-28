@@ -33,7 +33,7 @@
     extraPackages = with pkgs; [
       nodePackages.bash-language-server
       nixd
-      nixfmt-rfc-style
+      pkgs.nixfmt
       lua-language-server
       texlab
     ];

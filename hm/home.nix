@@ -59,8 +59,7 @@
     cava
   ];
 
-  home.pointerCursor = {
-    enable = true;
+  stylix.cursor = {
     name = "phinger-cursors-light";
     package = pkgs.phinger-cursors;
     size = 28;
