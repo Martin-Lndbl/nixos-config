@@ -2,6 +2,7 @@
 {
   imports = [
     ./alacritty.nix
+    ./anki.nix
     ./bash.nix
     ./calc.nix
     ./cava.nix

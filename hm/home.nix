@@ -49,7 +49,6 @@
     # Notes
     trilium-desktop
     xournalpp
-    anki
 
     # Browser
     tor-browser

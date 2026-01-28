@@ -63,8 +63,6 @@ in
       "center yes, match:class thunderbird, match:title Select Calendar"
 
       "size 400 500, match:class thunderbird, match:title Uninvited guest"
-
-      "float yes, size 400 660, match:class anki"
     ];
 
     bind = [
