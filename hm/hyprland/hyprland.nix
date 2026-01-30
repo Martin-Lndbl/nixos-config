@@ -72,7 +72,7 @@ in
       "SUPER, g, exec, MOZ_ENABLE_WAYLAND=1 firefox"
       "SUPER_SHIFT, Q, killactive"
       "SUPERALT, L, exec, hyprlock"
-      "SUPERALT, S, exec, hyprlock; sleep 1; systemctl suspend -i"
+      "SUPERALT, S, exec, (hyprlock & systemctl suspend -i)"
 
       # Move focus
       "SUPER, left, movefocus, l"
