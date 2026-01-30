@@ -6,6 +6,7 @@
 {
   imports = [
     ./hyprland.nix
+    ./hyprlock.nix
     ./wofi.nix
     ./grim.nix
   ];
@@ -64,9 +65,6 @@
     wl-clipboard
     hyprctl-rotate
   ];
-
-  programs.hyprlock.enable = true;
-  stylix.targets.hyprlock.colors.enable = true;
 
   programs.bash.bashrcExtra = ''
     ccat() {

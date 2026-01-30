@@ -1,11 +1,15 @@
 {
   config,
+  pkgs,
   ...
 }:
 {
   imports = [ ./secrets.nix ];
 
-  appearance.wallpaper = "${config.xdg.userDirs.pictures}/wallpaper.jpg";
+  appearance.wallpaper = pkgs.fetchurl {
+    url = "https://4kwallpapers.com/images/wallpapers/cozy-winterscape-3840x2160-21319.jpg";
+    hash = "sha256-knweYThXi1bhUBz2sjjdwhbyRE5Jni1y9A1TWIbO0do=";
+  };
 
   appearance.opacity = 0.95;
 
