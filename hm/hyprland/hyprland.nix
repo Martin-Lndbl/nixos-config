@@ -19,7 +19,7 @@ in
     ];
 
     input = {
-      kb_layout = "de";
+      kb_layout = "us";
       follow_mouse = 1;
     };
 

@@ -58,7 +58,7 @@
     };
   };
 
-  console.keyMap = lib.mkForce "de-latin1";
+  console.keyMap = lib.mkForce "us";
 
   security.pam.services.swaylock = {
     text = "auth include login";

@@ -52,8 +52,6 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
-  console.keyMap = "de";
-
   system.stateVersion = lib.mkForce "24.11";
 
   hardware.nvidia = {
