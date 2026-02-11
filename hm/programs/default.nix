@@ -16,7 +16,6 @@
     ./thunderbird.nix
     ./oci.nix
     ./vscode.nix
-    ./whatsapp.nix
     ./xournalpp.nix
   ];
 
