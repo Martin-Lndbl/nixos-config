@@ -9,6 +9,7 @@
     ./undotree.nix
     ./telescope.nix
     ./jdtls-nvim.nix
+    ./base16-nvim.nix
   ];
 
   programs.neovim.plugins = with pkgs.vimPlugins; [

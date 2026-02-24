@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   ...
 }:
@@ -15,9 +14,9 @@
     TERM = "xterm";
   };
 
-  # stylix.enable = true;
+  stylix.enable = true;
+  stylix.polarity = "dark";
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
-  # programs.dconf.enable = true;
 
   programs.home-manager.enable = true;
   programs.direnv.enable = true;
