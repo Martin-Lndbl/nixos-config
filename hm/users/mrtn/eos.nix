@@ -1,6 +1,6 @@
 {
-  inputs,
   config,
+  pkgs,
   ...
 }:
 {
@@ -15,7 +15,10 @@
     TERM = "xterm";
   };
 
-  colorScheme = inputs.nix-colors.colorSchemes.classic-dark;
+  home.packages = with pkgs; [
+    clipboard-jh
+    btop
+  ];
 
   programs.git.userName = "Martin-Lndbl";
   programs.home-manager.enable = true;
