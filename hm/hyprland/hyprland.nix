@@ -19,7 +19,9 @@ in
     ];
 
     input = {
-      kb_layout = "us";
+      # kb_layout = "us,de";
+      # kb_variant = ",qwerty";
+      # kb_options = "grp:alt_shift_toggle";
       follow_mouse = 1;
     };
 
