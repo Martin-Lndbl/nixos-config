@@ -149,6 +149,21 @@
       };
 
       # -----------------------------------------------
+      #                   pyroeis
+      # -----------------------------------------------
+      homeConfigurations = {
+        "mrtn@pyroeis" = hm.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            stylix.homeModules.stylix
+            ./hm/users/mrtn/pyroeis.nix
+          ];
+        };
+      };
+      # -----------------------------------------------
       #                   cronus
       # -----------------------------------------------
       nixosConfigurations.cronus = nixpkgs.lib.nixosSystem {
