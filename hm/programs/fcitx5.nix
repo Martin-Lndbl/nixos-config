@@ -10,15 +10,17 @@
         fcitx5-mozc
       ];
       settings = {
-        globalOptions.Hotkey.ToggleInputMethod = "Super+Space";
         inputMethod = {
           "Groups/0" = {
             Name = "Default";
-            "Default Layout" = "de";
-            DefaultIM = "keyboard-de";
+            "Default Layout" = "us";
+            DefaultIM = "keyboard-us";
           };
-          "Groups/0/Items/0".Name = "keyboard-de";
-          "Groups/0/Items/1".Name = "mozc";
+          "Groups/0/Items/0".Name = "keyboard-us";
+          "Groups/0/Items/0".Layout = "us";
+          "Groups/0/Items/1".Name = "keyboard-de";
+          "Groups/0/Items/1".Layout = "de";
+          "Groups/0/Items/2".Name = "mozc";
         };
       };
     };
