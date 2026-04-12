@@ -1,26 +1,27 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 
 let
-  switch_workspace = builtins.map (ws: "SUPER, ${ws}, workspace, ${ws}") config.workspaces;
+  switch_workspace = map (ws: "SUPER, ${ws}, workspace, ${ws}") config.workspaces;
 
-  move_workspace = builtins.map (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}") config.workspaces;
+  move_workspace = map (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}") config.workspaces;
 
 in
 {
   wayland.windowManager.hyprland.enable = true;
 
-  wayland.windowManager.hyprland.settings = with config.colorScheme; {
+  wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "swaybg -i ${config.appearance.wallpaper}"
-      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-window https://calendar.google.com/calendar/u/0/r"
-      "[workspace 9 silent; noanim] discord"
-      "[workspace 9 silent; noanim; fullscreenstate, -1 2] firefox -p autostart --new-window https://web.whatsapp.com/"
+      "[workspace 9 silent; noanim] thunderbird"
+      "[workspace 9 silent; noanim] element-desktop --password-store=\"gnome-libsecret\" "
+      "[workspace 9 silent; noanim] feishin"
       "[workspace 1; noanim] alacritty"
       "[workspace 1; noanim] alacritty"
     ];
 
     input = {
-      kb_layout = "de";
+      # kb_layout = "us,de";
+      # kb_variant = ",qwerty";
+      # kb_options = "grp:alt_shift_toggle";
       follow_mouse = 1;
     };
 
@@ -28,13 +29,6 @@ in
       gaps_in = 5;
       gaps_out = 10;
       resize_on_border = true;
-      "col.active_border" = "rgb(${palette.base06})";
-      "col.inactive_border" = "rgb(${palette.base02})";
-    };
-
-    group = {
-      "col.border_active" = "rgb(${palette.base0C})";
-      "col.border_inactive" = "rgb(${palette.base0D})";
     };
 
     decoration = {
@@ -61,7 +55,16 @@ in
     };
 
     windowrule = [
-      "opacity 0.99 override ${builtins.toString config.appearance.opacity} override, .*"
+      "opacity 0.98 override ${toString config.appearance.opacity}, match:tag code"
+      "float yes, match:class thunderbird, match:title Edit Item"
+      "float yes, match:class thunderbird, match:title ^$"
+      "float yes, match:class thunderbird, match:title Select Calendar"
+      "suppress_event maximize, match:class feishin"
+      "suppress_event maximize, match:class thunderbird, match:title Select Calendar"
+      "size 600 400, match:class thunderbird, match:title Select Calendar"
+      "center yes, match:class thunderbird, match:title Select Calendar"
+
+      "size 400 500, match:class thunderbird, match:title Uninvited guest"
     ];
 
     bind = [
@@ -70,8 +73,8 @@ in
       "SUPER, d, exec, wofi --show drun"
       "SUPER, g, exec, MOZ_ENABLE_WAYLAND=1 firefox"
       "SUPER_SHIFT, Q, killactive"
-      "SUPERALT, L, exec, swaylock -fel"
-      "SUPERALT, S, exec, swaylock -fel; sleep 1; systemctl suspend -i"
+      "SUPERALT, L, exec, hyprlock"
+      "SUPERALT, S, exec, (hyprlock & systemctl suspend -i)"
 
       # Move focus
       "SUPER, left, movefocus, l"
@@ -115,8 +118,11 @@ in
 
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
-      ", XF86Calculator, exec, alacritty  -t popup -e calc"
-    ] ++ switch_workspace ++ move_workspace;
+      ", XF86Calculator, exec, alacritty -t popup -e calc"
+      "SUPER_SHIFT, s, exec, grimblast copy area"
+    ]
+    ++ switch_workspace
+    ++ move_workspace;
 
     workspace = [
       "1,monitor:${config.monitors.center}"
@@ -133,5 +139,7 @@ in
       ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+"
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
     ];
+
+    ecosystem.no_update_news = true;
   };
 }

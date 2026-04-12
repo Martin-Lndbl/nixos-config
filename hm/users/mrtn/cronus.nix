@@ -1,37 +1,24 @@
 {
-  inputs,
-  pkgs,
   config,
+  pkgs,
   ...
 }:
-
-let
-  inherit (inputs.nix-colors.lib-contrib { inherit pkgs; })
-    nixWallpaperFromScheme
-    ;
-in
 {
   imports = [ ./secrets.nix ];
 
-  appearance.wallpaper = nixWallpaperFromScheme {
-    scheme = config.colorscheme;
-    width = 1920;
-    height = 1080;
-    logoScale = 8;
-    logoColor1 = config.colorscheme.palette.base03;
-    logoColor2 = config.colorscheme.palette.base04;
+  appearance.wallpaper = pkgs.fetchurl {
+    url = "https://4kwallpapers.com/images/wallpapers/cozy-winterscape-3840x2160-21319.jpg";
+    hash = "sha256-knweYThXi1bhUBz2sjjdwhbyRE5Jni1y9A1TWIbO0do=";
   };
 
-  appearance.opacity = 0.96;
+  appearance.opacity = 0.95;
 
-  appearance.fontSize = 18;
-  monitors.center = "DP-1";
-  monitors.right = "HDMI-A-1";
-  monitors.primary_id = 1;
+  appearance.fontSize = 16;
+  stylix.fonts.sizes.terminal = 16;
 
-  programs.git = {
-    userName = "Martin-Lindbuechl@cronus";
-  };
+  monitors.center = "DP-3";
+  monitors.right = "DP-4";
+  monitors.primary_id = 0;
 
   wayland.windowManager.hyprland.settings.monitor = [
     "${config.monitors.center}, 3840x2160, 0x0, 1"

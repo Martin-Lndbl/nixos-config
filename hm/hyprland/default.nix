@@ -4,14 +4,14 @@
 }:
 {
   imports = [
-    ./eww
-    ./swaylock.nix
     ./hyprland.nix
-    ./mako.nix
+    ./hyprlock.nix
+    ./hyprpanel.nix
     ./wofi.nix
     ./grim.nix
   ];
 
+  stylix.targets.hyprland.enable = true;
   home.packages = with pkgs; [
     wl-clipboard
     hyprctl-rotate

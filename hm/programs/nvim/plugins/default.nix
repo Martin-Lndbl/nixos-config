@@ -1,27 +1,32 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
-    ./base16-nvim.nix # colorscheme
-    ./lsp.nix # language server + auto-completion
+    ./lsp.nix
+    ./lualine.nix
     ./treesitter.nix
     ./nvim-tree.nix
     ./undotree.nix
     ./telescope.nix
-#    ./wakatime.nix
+    ./jdtls-nvim.nix
+    ./base16-nvim.nix
   ];
 
-  programs.neovim.plugins = with pkgs.vimPlugins;
-    [
-      delimitMate
-      vim-css-color
-      BufOnly-vim
-      vim-vsnip
-
-      {
-        plugin = comment-nvim;
-        type = "lua";
-        config = "require('Comment').setup()";
-      }
-    ];
+  programs.neovim.plugins = with pkgs.vimPlugins; [
+    delimitMate
+    vim-css-color
+    BufOnly-vim
+    vim-vsnip
+    vim-suda
+    {
+      plugin = comment-nvim;
+      type = "lua";
+      config =
+        #lua
+        ''
+          require('Comment').setup()
+          vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
+        '';
+    }
+  ];
 }

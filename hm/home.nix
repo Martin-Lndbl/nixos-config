@@ -1,7 +1,6 @@
 {
   inputs,
   outputs,
-  lib,
   config,
   pkgs,
   ...
@@ -9,26 +8,23 @@
 {
   imports = [
     ./programs
-    ./games
+    ./colorschemes
   ];
 
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
-  colorScheme = inputs.nix-colors.colorSchemes.classic-dark;
   appearance.profile.picture = "${config.xdg.userDirs.pictures}/profile.jpeg";
 
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
       outputs.overlays.nixpkgs-stable
-    ] ++ outputs.overlays.modifications;
+    ]
+    ++ outputs.overlays.modifications;
     config = {
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
-      permittedInsecurePackages = [
-        "electron-24.8.6"
-      ];
     };
   };
 
@@ -43,23 +39,24 @@
     swaybg
     brightnessctl
     ripgrep
+    btop
 
     # meetings
-    zoom-us
-    teams-for-linux
-    slack
     discord
+    element-desktop
 
     # Notes
     trilium-desktop
-    anki
+
+    # Browser
+    tor-browser
 
     # eyecandy
     neofetch
     cava
   ];
 
-  home.pointerCursor = {
+  stylix.cursor = {
     name = "phinger-cursors-light";
     package = pkgs.phinger-cursors;
     size = 28;

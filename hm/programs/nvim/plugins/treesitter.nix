@@ -2,38 +2,29 @@
 
 {
 
-  programs.neovim.plugins = with pkgs.vimPlugins.nvim-treesitter-parsers; [
-    {
-      plugin = pkgs.vimPlugins.nvim-treesitter;
-      type = "lua";
-      config = ''
-        require'nvim-treesitter.configs'.setup{
-        	ensure_installed = {},
-        	highlight = {
-        		enable = true,
-        		additional_vim_regex_highlighting = true,
-        	},
-        }
-      '';
-    }
-    bash
-    c
-    cpp
-    c_sharp
-    css
-    html
-    java
-    javascript
-    json
-    lua
-    make
-    markdown
-    r
-    rust
-    scss
-    toml
-    vimdoc
-    yaml
-    nix
+  programs.neovim.plugins = [
+    (pkgs.vimPlugins.nvim-treesitter.withPlugins (
+      p: with p; [
+        bash
+        c
+        cpp
+        c_sharp
+        css
+        html
+        java
+        javascript
+        json
+        lua
+        make
+        markdown
+        r
+        rust
+        scss
+        toml
+        vimdoc
+        yaml
+        nix
+      ]
+    ))
   ];
 }

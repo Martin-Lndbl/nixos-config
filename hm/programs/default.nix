@@ -2,20 +2,21 @@
 {
   imports = [
     ./alacritty.nix
+    ./anki.nix
     ./bash.nix
     ./calc.nix
     ./cava.nix
-    # ./discord.nix
     ./fcitx5.nix
     ./firefox.nix
     ./git.nix
     ./mime.nix
     ./nvim
-    ./oci.nix
     ./spotify.nix
     ./ssh.nix
+    ./thunderbird.nix
+    ./oci.nix
     ./vscode.nix
-    ./whatsapp.nix
+    ./xournalpp.nix
   ];
 
   programs = {

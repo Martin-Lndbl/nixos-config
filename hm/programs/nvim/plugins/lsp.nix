@@ -10,175 +10,234 @@
     {
       plugin = nvim-cmp;
       type = "lua";
-      config = ''
-        local cmp = require 'cmp'
+      config =
+        #lua
+        ''
+          local cmp = require 'cmp'
 
-        cmp.setup({
-          snippet = {
-            expand = function(args)
-              vim.fn["vsnip#anonymous"](args.body)
-            end,
-          },
-          window = {
-            completion = cmp.config.window.bordered(),
-            documentation = cmp.config.window.bordered(),
-          },
-          mapping = cmp.mapping.preset.insert({
-            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-            ['<C-f>'] = cmp.mapping.scroll_docs(4),
-            ['<C-Space>'] = cmp.mapping.complete(),
-            ['<C-e>'] = cmp.mapping.abort(),
-            ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          }),
-          sources = cmp.config.sources({
-            { name = 'nvim_lsp' },
-            { name = 'vsnip' },
-            { name = 'path' },
-          }, {
-            { name = 'buffer' },
+          cmp.setup({
+            snippet = {
+              expand = function(args)
+                vim.fn["vsnip#anonymous"](args.body)
+              end,
+            },
+            window = {
+              completion = {
+                border = 'rounded',
+                winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+              },
+              documentation = {
+                border = 'rounded',
+                winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+              },
+            },
+            mapping = cmp.mapping.preset.insert({
+              ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+              ['<C-f>'] = cmp.mapping.scroll_docs(4),
+              ['<C-Space>'] = cmp.mapping.complete(),
+              ['<C-e>'] = cmp.mapping.abort(),
+              ['<CR>'] = cmp.mapping.confirm({ select = true }),
+            }),
+            sources = cmp.config.sources({
+              { name = 'nvim_lsp' },
+              { name = 'vsnip' },
+              { name = 'path' },
+            }, {
+              { name = 'buffer' },
+            })
           })
-        })
 
-        cmp.setup.filetype('gitcommit', {
-          sources = cmp.config.sources({
-            { name = 'git' }, }, {
-            { name = 'buffer' },
+          cmp.setup.filetype('gitcommit', {
+            sources = cmp.config.sources({
+              { name = 'git' }, }, {
+              { name = 'buffer' },
+            })
           })
-        })
 
-        cmp.setup.cmdline({ '/', '?' }, {
-          mapping = cmp.mapping.preset.cmdline(),
-          sources = {
-            { name = 'buffer' }
-          }
-        })
-
-        cmp.setup.cmdline(':', {
-          mapping = cmp.mapping.preset.cmdline(),
-          sources = cmp.config.sources({
-            { name = 'path' }
-          }, {
-            { name = 'cmdline' }
+          cmp.setup.cmdline({ '/', '?' }, {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = {
+              { name = 'buffer' }
+            }
           })
-        })
-      '';
+
+          cmp.setup.cmdline(':', {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = cmp.config.sources({
+              { name = 'path' }
+            }, {
+              { name = 'cmdline' }
+            })
+          })
+        '';
     }
     {
       plugin = nvim-lspconfig;
       type = "lua";
-      config = ''
-        -- Mappings.
-        -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-        local opts = { noremap = true, silent = true }
-        vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-        vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+      config =
+        #lua
+        ''
+          -- Mappings.
+          -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+          local opts = { noremap = true, silent = true }
+          vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+          vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+          vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+          vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-        local on_attach = function(client, bufnr)
-          vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+          local on_attach = function(client, bufnr)
+            vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-          -- See `:help vim.lsp.*` for documentation on any of the below functions
-          local bufopts = { noremap = true, silent = true, buffer = bufnr }
-          vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-          vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-          vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-          vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-          vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-          vim.keymap.set('n', '<space>wl', function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, bufopts)
-          vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-          vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-          vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-          vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-          vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-        end
+            -- See `:help vim.lsp.*` for documentation on any of the below functions
+            local bufopts = { noremap = true, silent = true, buffer = bufnr }
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+            vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+            vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+            vim.keymap.set('n', '<space>wl', function()
+              print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end, bufopts)
+            vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+            vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+            vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+            vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+            vim.keymap.set('n', '<space>f', function()
+              if vim.bo.filetype == "python" then
+                vim.cmd("!black %")
+              else
+                vim.lsp.buf.format { async = true }
+              end
+            end, bufopts)
 
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        local lsp_flags = { debounce_text_changes = 150, }
-        require('lspconfig')['pyright'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          capabilities = capabilities,
-        }
-        require('lspconfig')['ts_ls'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          capabilities = capabilities,
-        }
-        require('lspconfig')['rust_analyzer'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          capabilities = capabilities,
-          -- Server-specific settings...
-          settings = {
-            ["rust-analyzer"] = {}
+          end
+
+          local capabilities = require('cmp_nvim_lsp').default_capabilities()
+          local lsp_flags = { debounce_text_changes = 150, }
+          vim.lsp.enable('pyright')
+          vim.lsp.config('pyright', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+          })
+          vim.lsp.enable('ts_ls')
+          vim.lsp.config('ts_ls', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+          })
+          vim.lsp.enable('rust_analyzer')
+          vim.lsp.config('rust_analyzer', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+            settings = {
+              ["rust-analyzer"] = {}
+            }
+          })
+          vim.lsp.enable('lua_ls')
+          vim.lsp.config('lua_ls', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+          })
+          vim.lsp.enable('bashls')
+          vim.lsp.config('bashls', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+          })
+          vim.lsp.enable('clangd')
+          vim.lsp.config('clangd', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+            cmd = {
+               "clangd",
+               "--all-scopes-completion",
+               "--recovery-ast",
+               "--clang-tidy",
+               "--background-index",
+               "-j=64",
+               "--log=verbose",
+               "--cross-file-rename",
+               "--suggest-missing-includes",
+               "--enable-config",
+            },
+          })
+          vim.lsp.enable('nixd')
+          vim.lsp.config('nixd', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+          })
+          vim.lsp.enable('r_language_server')
+          vim.lsp.config('r_language_server', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+          })
+          vim.lsp.enable('texlab')
+          vim.lsp.config('texlab', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            filetypes = { "tex", "lytex" },
+            capabilities = capabilities,
+          })
+          local pid = vim.fn.getpid()
+          vim.lsp.enable('omnisharp')
+          vim.lsp.config('omnisharp', {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+            cmd = { "OmniSharp", "--languageserver" , "--hostPID", tostring(pid) },
+          })
+          vim.diagnostic.config({
+            virtual_text = {
+              -- source = "always",  -- Or "if_many"
+              prefix = '●', -- Could be '■', '▎', 'x'
+            },
+            severity_sort = true,
+            float = {
+              source = "always", -- Or "if_many"
+            },
+          })
+        '';
+    }
+    {
+      plugin = pkgs.vimPlugins.lspkind-nvim;
+      type = "lua";
+      config =
+        #lua
+        ''
+          local lspkind = require('lspkind')
+          cmp.setup {
+            formatting = {
+              fields = { 'abbr', 'icon', 'kind', 'menu' },
+              format = lspkind.cmp_format({
+                maxwidth = {
+                  -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                  -- can also be a function to dynamically calculate max width such as
+                  -- menu = function() return math.floor(0.45 * vim.o.columns) end,
+                  menu = 50, -- leading text (labelDetails)
+                  abbr = 50, -- actual suggestion item
+                },
+                ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+                show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+
+                -- The function below will be called before any actual modifications from lspkind
+                -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+                before = function (entry, vim_item)
+                  -- ...
+                  return vim_item
+                end
+              })
+            }
           }
-        }
-        require('lspconfig')['lua_ls'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          capabilities = capabilities,
-        }
-        require('lspconfig')['bashls'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          capabilities = capabilities,
-        }
-        require('lspconfig')['clangd'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          capabilities = capabilities,
-         cmd = {
-           "clangd",
-           "--all-scopes-completion",
-           "--recovery-ast",
-           "--clang-tidy",
-           "--background-index",
-           "-j=64",
-           "--log=verbose",
-           "--cross-file-rename",
-           "--suggest-missing-includes",
-           "--enable-config",
-          },
-        }
-        require('lspconfig')['nixd'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          capabilities = capabilities,
-        }
-        require('lspconfig')['r_language_server'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          capabilities = capabilities,
-        }
-        require('lspconfig')['texlab'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          filetypes = { "tex", "lytex" },
-          capabilities = capabilities,
-        }
-        local pid = vim.fn.getpid()
-        require('lspconfig')['omnisharp'].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-          capabilities = capabilities,
-          cmd = { "OmniSharp", "--languageserver" , "--hostPID", tostring(pid) },
-        }
-        vim.diagnostic.config({
-          virtual_text = {
-            -- source = "always",  -- Or "if_many"
-            prefix = '●', -- Could be '■', '▎', 'x'
-          },
-          severity_sort = true,
-          float = {
-            source = "always", -- Or "if_many"
-          },
-        })
-      '';
+          vim.o.winborder = 'rounded'
+        '';
     }
   ];
 }
