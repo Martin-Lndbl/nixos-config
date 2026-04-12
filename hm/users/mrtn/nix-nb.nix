@@ -6,6 +6,10 @@
 rec {
   imports = [ ./secrets.nix ];
 
+  home.packages = with pkgs; [
+    prismlauncher
+  ];
+
   appearance.wallpaper = pkgs.fetchurl {
     url = "https://4kwallpapers.com/images/wallpapers/cozy-winterscape-3840x2160-21319.jpg";
     hash = "sha256-knweYThXi1bhUBz2sjjdwhbyRE5Jni1y9A1TWIbO0do=";

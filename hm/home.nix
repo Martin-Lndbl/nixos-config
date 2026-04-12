@@ -9,7 +9,6 @@
   imports = [
     ./programs
     ./colorschemes
-    ./games
   ];
 
   home.username = "mrtn";

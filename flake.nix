@@ -190,6 +190,7 @@
             stylix.homeModules.stylix
             ./hm/home.nix
             ./hm/hyprland
+            ./hm/games
             ./hm/users/mrtn/cronus.nix
           ]
           ++ import ./modules/hm;
