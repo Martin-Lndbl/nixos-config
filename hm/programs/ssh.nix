@@ -21,6 +21,11 @@
       "cronus" = {
         hostname = "192.168.1.105";
       };
+      "irene" = {
+        hostname = "irene.dos.cit.tum.de";
+        user = "martinLi";
+        proxyJump = "tunnel@login.dos.cit.tum.de";
+      };
     };
   };
 }
