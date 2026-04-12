@@ -143,6 +143,7 @@
             inherit inputs outputs;
           };
           modules = [
+            stylix.homeModules.stylix
             ./hm/users/mrtn/eos.nix
           ];
         };
