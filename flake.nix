@@ -128,6 +128,7 @@
             inherit inputs outputs;
           };
           modules = [
+          stylix.homeModules.stylix
             ./hm/users/martinLi/irene.nix
           ];
         };

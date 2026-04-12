@@ -15,8 +15,7 @@
 
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
 
-  # programs.bash.bashrcExtra = "source ~/.profile";
-  programs.git.userName = "martinLi-irene";
+  programs.bash.bashrcExtra = "source ~/.profile";
   programs.home-manager.enable = true;
   programs.direnv.enable = true;
 
