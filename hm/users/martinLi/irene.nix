@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   config,
   ...
@@ -14,6 +13,13 @@
   home.username = "martinLi";
   home.homeDirectory = "/home/martinLi";
 
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
+
+  # programs.bash.bashrcExtra = "source ~/.profile";
+  programs.git.userName = "martinLi-irene";
+  programs.home-manager.enable = true;
+  programs.direnv.enable = true;
+
   home.packages = with pkgs; [
     mdcat
     clipboard-jh
@@ -23,11 +29,6 @@
     TERM = "xterm";
   };
 
-  colorScheme = inputs.nix-colors.colorSchemes.classic-dark;
-
-  programs.git.userName = "martinLi-irene";
-  programs.home-manager.enable = true;
-  programs.direnv.enable = true;
 
   xdg.enable = true;
   xdg.cacheHome = "/scratch/${config.home.username}/.cache";
@@ -46,5 +47,5 @@
     extraConfig.XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/screenshots";
   };
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "25.11";
 }
