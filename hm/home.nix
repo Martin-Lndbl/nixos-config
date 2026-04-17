@@ -52,7 +52,6 @@
     tor-browser
 
     # eyecandy
-    neofetch
     cava
   ];
 
