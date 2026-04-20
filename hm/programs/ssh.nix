@@ -26,6 +26,12 @@
         user = "martinLi";
         proxyJump = "tunnel@login.dos.cit.tum.de";
       };
+      "jamie" = {
+        hostname = "jamie.dos.cit.tum.de";
+        user = "martinLi";
+        proxyJump = "tunnel@login.dos.cit.tum.de";
+
+      };
     };
   };
 }

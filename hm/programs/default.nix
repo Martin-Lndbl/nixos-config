@@ -10,6 +10,7 @@
     ./firefox.nix
     ./git.nix
     ./mime.nix
+    ./nextcloud.nix
     ./nvim
     ./spotify.nix
     ./ssh.nix
