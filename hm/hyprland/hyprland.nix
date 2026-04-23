@@ -56,15 +56,7 @@ in
 
     windowrule = [
       "opacity 0.98 override ${toString config.appearance.opacity}, match:tag code"
-      "float yes, match:class thunderbird, match:title Edit Item"
-      "float yes, match:class thunderbird, match:title ^$"
-      "float yes, match:class thunderbird, match:title Select Calendar"
       "suppress_event maximize, match:class feishin"
-      "suppress_event maximize, match:class thunderbird, match:title Select Calendar"
-      "size 600 400, match:class thunderbird, match:title Select Calendar"
-      "center yes, match:class thunderbird, match:title Select Calendar"
-
-      "size 400 500, match:class thunderbird, match:title Uninvited guest"
     ];
 
     bind = [
@@ -97,7 +89,7 @@ in
       "SUPER_SHIFT, k, movewindow, u"
       "SUPER_SHIFT, j, movewindow, d"
 
-      "SUPER, q, togglesplit,"
+      "SUPER, q, layoutmsg, togglesplit"
       "SUPER, v, togglefloating,"
       "SUPER, v, centerwindow,"
       "SUPER, f, fullscreen,"
