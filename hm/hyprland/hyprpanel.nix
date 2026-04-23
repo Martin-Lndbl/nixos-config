@@ -32,7 +32,7 @@
       bar.launcher.autoDetectIcon = true;
       bar.bluetooth.label = false;
       bar.clock.format = "%a %b %d %H:%M:%S";
-      bar.layouts."${config.monitors.center}" = {
+      bar.layouts."${config.monitors.right}" = {
         left = [
           "dashboard"
           "workspaces"
@@ -50,7 +50,7 @@
           "notifications"
         ];
       };
-      bar.layouts."${config.monitors.right}" = {
+      bar.layouts."${config.monitors.center}" = {
         left = [
           "dashboard"
           "workspaces"
