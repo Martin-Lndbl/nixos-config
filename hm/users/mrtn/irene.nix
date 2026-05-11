@@ -1,3 +1,7 @@
+# Create the following symbolic links before first switching into this generation
+# ln -s /scratch ~/scratch
+# ln -s /scratch/mrtn/.local ~/.local
+
 { pkgs, ... }:
 let
   username = "mrtn";
