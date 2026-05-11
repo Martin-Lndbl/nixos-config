@@ -8,6 +8,8 @@ rec {
 
   home.packages = with pkgs; [
     prismlauncher
+    iio-sensor-proxy
+    iio-hyprland
   ];
 
   appearance.wallpaper = pkgs.fetchurl {
