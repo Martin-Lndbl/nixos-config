@@ -18,11 +18,11 @@
 
   monitors.center = "DP-3";
   monitors.right = "DP-4";
-  monitors.primary_id = 0;
+  monitors.primary_id = 1;
 
   wayland.windowManager.hyprland.settings.monitor = [
     "${config.monitors.center}, 3840x2160, 0x0, 1"
     "${config.monitors.right}, 3840x2160, 3840x0, 1"
-    "HDMI-A-2, preferred, auto, 1, mirror, ${config.monitors.center}"
+    # "HDMI-A-2, preferred, auto, 1, mirror, ${config.monitors.center}"
   ];
 }
