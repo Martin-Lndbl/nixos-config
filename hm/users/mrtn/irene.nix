@@ -10,7 +10,7 @@ in
 
   home.username = username;
   home.homeDirectory = "/home/${username}";
-  home.stateVersion = "26.05";
+  home.stateVersion = "25.11";
 
   home.sessionVariables.TERM = "xterm";
 
@@ -25,6 +25,12 @@ in
 
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
 
-  xdg.cacheHome = "/scratch/${username}/.cache";
-  xdg.stateHome = "/scratch/${username}/.local/share";
+  xdg = {
+    enable = true;
+    userDirs.enable = false;
+    userDirs.createDirectories = false;
+    cacheHome = "/scratch/${username}/.cache";
+    stateHome = "/scratch/${username}/.local/state";
+    dataHome = "/scratch/${username}/.local/share";
+  };
 }
