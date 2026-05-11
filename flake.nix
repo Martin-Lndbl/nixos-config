@@ -122,14 +122,14 @@
       #                   irene
       # -----------------------------------------------
       homeConfigurations = {
-        "martinLi@irene" = hm.lib.homeManagerConfiguration {
+        "mrtn@irene" = hm.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = {
             inherit inputs outputs;
           };
           modules = [
-          stylix.homeModules.stylix
-            ./hm/users/martinLi/irene.nix
+            stylix.homeModules.stylix
+            ./hm/users/mrtn/irene.nix
           ];
         };
       };
