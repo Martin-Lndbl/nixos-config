@@ -9,6 +9,8 @@
     enable = true;
     vimAlias = true;
     defaultEditor = true;
+    withRuby = false;
+    withPython3 = false;
 
     extraConfig = ''
       set relativenumber
@@ -31,7 +33,7 @@
     '';
 
     extraPackages = with pkgs; [
-      nodePackages.bash-language-server
+      bash-language-server
       nixd
       pkgs.nixfmt
       lua-language-server

@@ -1,7 +1,8 @@
-{ ... }:
+{ config, ... }:
 
 {
   programs.firefox.enable = true;
+  programs.firefox.configPath = "${config.xdg.configHome}/mozilla/firefox";
 
   stylix.targets.firefox.enable = false;
   stylix.targets.firefox.profileNames = [ ];
@@ -20,6 +21,6 @@
     "opacity 1, match:title ^(Netflix — Mozilla Firefox)"
     "opacity 1, match:title ^(Netflix — Mozilla Firefox)"
     "opacity 1, match:title ^(Netflix — Mozilla Firefox)"
-  ]; 
+  ];
 
 }

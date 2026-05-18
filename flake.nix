@@ -14,9 +14,6 @@
 
     stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
-
-    envfs.url = "github:Mic92/envfs";
-    envfs.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -25,7 +22,6 @@
       nixpkgs,
       hm,
       stylix,
-      envfs,
       ...
     }@inputs:
     let
@@ -59,7 +55,6 @@
           inherit inputs outputs;
         };
         modules = [
-          envfs.nixosModules.envfs
           ./nixos/base.nix
           ./nixos/wireguard.nix
           ./nixos/printer.nix
@@ -92,7 +87,6 @@
           inherit inputs outputs;
         };
         modules = [
-          envfs.nixosModules.envfs
           ./nixos/base.nix
           ./nixos/wireguard.nix
           ./nixos/printer.nix
@@ -173,7 +167,6 @@
           inherit inputs outputs;
         };
         modules = [
-          envfs.nixosModules.envfs
           ./nixos/base.nix
           ./nixos/wireguard.nix
           ./nixos/printer.nix

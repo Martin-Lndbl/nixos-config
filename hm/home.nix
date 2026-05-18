@@ -1,5 +1,4 @@
 {
-  inputs,
   outputs,
   config,
   pkgs,
@@ -68,6 +67,7 @@
   xdg.userDirs = {
     enable = true;
     createDirectories = false;
+    setSessionVariables = true;
     documents = "${config.home.homeDirectory}/documents";
     download = "${config.home.homeDirectory}/downloads";
     desktop = "${config.home.homeDirectory}/.local/share/applications";
@@ -76,7 +76,7 @@
     videos = "${config.home.homeDirectory}/other/videos";
     templates = "${config.home.homeDirectory}/other";
     publicShare = "${config.home.homeDirectory}/other";
-    extraConfig.XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/screenshots";
+    extraConfig.SCREENSHOTS = "${config.xdg.userDirs.pictures}/screenshots";
   };
 
   systemd.user.startServices = "sd-switch";
