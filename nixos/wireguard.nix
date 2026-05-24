@@ -6,7 +6,25 @@
   environment.systemPackages = with pkgs; [
     eduvpn-client
   ];
-  networking.networkmanager.plugins = with pkgs; [ networkmanager-openvpn ];
+
+  services.dnsmasq = {
+    enable = true;
+    resolveLocalQueries = true;
+    settings = {
+      server = [
+        # --- Pyroeis VPN ---
+        "/lndbl.de/172.16.0.1"
+        "/16.172.in-addr.arpa/172.16.0.1"
+
+        # --- Eos VPN ---
+        "/home/10.0.0.1"
+        "/0.10.in-addr.arpa/10.0.0.1"
+      ];
+      domain-needed = true;
+      bogus-priv = true;
+    };
+  };
+
   networking.firewall = {
     # if packets are still dropped, they will show up in dmesg
     logReversePathDrops = true;

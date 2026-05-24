@@ -1,26 +1,28 @@
-{
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
+let
+  username = "mrtn";
+in
 {
   imports = [
-    ../../programs/nvim
+    ../../common.nix
     ../../programs/bash.nix
+    ../../programs/nvim
   ];
 
-  home.username = "mrtn";
-  home.homeDirectory = "/home/mrtn";
-  home.sessionVariables = {
-    TERM = "xterm";
-  };
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
+  home.stateVersion = "25.11";
 
-  stylix.enable = true;
-  stylix.polarity = "dark";
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
+  home.sessionVariables.TERM = "xterm";
+
+  home.packages = with pkgs; [
+    btop
+    mdcat
+  ];
 
   programs.home-manager.enable = true;
   programs.direnv.enable = true;
   programs.bash.bashrcExtra = "source ~/.profile";
 
-  home.stateVersion = "25.11";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
 }
