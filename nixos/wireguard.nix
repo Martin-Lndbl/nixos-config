@@ -17,8 +17,8 @@
         "/16.172.in-addr.arpa/172.16.0.1"
 
         # --- Eos VPN ---
-        "/home/10.0.0.1"
-        "/0.10.in-addr.arpa/10.0.0.1"
+        "/home/10.10.0.1"
+        "/10.10.in-addr.arpa/10.10.0.1"
       ];
       domain-needed = true;
       bogus-priv = true;
