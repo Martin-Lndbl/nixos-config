@@ -14,6 +14,10 @@
         user = "mrtn";
         identityFile = "~/.ssh/id_eos";
       };
+      "pyroeis" = {
+        hostname = "172.16.0.1";
+        user = "mrtn";
+      };
       "rgb" = {
         hostname = "lxhalle.in.tum.de";
         user = "linm";
