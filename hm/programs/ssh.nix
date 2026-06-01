@@ -31,6 +31,11 @@
         user = "mrtn";
         proxyJump = "tunnel@login.dos.cit.tum.de";
       };
+      "eliza" = {
+        hostname = "eliza.dos.cit.tum.de";
+        user = "mrtn";
+        proxyJump = "tunnel@login.dos.cit.tum.de";
+      };
     };
   };
 }
