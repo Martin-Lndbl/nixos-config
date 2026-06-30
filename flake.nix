@@ -145,6 +145,23 @@
       };
 
       # -----------------------------------------------
+      #                   aws
+      # -----------------------------------------------
+      homeConfigurations = {
+        "ubuntu@aws" = hm.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            stylix.homeModules.stylix
+            ./hm/users/ubuntu/aws.nix
+          ];
+        };
+      };
+
+
+      # -----------------------------------------------
       #                   pyroeis
       # -----------------------------------------------
       homeConfigurations = {
