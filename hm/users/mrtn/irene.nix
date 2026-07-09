@@ -22,6 +22,7 @@ in
   home.packages = with pkgs; [
     btop
     mdcat
+    claude-code
   ];
 
   programs.home-manager.enable = true;
