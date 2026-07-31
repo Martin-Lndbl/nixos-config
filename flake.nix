@@ -129,6 +129,21 @@
       };
 
       # -----------------------------------------------
+      #                   eliza
+      # -----------------------------------------------
+      homeConfigurations = {
+        "mrtn@eliza" = hm.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            stylix.homeModules.stylix
+            ./hm/users/mrtn/eliza.nix
+          ];
+        };
+      };
+      # -----------------------------------------------
       #                   eos
       # -----------------------------------------------
       homeConfigurations = {
@@ -143,6 +158,23 @@
           ];
         };
       };
+
+      # -----------------------------------------------
+      #                   aws
+      # -----------------------------------------------
+      homeConfigurations = {
+        "ubuntu@aws" = hm.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            stylix.homeModules.stylix
+            ./hm/users/ubuntu/aws.nix
+          ];
+        };
+      };
+
 
       # -----------------------------------------------
       #                   pyroeis
