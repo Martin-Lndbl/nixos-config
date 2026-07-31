@@ -16,6 +16,7 @@
     wl-clipboard
     hyprctl-rotate
   ];
+  home.pointerCursor.enable = true;
 
   programs.bash.bashrcExtra = ''
     ccat() {

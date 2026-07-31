@@ -8,7 +8,7 @@
     ./nvim-tree.nix
     ./undotree.nix
     ./telescope.nix
-    ./jdtls-nvim.nix
+    # ./jdtls-nvim.nix
     ./base16-nvim.nix
   ];
 

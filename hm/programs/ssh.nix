@@ -5,7 +5,7 @@
     enable = true;
     enableDefaultConfig = false;
     includes = [ "~/.ssh/private-config" ];
-    matchBlocks = {
+    settings = {
       "*" = {
         userKnownHostsFile = "~/.ssh/known_hosts";
       };

@@ -1,78 +1,79 @@
-{ config, pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
 
   home.packages = with pkgs; [
     btop
-    power-profiles-daemon
-    wf-recorder
   ];
 
-  stylix.targets.hyprpanel.enable = true;
-  programs.hyprpanel = {
+  services.wayle = {
     enable = true;
-    settings = {
-      menus = {
-        dashboard = {
-          powermenu.avatar.image = config.appearance.profile.picture;
-          recording.path = "${config.xdg.userDirs.videos}/screenrecording";
-          directories.enabled = false;
-        };
-        clock = {
-          time = {
-            military = "%H:%M:%S";
-            hideSeconds = false;
-          };
-          weather = {
-            enabled = true;
-            unit = "metric";
-            location = "Munich";
-          };
-        };
-      };
-      bar.launcher.autoDetectIcon = true;
-      bar.bluetooth.label = false;
-      bar.clock.format = "%a %b %d %H:%M:%S";
-      bar.layouts."${config.monitors.center}" = {
-        left = [
-          "dashboard"
-          "workspaces"
-          "windowtitle"
-        ];
-        middle = [
-          "media"
-        ];
-        right = [
-          "volume"
-          "network"
-          "clock"
-          "systray"
-          (if config.appearance.hasBattery then "battery" else "")
-          "notifications"
-        ];
-      };
-      bar.layouts."${config.monitors.right}" = {
-        left = [
-          "dashboard"
-          "workspaces"
-          "windowtitle"
-        ];
-        middle = [
-          "media"
-        ];
-        right = [
-          "volume"
-          "clock"
-          (if config.appearance.hasBattery then "battery" else "")
-          "notifications"
-        ];
-      };
 
-      theme = {
-        font.size = config.appearance.fontSize;
-        bar.transparent = true;
-        bar.location = "bottom";
+    autoInstallDependencies = true;
+
+    settings = {
+      bar = {
+        location = "bottom";
+        bg = "transparent";
+        scale = 0.9;
       };
+      osd.enabled = false;
+      modules = {
+        clock = {
+          format = "%H:%M:%S";
+          dropdown-show-seconds = false;
+        };
+        weather = {
+          location = "Munich";
+          units = "metric";
+        };
+        volume = {
+          scroll-up = "wayle audio output-volume +2";
+          scroll-down = "wayle audio output-volume -2";
+        };
+        microphone = {
+          scroll-up = "wayle audio input-volume +2";
+          scroll-down = "wayle audio input-volume -2";
+        };
+        notifications = {
+          popup-duration = 3500;
+          popup-position = "top-right";
+          popup-max-visible = 5;
+        };
+        custom = [
+          {
+            id = "cpu-temp";
+            command = "${pkgs.lm_sensors}/bin/sensors | sed -n 's/^Tctl: *+\\([0-9.]*\\)°C.*/\\1°C/p'";
+            interval-ms = 2000;
+            icon-name = "ld-thermometer-symbolic";
+            format = "{{ output }}";
+          }
+          {
+            id = "screenshot";
+            icon-name = "ld-camera-symbolic";
+            left-click = "${pkgs.grimblast}/bin/grimblast copy area";
+            interval-ms = 0;
+            tooltip-format = "Screenshot area (left-click)";
+          }
+        ];
+      };
+      styling.palette = with config.lib.stylix.colors; {
+        bg = "#${base00}";
+        surface = "#${base01}";
+        elevated = "#${base02}";
+        fg = "#${base05}";
+        fg_muted = "#${base03}";
+        primary = "#${base0D}";
+        red = "#${base08}";
+        yellow = "#${base0A}";
+        green = "#${base0B}";
+        blue = "#${base0D}";
+      };
+      wallpaper.engine-enabled = false;
     };
   };
-
 }

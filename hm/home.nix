@@ -40,8 +40,6 @@
     ripgrep
     btop
 
-    gnucash
-
     # meetings
     discord
     element-desktop
