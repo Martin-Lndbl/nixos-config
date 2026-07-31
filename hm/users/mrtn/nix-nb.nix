@@ -100,6 +100,8 @@ rec {
           "volume"
           "microphone"
           "notifications"
+          "brightness"
+          "battery"
         ];
       }
     ];
