@@ -20,6 +20,8 @@
         location = "bottom";
         bg = "transparent";
         scale = 0.9;
+        button-variant = "basic";
+        button-bg-opacity = 0;
       };
       osd.enabled = false;
       modules = {

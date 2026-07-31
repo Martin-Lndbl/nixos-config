@@ -47,7 +47,6 @@
         "hyprland-workspaces"
       ];
       center = [
-        "custom-screenshot"
         "media"
       ];
       right = [
