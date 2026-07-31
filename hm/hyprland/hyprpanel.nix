@@ -19,7 +19,6 @@
       bar = {
         location = "bottom";
         bg = "transparent";
-        scale = 0.9;
         button-variant = "basic";
         button-bg-opacity = 0;
       };
@@ -49,7 +48,7 @@
         custom = [
           {
             id = "cpu-temp";
-            command = "${pkgs.lm_sensors}/bin/sensors | sed -n 's/^Tctl: *+\\([0-9.]*\\)°C.*/\\1°C/p'";
+            command = "${pkgs.lm_sensors}/bin/sensors | sed -n -E 's/^(Tctl|Package id 0): *\\+([0-9.]*)°C.*/\\2°C/p'";
             interval-ms = 2000;
             icon-name = "ld-thermometer-symbolic";
             format = "{{ output }}";

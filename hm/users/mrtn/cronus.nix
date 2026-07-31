@@ -20,43 +20,46 @@
   monitors.right = "DP-4";
   monitors.primary_id = 1;
 
-  services.wayle.settings.bar.layout = [
-    {
-      monitor = config.monitors.center;
-      show = true;
-      left = [
-        "dashboard"
-        "hyprland-workspaces"
-      ];
-      center = [
-        "clock"
-      ];
-      right = [
-        "cpu"
-        "ram"
-        "storage"
-        "custom-cpu-temp"
-        "notifications"
-      ];
-    }
-    {
-      monitor = config.monitors.right;
-      show = true;
-      left = [
-        "dashboard"
-        "hyprland-workspaces"
-      ];
-      center = [
-        "media"
-      ];
-      right = [
-        "network"
-        "volume"
-        "microphone"
-        "notifications"
-      ];
-    }
-  ];
+  services.wayle.settings.bar = {
+    scale = 0.9;
+    layout = [
+      {
+        monitor = config.monitors.center;
+        show = true;
+        left = [
+          "dashboard"
+          "hyprland-workspaces"
+        ];
+        center = [
+          "clock"
+        ];
+        right = [
+          "cpu"
+          "ram"
+          "storage"
+          "custom-cpu-temp"
+          "notifications"
+        ];
+      }
+      {
+        monitor = config.monitors.right;
+        show = true;
+        left = [
+          "dashboard"
+          "hyprland-workspaces"
+        ];
+        center = [
+          "media"
+        ];
+        right = [
+          "network"
+          "volume"
+          "microphone"
+          "notifications"
+        ];
+      }
+    ];
+  };
 
   wayland.windowManager.hyprland.settings.monitor = [
     "${config.monitors.center}, 3840x2160, 0x0, 1"
