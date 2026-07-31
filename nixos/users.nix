@@ -7,6 +7,7 @@
       "wheel"
       "video"
       "audio"
+      "input"
       "scanner"
       "networkmanager"
       "docker"

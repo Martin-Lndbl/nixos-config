@@ -8,32 +8,36 @@ let
   tabletModeWatcher = pkgs.writeShellApplication {
     name = "wayle-tablet-mode-watch";
     runtimeInputs = with pkgs; [
-      glib
-      systemd
+      evtest
+      gawk
       wayle
     ];
     text = ''
-      set_location() {
-        if [ "$1" = "true" ]; then
-          wayle config set bar.location bottom
-        else
+      dev=$(awk -v RS= '/Tablet Mode/{
+        match($0, /event[0-9]+/)
+        print "/dev/input/" substr($0, RSTART, RLENGTH)
+        exit
+      }' /proc/bus/input/devices)
+
+      if [ -z "$dev" ]; then
+        echo "No tablet-mode switch found in /proc/bus/input/devices" >&2
+        exit 1
+      fi
+
+      apply() {
+        if [ "$1" = "1" ]; then
           wayle config set bar.location top
+        else
+          wayle config set bar.location bottom
         fi
       }
 
-      # Set correct location on startup
-      current="$(busctl --system get-property net.hadess.SensorProxy \
-        /net/hadess/SensorProxy net.hadess.SensorProxy TabletMode 2>/dev/null \
-        | awk '{print $2}')"
-      set_location "''${current:-false}"
-
-      # React to flips as they happen
-      gdbus monitor --system --dest net.hadess.SensorProxy \
-        --object-path /net/hadess/SensorProxy |
-      while read -r line; do
+      stdbuf -oL evtest "$dev" | while IFS= read -r line; do
         case "$line" in
-          *"'TabletMode': <true>"*)  set_location true ;;
-          *"'TabletMode': <false>"*) set_location false ;;
+          *"SW_TABLET_MODE) state 1"*)  apply 1 ;;  # initial state at startup
+          *"SW_TABLET_MODE) state 0"*)  apply 0 ;;
+          *"SW_TABLET_MODE), value 1"*) apply 1 ;;  # runtime flip
+          *"SW_TABLET_MODE), value 0"*) apply 0 ;;
         esac
       done
     '';
@@ -64,14 +68,14 @@ rec {
       " , preferred, auto, 1, mirror, eDP-1"
     ];
   };
-  # systemd.user.services.wayle-tablet-mode = {
-  #   Unit.Description = "Flip wayle bar location on tablet-mode change";
-  #   Install.WantedBy = [ "graphical-session.target" ];
-  #   Service = {
-  #     ExecStart = "${tabletModeWatcher}/bin/wayle-tablet-mode-watch";
-  #     Restart = "on-failure";
-  #   };
-  # };
+  systemd.user.services.wayle-tablet-mode = {
+    Unit.Description = "Flip wayle bar location on tablet-mode change";
+    Install.WantedBy = [ "graphical-session.target" ];
+    Service = {
+      ExecStart = "${tabletModeWatcher}/bin/wayle-tablet-mode-watch";
+      Restart = "on-failure";
+    };
+  };
 
   services.wayle.settings.bar = {
     scale = 0.7;
