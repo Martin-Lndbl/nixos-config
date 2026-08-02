@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   users.users.mrtn = {
     isNormalUser = true;
@@ -7,6 +7,7 @@
       "wheel"
       "video"
       "audio"
+      "input"
       "scanner"
       "networkmanager"
       "docker"

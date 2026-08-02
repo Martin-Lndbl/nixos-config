@@ -5,27 +5,10 @@
 # https://wiki.hypr.land/Nix/Hyprland-on-Home-Manager/#using-the-home-manager-module-with-nixos
 
 let
-  inline = lib.generators.mkLuaInline;
-
-  exec = cmd: inline "hl.dsp.exec_cmd(${builtins.toJSON cmd})";
-  focusDir = dir: inline "hl.dsp.focus({ direction = ${builtins.toJSON dir} })";
-  moveDir = dir: inline "hl.dsp.window.move({ direction = ${builtins.toJSON dir} })";
-  intoGroup = dir: inline "hl.dsp.window.move({ into_group = ${builtins.toJSON dir} })";
-
-  switch_workspace = map (ws: {
-    _args = [
-      "SUPER + ${ws}"
-      (inline "hl.dsp.focus({ workspace = ${builtins.toJSON ws} })")
-    ];
-  }) config.workspaces;
-
-  move_workspace = map (ws: {
-    _args = [
-      "SUPER + SHIFT + ${ws}"
-      (inline "hl.dsp.window.move({ workspace = ${builtins.toJSON ws} })")
-    ];
-  }) config.workspaces;
-
+  workspaceBinds = lib.concatMapStrings (ws: ''
+    hl.bind("SUPER + ${ws}", hl.dsp.focus({ workspace = "${ws}" }))
+    hl.bind("SUPER + SHIFT + ${ws}", hl.dsp.window.move({ workspace = "${ws}" }))
+  '') config.workspaces;
 in
 {
   wayland.windowManager.hyprland = {
@@ -78,22 +61,8 @@ in
         }
       ];
 
-      on = {
-        _args = [
-          "hyprland.start"
-          (inline ''
-            function()
-              hl.exec_cmd("thunderbird")
-              hl.exec_cmd([[element-desktop --password-store="gnome-libsecret"]])
-              hl.exec_cmd("feishin")
-              hl.exec_cmd("alacritty")
-              hl.exec_cmd("alacritty")
-            end
-          '')
-        ];
-      };
-
       window_rule = [
+        # Local rules
         {
           match.tag = "code";
           opacity = 0.98;
@@ -102,22 +71,24 @@ in
           match.class = "feishin";
           suppress_event = "maximize";
         }
-        # Route the startup apps onto their target workspaces silently.
+        # Route startup apps onto their target workspace on spawn.
+        # Effect syntax per https://wiki.hypr.land/Configuring/Basics/Window-Rules/#effects
+        # `workspace = "<id> silent"` opens the window without switching to it.
         {
           match.class = "thunderbird";
-          workspace = "silent 9";
+          workspace = "9 silent";
         }
         {
           match.class = "Element";
-          workspace = "silent 9";
+          workspace = "9 silent";
         }
         {
           match.class = "feishin";
-          workspace = "silent 9";
+          workspace = "9 silent";
         }
         {
           match.class = "Alacritty";
-          workspace = "silent 1";
+          workspace = "1 silent";
         }
       ];
 
@@ -143,298 +114,91 @@ in
           monitor = config.monitors.right;
         }
       ];
-
-      bind = [
-        # App binds
-        {
-          _args = [
-            "SUPER + return"
-            (exec "alacritty")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + d"
-            (exec "wofi --show drun")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + g"
-            (exec "MOZ_ENABLE_WAYLAND=1 firefox")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + Q"
-            (inline "hl.dsp.window.close()")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + ALT + L"
-            (exec "hyprlock")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + ALT + S"
-            (exec "(hyprlock & systemctl suspend -i)")
-          ];
-        }
-
-        # Move focus
-        {
-          _args = [
-            "SUPER + left"
-            (focusDir "left")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + right"
-            (focusDir "right")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + up"
-            (focusDir "up")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + down"
-            (focusDir "down")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + h"
-            (focusDir "left")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + l"
-            (focusDir "right")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + k"
-            (focusDir "up")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + j"
-            (focusDir "down")
-          ];
-        }
-
-        # Move window
-        {
-          _args = [
-            "SUPER + SHIFT + left"
-            (moveDir "left")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + right"
-            (moveDir "right")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + up"
-            (moveDir "up")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + down"
-            (moveDir "down")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + h"
-            (moveDir "left")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + l"
-            (moveDir "right")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + k"
-            (moveDir "up")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + j"
-            (moveDir "down")
-          ];
-        }
-
-        # Layout / floating / fullscreen
-        {
-          _args = [
-            "SUPER + q"
-            (inline ''hl.dsp.layout("togglesplit")'')
-          ];
-        }
-        {
-          _args = [
-            "SUPER + v"
-            (inline ''
-              function()
-                hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
-                hl.dispatch(hl.dsp.window.center())
-              end
-            '')
-          ];
-        }
-        {
-          _args = [
-            "SUPER + f"
-            (inline ''hl.dsp.window.fullscreen({ action = "toggle" })'')
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + f"
-            (inline "hl.dsp.window.fullscreen_state({ internal = -1, client = 2 })")
-          ];
-        }
-
-        # Groups
-        {
-          _args = [
-            "SUPER + CTRL + g"
-            (inline "hl.dsp.group.toggle()")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + w"
-            (inline "hl.dsp.group.next()")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + e"
-            (inline "hl.dsp.window.move({ out_of_group = true })")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + left"
-            (intoGroup "left")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + right"
-            (intoGroup "right")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + up"
-            (intoGroup "up")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + down"
-            (intoGroup "down")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + h"
-            (intoGroup "left")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + l"
-            (intoGroup "right")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + k"
-            (intoGroup "up")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + CTRL + j"
-            (intoGroup "down")
-          ];
-        }
-
-        # Media / screenshot
-        {
-          _args = [
-            "XF86AudioMute"
-            (exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")
-          ];
-        }
-        {
-          _args = [
-            "XF86AudioMicMute"
-            (exec "wpctl set-mute @DEFAULT_SOURCE@ toggle")
-          ];
-        }
-        {
-          _args = [
-            "XF86Calculator"
-            (exec "alacritty -t popup -e calc")
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + s"
-            (exec "grimblast copy area")
-          ];
-        }
-
-        # Mouse
-        {
-          _args = [
-            "SUPER + mouse:272"
-            (inline "hl.dsp.window.drag()")
-            { mouse = true; }
-          ];
-        }
-
-        # Volume (repeating)
-        {
-          _args = [
-            "XF86AudioRaiseVolume"
-            (exec "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+")
-            { repeating = true; }
-          ];
-        }
-        {
-          _args = [
-            "XF86AudioLowerVolume"
-            (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-")
-            { repeating = true; }
-          ];
-        }
-      ]
-      ++ switch_workspace
-      ++ move_workspace;
     };
+
+    # Anything that needs to be a multi-arg call (hl.bind, hl.on) is written
+    # directly as Lua. hl.bind(keys, dispatcher, opts?) — see
+    # https://wiki.hypr.land/Configuring/Basics/Binds/
+    extraConfig = ''
+      -- Startup apps. Placement is handled by workspace-assigning window_rules above.
+      hl.on("hyprland.start", function()
+        hl.exec_cmd("thunderbird")
+        hl.exec_cmd([[element-desktop --password-store="gnome-libsecret"]])
+        hl.exec_cmd("feishin")
+        hl.exec_cmd("alacritty")
+        hl.exec_cmd("alacritty")
+      end)
+
+      -- App binds
+      hl.bind("SUPER + return", hl.dsp.exec_cmd("alacritty"))
+      hl.bind("SUPER + d", hl.dsp.exec_cmd("wofi --show drun"))
+      hl.bind("SUPER + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 firefox"))
+      hl.bind("SUPER + SHIFT + Q", hl.dsp.window.close())
+      hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("hyprlock"))
+      hl.bind("SUPER + ALT + S", hl.dsp.exec_cmd("(hyprlock & systemctl suspend -i)"))
+
+      -- Move focus
+      hl.bind("SUPER + left",  hl.dsp.focus({ direction = "left" }))
+      hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
+      hl.bind("SUPER + up",    hl.dsp.focus({ direction = "up" }))
+      hl.bind("SUPER + down",  hl.dsp.focus({ direction = "down" }))
+      hl.bind("SUPER + h",     hl.dsp.focus({ direction = "left" }))
+      hl.bind("SUPER + l",     hl.dsp.focus({ direction = "right" }))
+      hl.bind("SUPER + k",     hl.dsp.focus({ direction = "up" }))
+      hl.bind("SUPER + j",     hl.dsp.focus({ direction = "down" }))
+
+      -- Move window
+      hl.bind("SUPER + SHIFT + left",  hl.dsp.window.move({ direction = "left" }))
+      hl.bind("SUPER + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
+      hl.bind("SUPER + SHIFT + up",    hl.dsp.window.move({ direction = "up" }))
+      hl.bind("SUPER + SHIFT + down",  hl.dsp.window.move({ direction = "down" }))
+      hl.bind("SUPER + SHIFT + h",     hl.dsp.window.move({ direction = "left" }))
+      hl.bind("SUPER + SHIFT + l",     hl.dsp.window.move({ direction = "right" }))
+      hl.bind("SUPER + SHIFT + k",     hl.dsp.window.move({ direction = "up" }))
+      hl.bind("SUPER + SHIFT + j",     hl.dsp.window.move({ direction = "down" }))
+
+      -- Layout / floating / fullscreen
+      hl.bind("SUPER + q", hl.dsp.layout("togglesplit"))
+      hl.bind("SUPER + v", function()
+        hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+        hl.dispatch(hl.dsp.window.center())
+      end)
+      hl.bind("SUPER + f", hl.dsp.window.fullscreen({ action = "toggle" }))
+      hl.bind("SUPER + SHIFT + f", hl.dsp.window.fullscreen_state({ internal = -1, client = 2 }))
+
+      -- Groups
+      hl.bind("SUPER + CTRL + g", hl.dsp.group.toggle())
+      hl.bind("SUPER + CTRL + w", hl.dsp.group.next())
+      hl.bind("SUPER + CTRL + e", hl.dsp.window.move({ out_of_group = true }))
+      hl.bind("SUPER + CTRL + left",  hl.dsp.window.move({ into_group = "left" }))
+      hl.bind("SUPER + CTRL + right", hl.dsp.window.move({ into_group = "right" }))
+      hl.bind("SUPER + CTRL + up",    hl.dsp.window.move({ into_group = "up" }))
+      hl.bind("SUPER + CTRL + down",  hl.dsp.window.move({ into_group = "down" }))
+      hl.bind("SUPER + CTRL + h",     hl.dsp.window.move({ into_group = "left" }))
+      hl.bind("SUPER + CTRL + l",     hl.dsp.window.move({ into_group = "right" }))
+      hl.bind("SUPER + CTRL + k",     hl.dsp.window.move({ into_group = "up" }))
+      hl.bind("SUPER + CTRL + j",     hl.dsp.window.move({ into_group = "down" }))
+
+      -- Media / screenshot
+      hl.bind("XF86AudioMute",    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
+      hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SOURCE@ toggle"))
+      hl.bind("XF86Calculator",   hl.dsp.exec_cmd("alacritty -t popup -e calc"))
+      hl.bind("SUPER + SHIFT + s", hl.dsp.exec_cmd("grimblast copy area"))
+
+      -- Mouse
+      hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
+
+      -- Volume (repeating)
+      hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+"), { repeating = true })
+      hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"), { repeating = true })
+
+      -- Per-workspace switch / move binds
+      ${workspaceBinds}
+    '';
   };
+
+  # Feed home-manager's session variables into the UWSM-managed Hyprland
+  # session so it can find $XDG_CONFIG_HOME (and thus hyprland.lua).
+  xdg.configFile."uwsm/env".source =
+    "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
 }
