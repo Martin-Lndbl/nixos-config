@@ -62,7 +62,7 @@
           ./nixos/machines/nix-nb.nix
           ./nixos/wm/hyprland.nix
           ./nixos/wm/gnome.nix
-          ./nixos/wm/gdm.nix
+          ./nixos/wm/sddm.nix
         ]
         ++ import ./modules/nixos;
       };
@@ -175,7 +175,7 @@
           ./nixos/machines/cronus.nix
           ./nixos/wm/hyprland.nix
           ./nixos/wm/gnome.nix
-          ./nixos/wm/gdm.nix
+          ./nixos/wm/sddm.nix
         ]
         ++ import ./modules/nixos;
       };

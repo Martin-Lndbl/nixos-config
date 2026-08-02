@@ -123,7 +123,7 @@ in
       -- Startup apps. Placement is handled by workspace-assigning window_rules above.
       hl.on("hyprland.start", function()
         hl.exec_cmd("thunderbird")
-        hl.exec_cmd([[element-desktop --password-store="gnome-libsecret"]])
+        hl.exec_cmd([[element-desktop --class=Element --password-store="gnome-libsecret"]])
         hl.exec_cmd("feishin")
         hl.exec_cmd("alacritty")
         hl.exec_cmd("alacritty")
