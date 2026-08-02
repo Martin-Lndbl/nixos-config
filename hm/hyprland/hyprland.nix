@@ -58,73 +58,33 @@ in
 
     animation = [
       {
-        _args = [
-          "windows"
-          true
-          7
-          "default"
-        ];
+        leaf = "windows";
+        enabled = true;
+        speed = 7;
+        bezier = "default";
       }
       {
-        _args = [
-          "workspaces"
-          true
-          6
-          "default"
-        ];
+        leaf = "workspaces";
+        enabled = true;
+        speed = 6;
+        bezier = "default";
       }
     ];
 
-    exec_cmd = [
-      {
-        _args = [
-          "thunderbird"
-          {
-            workspace = "9";
-            silent = true;
-            noanim = true;
-          }
-        ];
-      }
-      {
-        _args = [
-          ''element-desktop --password-store="gnome-libsecret"''
-          {
-            workspace = "9";
-            silent = true;
-            noanim = true;
-          }
-        ];
-      }
-      {
-        _args = [
-          "feishin"
-          {
-            workspace = "9";
-            silent = true;
-            noanim = true;
-          }
-        ];
-      }
-      {
-        _args = [
-          "alacritty"
-          {
-            workspace = "1";
-            noanim = true;
-          }
-        ];
-      }
-      {
-        _args = [
-          "alacritty"
-          {
-            workspace = "1";
-            noanim = true;
-          }
-        ];
-      }
-    ];
+    on = {
+      _args = [
+        "hyprland.start"
+        (inline ''
+          function()
+            hl.exec_cmd("thunderbird")
+            hl.exec_cmd([[element-desktop --password-store="gnome-libsecret"]])
+            hl.exec_cmd("feishin")
+            hl.exec_cmd("alacritty")
+            hl.exec_cmd("alacritty")
+          end
+        '')
+      ];
+    };
 
     window_rule = [
       {
@@ -134,6 +94,23 @@ in
       {
         match.class = "feishin";
         suppress_event = "maximize";
+      }
+      # Route the startup apps onto their target workspaces silently.
+      {
+        match.class = "thunderbird";
+        workspace = "silent 9";
+      }
+      {
+        match.class = "Element";
+        workspace = "silent 9";
+      }
+      {
+        match.class = "feishin";
+        workspace = "silent 9";
+      }
+      {
+        match.class = "Alacritty";
+        workspace = "silent 1";
       }
     ];
 
@@ -309,13 +286,12 @@ in
       {
         _args = [
           "SUPER + v"
-          (inline ''hl.dsp.window.float({ action = "toggle" })'')
-        ];
-      }
-      {
-        _args = [
-          "SUPER + v"
-          (inline "hl.dsp.window.center()")
+          (inline ''
+            function()
+              hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+              hl.dispatch(hl.dsp.window.center())
+            end
+          '')
         ];
       }
       {
