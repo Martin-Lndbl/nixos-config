@@ -7,7 +7,7 @@
 {
   imports = [
     ./programs
-    ./colorschemes
+    ./stylix.nix
   ];
 
   home.username = "mrtn";

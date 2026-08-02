@@ -1,137 +1,456 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 let
-  switch_workspace = map (ws: "SUPER, ${ws}, workspace, ${ws}") config.workspaces;
+  inline = lib.generators.mkLuaInline;
 
-  move_workspace = map (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}") config.workspaces;
+  exec = cmd: inline "hl.dsp.exec_cmd(${builtins.toJSON cmd})";
+  focusDir = dir: inline "hl.dsp.focus({ direction = ${builtins.toJSON dir} })";
+  moveDir = dir: inline "hl.dsp.window.move({ direction = ${builtins.toJSON dir} })";
+  intoGroup = dir: inline "hl.dsp.window.move({ into_group = ${builtins.toJSON dir} })";
+
+  switch_workspace = map (ws: {
+    _args = [
+      "SUPER + ${ws}"
+      (inline "hl.dsp.focus({ workspace = ${builtins.toJSON ws} })")
+    ];
+  }) config.workspaces;
+
+  move_workspace = map (ws: {
+    _args = [
+      "SUPER + SHIFT + ${ws}"
+      (inline "hl.dsp.window.move({ workspace = ${builtins.toJSON ws} })")
+    ];
+  }) config.workspaces;
 
 in
 {
   wayland.windowManager.hyprland.enable = true;
-  wayland.windowManager.hyprland.configType = "hyprlang";
+  wayland.windowManager.hyprland.configType = "lua";
 
   wayland.windowManager.hyprland.settings = {
-    exec-once = [
-      "[workspace 9 silent; noanim] thunderbird"
-      "[workspace 9 silent; noanim] element-desktop --password-store=\"gnome-libsecret\" "
-      "[workspace 9 silent; noanim] feishin"
-      "[workspace 1; noanim] alacritty"
-      "[workspace 1; noanim] alacritty"
+    config = {
+      input.follow_mouse = 1;
+
+      general = {
+        gaps_in = 5;
+        gaps_out = 10;
+        resize_on_border = true;
+      };
+
+      decoration = {
+        rounding = 5;
+        blur = {
+          enabled = true;
+          size = 3;
+          passes = 2;
+        };
+      };
+
+      animations.enabled = true;
+
+      dwindle = {
+        force_split = 2;
+        preserve_split = true;
+      };
+
+      ecosystem.no_update_news = true;
+    };
+
+    animation = [
+      {
+        _args = [
+          "windows"
+          true
+          7
+          "default"
+        ];
+      }
+      {
+        _args = [
+          "workspaces"
+          true
+          6
+          "default"
+        ];
+      }
     ];
 
-    input = {
-      # kb_layout = "us,de";
-      # kb_variant = ",qwerty";
-      # kb_options = "grp:alt_shift_toggle";
-      follow_mouse = 1;
-    };
+    exec_cmd = [
+      {
+        _args = [
+          "thunderbird"
+          {
+            workspace = "9";
+            silent = true;
+            noanim = true;
+          }
+        ];
+      }
+      {
+        _args = [
+          ''element-desktop --password-store="gnome-libsecret"''
+          {
+            workspace = "9";
+            silent = true;
+            noanim = true;
+          }
+        ];
+      }
+      {
+        _args = [
+          "feishin"
+          {
+            workspace = "9";
+            silent = true;
+            noanim = true;
+          }
+        ];
+      }
+      {
+        _args = [
+          "alacritty"
+          {
+            workspace = "1";
+            noanim = true;
+          }
+        ];
+      }
+      {
+        _args = [
+          "alacritty"
+          {
+            workspace = "1";
+            noanim = true;
+          }
+        ];
+      }
+    ];
 
-    general = {
-      gaps_in = 5;
-      gaps_out = 10;
-      resize_on_border = true;
-    };
+    window_rule = [
+      {
+        match.tag = "code";
+        opacity = 0.98;
+      }
+      {
+        match.class = "feishin";
+        suppress_event = "maximize";
+      }
+    ];
 
-    decoration = {
-      rounding = 5;
-      blur = {
-        enabled = true;
-        size = 3;
-        passes = 2;
-      };
-    };
-
-    animations = {
-      enabled = 1;
-      animation = [
-        "windows,1,7,default"
-        "workspaces,1,6,default"
-      ];
-    };
-
-    dwindle = {
-      force_split = 2;
-      preserve_split = true;
-    };
-
-    windowrule = [
-      "opacity 0.98 override ${toString config.appearance.opacity}, match:tag code"
-      "suppress_event maximize, match:class feishin"
+    workspace_rule = [
+      {
+        workspace = "1";
+        monitor = config.monitors.center;
+      }
+      {
+        workspace = "2";
+        monitor = config.monitors.center;
+      }
+      {
+        workspace = "3";
+        monitor = config.monitors.center;
+      }
+      {
+        workspace = "8";
+        monitor = config.monitors.right;
+      }
+      {
+        workspace = "9";
+        monitor = config.monitors.right;
+      }
     ];
 
     bind = [
       # App binds
-      "SUPER, return, exec, alacritty"
-      "SUPER, d, exec, wofi --show drun"
-      "SUPER, g, exec, MOZ_ENABLE_WAYLAND=1 firefox"
-      "SUPER_SHIFT, Q, killactive"
-      "SUPERALT, L, exec, hyprlock"
-      "SUPERALT, S, exec, (hyprlock & systemctl suspend -i)"
+      {
+        _args = [
+          "SUPER + return"
+          (exec "alacritty")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + d"
+          (exec "wofi --show drun")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + g"
+          (exec "MOZ_ENABLE_WAYLAND=1 firefox")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + Q"
+          (inline "hl.dsp.window.close()")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + ALT + L"
+          (exec "hyprlock")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + ALT + S"
+          (exec "(hyprlock & systemctl suspend -i)")
+        ];
+      }
 
       # Move focus
-      "SUPER, left, movefocus, l"
-      "SUPER, right, movefocus, r"
-      "SUPER, up, movefocus, u"
-      "SUPER, down, movefocus, d"
+      {
+        _args = [
+          "SUPER + left"
+          (focusDir "left")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + right"
+          (focusDir "right")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + up"
+          (focusDir "up")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + down"
+          (focusDir "down")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + h"
+          (focusDir "left")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + l"
+          (focusDir "right")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + k"
+          (focusDir "up")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + j"
+          (focusDir "down")
+        ];
+      }
 
-      "SUPER, h, movefocus, l"
-      "SUPER, l, movefocus, r"
-      "SUPER, k, movefocus, u"
-      "SUPER, j, movefocus, d"
+      # Move window
+      {
+        _args = [
+          "SUPER + SHIFT + left"
+          (moveDir "left")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + right"
+          (moveDir "right")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + up"
+          (moveDir "up")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + down"
+          (moveDir "down")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + h"
+          (moveDir "left")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + l"
+          (moveDir "right")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + k"
+          (moveDir "up")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + j"
+          (moveDir "down")
+        ];
+      }
 
-      "SUPER_SHIFT, left, movewindow, l"
-      "SUPER_SHIFT, right, movewindow, r"
-      "SUPER_SHIFT, up, movewindow, u"
-      "SUPER_SHIFT, down, movewindow, d"
-
-      "SUPER_SHIFT, h, movewindow, l"
-      "SUPER_SHIFT, l, movewindow, r"
-      "SUPER_SHIFT, k, movewindow, u"
-      "SUPER_SHIFT, j, movewindow, d"
-
-      "SUPER, q, layoutmsg, togglesplit"
-      "SUPER, v, togglefloating,"
-      "SUPER, v, centerwindow,"
-      "SUPER, f, fullscreen,"
-      "SUPER_SHIFT, f, fullscreenstate, -1 2"
+      # Layout / floating / fullscreen
+      {
+        _args = [
+          "SUPER + q"
+          (inline ''hl.dsp.layout("togglesplit")'')
+        ];
+      }
+      {
+        _args = [
+          "SUPER + v"
+          (inline ''hl.dsp.window.float({ action = "toggle" })'')
+        ];
+      }
+      {
+        _args = [
+          "SUPER + v"
+          (inline "hl.dsp.window.center()")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + f"
+          (inline ''hl.dsp.window.fullscreen({ action = "toggle" })'')
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + f"
+          (inline "hl.dsp.window.fullscreen_state({ internal = -1, client = 2 })")
+        ];
+      }
 
       # Groups
-      "SUPER_CTRL, g, togglegroup,"
-      "SUPER_CTRL, w, changegroupactive, f"
-      "SUPER_CTRL, e, moveoutofgroup,"
-      "SUPER_CTRL, left, moveintogroup, l"
-      "SUPER_CTRL, right, moveintogroup, r"
-      "SUPER_CTRL, up, moveintogroup, u"
-      "SUPER_CTRL, down, moveintogroup, d"
-      "SUPER_CTRL, h, moveintogroup, l"
-      "SUPER_CTRL, l, moveintogroup, r"
-      "SUPER_CTRL, k, moveintogroup, u"
-      "SUPER_CTRL, j, moveintogroup, d"
+      {
+        _args = [
+          "SUPER + CTRL + g"
+          (inline "hl.dsp.group.toggle()")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + w"
+          (inline "hl.dsp.group.next()")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + e"
+          (inline "hl.dsp.window.move({ out_of_group = true })")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + left"
+          (intoGroup "left")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + right"
+          (intoGroup "right")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + up"
+          (intoGroup "up")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + down"
+          (intoGroup "down")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + h"
+          (intoGroup "left")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + l"
+          (intoGroup "right")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + k"
+          (intoGroup "up")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + CTRL + j"
+          (intoGroup "down")
+        ];
+      }
 
-      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
-      ", XF86Calculator, exec, alacritty -t popup -e calc"
-      "SUPER_SHIFT, s, exec, grimblast copy area"
+      # Media / screenshot
+      {
+        _args = [
+          "XF86AudioMute"
+          (exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")
+        ];
+      }
+      {
+        _args = [
+          "XF86AudioMicMute"
+          (exec "wpctl set-mute @DEFAULT_SOURCE@ toggle")
+        ];
+      }
+      {
+        _args = [
+          "XF86Calculator"
+          (exec "alacritty -t popup -e calc")
+        ];
+      }
+      {
+        _args = [
+          "SUPER + SHIFT + s"
+          (exec "grimblast copy area")
+        ];
+      }
+
+      # Mouse
+      {
+        _args = [
+          "SUPER + mouse:272"
+          (inline "hl.dsp.window.drag()")
+          { mouse = true; }
+        ];
+      }
+
+      # Volume (repeating)
+      {
+        _args = [
+          "XF86AudioRaiseVolume"
+          (exec "wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+")
+          { repeating = true; }
+        ];
+      }
+      {
+        _args = [
+          "XF86AudioLowerVolume"
+          (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-")
+          { repeating = true; }
+        ];
+      }
     ]
     ++ switch_workspace
     ++ move_workspace;
-
-    workspace = [
-      "1,monitor:${config.monitors.center}"
-      "2,monitor:${config.monitors.center}"
-      "3,monitor:${config.monitors.center}"
-
-      "8,monitor:${config.monitors.right}"
-      "9,monitor:${config.monitors.right}"
-    ];
-
-    bindm = [ "SUPER, mouse:272, movewindow" ];
-
-    binde = [
-      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+"
-      ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-    ];
-
-    ecosystem.no_update_news = true;
   };
 }

@@ -48,38 +48,6 @@
       overlays = import ./overlays { inherit inputs; };
 
       # -----------------------------------------------
-      #                   nix-gt
-      # -----------------------------------------------
-      nixosConfigurations.nix-gt = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-        };
-        modules = [
-          ./nixos/base.nix
-          ./nixos/wireguard.nix
-          ./nixos/printer.nix
-          ./nixos/machines/nix-gt.nix
-          ./nixos/wm/hyprland.nix
-        ]
-        ++ import ./modules/nixos;
-      };
-      homeConfigurations = {
-        "mrtn@nix-gt" = hm.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-            stylix.homeModules.stylix
-            ./hm/home.nix
-            ./hm/hyprland
-            ./hm/users/mrtn/nix-gt.nix
-          ]
-          ++ import ./modules/hm;
-        };
-      };
-
-      # -----------------------------------------------
       #                   nix-nb
       # -----------------------------------------------
       nixosConfigurations.nix-nb = nixpkgs.lib.nixosSystem {
@@ -92,7 +60,9 @@
           ./nixos/printer.nix
           ./nixos/container/template.nix
           ./nixos/machines/nix-nb.nix
+          ./nixos/wm/hyprland.nix
           ./nixos/wm/gnome.nix
+          ./nixos/wm/gdm.nix
         ]
         ++ import ./modules/nixos;
       };
@@ -203,7 +173,9 @@
           ./nixos/wireguard.nix
           ./nixos/printer.nix
           ./nixos/machines/cronus.nix
+          ./nixos/wm/hyprland.nix
           ./nixos/wm/gnome.nix
+          ./nixos/wm/gdm.nix
         ]
         ++ import ./modules/nixos;
       };

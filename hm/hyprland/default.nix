@@ -6,9 +6,9 @@
   imports = [
     ./hyprland.nix
     ./hyprlock.nix
-    ./hyprpanel.nix
+    ./wayle.nix
     ./wofi.nix
-    ./grim.nix
+    ./grimblast.nix
   ];
 
   stylix.targets.hyprland.enable = true;

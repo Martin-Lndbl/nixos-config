@@ -1,9 +1,6 @@
 { pkgs, lib, ... }:
 
 {
-  services.displayManager.gdm.enable = true;
-  services.displayManager.defaultSession = "hyprland";
-
   services.desktopManager.gnome.enable = true;
   services.gnome.core-apps.enable = true;
   services.gnome.core-developer-tools.enable = false;
@@ -28,39 +25,5 @@
     }
   ];
 
-  programs.hyprland.enable = true;
-  programs.hyprland.withUWSM = true;
-  xdg = {
-    portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-hyprland
-        xdg-desktop-portal-gtk
-      ];
-      config = {
-        "Hyprland" = {
-          default = [
-            "hyprland"
-            "gtk"
-          ];
-        };
-        "common" = {
-          default = [ "gtk" ];
-        };
-      };
-    };
-  };
-
-  hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-  };
-
   console.keyMap = lib.mkForce "us";
-
-  security.pam.services.swaylock = {
-    text = "auth include login";
-  };
 }

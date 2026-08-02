@@ -62,8 +62,23 @@
   };
 
   wayland.windowManager.hyprland.settings.monitor = [
-    "${config.monitors.center}, 3840x2160, 0x0, 1"
-    "${config.monitors.right}, 3840x2160, 3840x0, 1"
-    "HDMI-A-2, preferred, auto, 1"
+    {
+      output = config.monitors.center;
+      mode = "3840x2160";
+      position = "0x0";
+      scale = 1;
+    }
+    {
+      output = config.monitors.right;
+      mode = "3840x2160";
+      position = "3840x0";
+      scale = 1;
+    }
+    {
+      output = "HDMI-A-2";
+      mode = "preferred";
+      position = "auto";
+      scale = 1;
+    }
   ];
 }
