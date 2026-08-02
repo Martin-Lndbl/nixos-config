@@ -97,6 +97,7 @@ rec {
           "hyprland-workspaces"
         ];
         center = [
+          "custom-screenshot"
           "clock"
         ];
         right = [
