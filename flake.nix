@@ -14,6 +14,9 @@
 
     stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+
+    qylock.url = "github:Darkkal44/qylock";
+    qylock.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
