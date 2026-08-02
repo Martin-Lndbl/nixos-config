@@ -25,6 +25,11 @@
   };
   services.displayManager.defaultSession = "hyprland";
 
+  # Unlock gnome-keyring at login so gcr-ssh-agent (auto-enabled by
+  # services.gnome.gnome-keyring) can store and retrieve SSH passphrases.
+  # GDM did this by default; SDDM does not.
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
   # qylock ships a collection of SDDM themes; its NixOS module wires the
   # selected one into `services.displayManager.sddm.theme` and adds the
   # required Qt6/QML packages to `extraPackages`.

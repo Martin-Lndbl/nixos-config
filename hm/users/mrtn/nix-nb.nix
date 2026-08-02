@@ -24,11 +24,18 @@ let
         exit 1
       fi
 
+      # Expose tablet-mode state to other processes as a sentinel file.
+      # The wayle `keyboard` custom module (defined below) uses its presence
+      # to decide whether to show itself in the bar.
+      state_file="$XDG_RUNTIME_DIR/tablet-mode"
+
       apply() {
         if [ "$1" = "1" ]; then
           wayle config set bar.location top
+          touch "$state_file"
         else
           wayle config set bar.location bottom
+          rm -f "$state_file"
         fi
       }
 
@@ -50,7 +57,15 @@ rec {
     prismlauncher
     iio-sensor-proxy
     iio-hyprland
+    wvkbd # on-screen keyboard for tablet mode; toggle bind below
   ];
+
+  # Toggle wvkbd on-screen keyboard (SUPER + ALT + K).
+  # wvkbd is a Wayland layer-shell keyboard — no windowrule needed.
+  wayland.windowManager.hyprland.extraConfig = ''
+    hl.bind("SUPER + ALT + K", hl.dsp.exec_cmd(
+      [[sh -c 'pkill -x wvkbd-mobintl || wvkbd-mobintl -L 250 &']]))
+  '';
 
   appearance.wallpaper = pkgs.fetchurl {
     url = "https://4kwallpapers.com/images/wallpapers/cozy-winterscape-3840x2160-21319.jpg";
@@ -86,6 +101,20 @@ rec {
     };
   };
 
+  # nix-nb-only keyboard toggle module. `hide-if-empty = true` + the command
+  # reading the tablet-mode sentinel file makes it appear only in tablet mode.
+  services.wayle.settings.modules.custom = [
+    {
+      id = "keyboard";
+      command = ''sh -c '[ -f "$XDG_RUNTIME_DIR/tablet-mode" ] && echo 1' '';
+      interval-ms = 1000;
+      hide-if-empty = true;
+      icon-name = "ld-keyboard-symbolic";
+      left-click = "sh -c 'pkill -x wvkbd-mobintl || wvkbd-mobintl -L 250 &'";
+      tooltip-format = "Toggle on-screen keyboard";
+    }
+  ];
+
   services.wayle.settings.bar = {
     scale = 0.7;
     layout = [
@@ -99,6 +128,7 @@ rec {
         center = [
           "custom-screenshot"
           "clock"
+          "custom-keyboard"
         ];
         right = [
           "cpu"
