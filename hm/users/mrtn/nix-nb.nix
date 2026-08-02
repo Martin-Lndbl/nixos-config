@@ -104,10 +104,11 @@ rec {
           "ram"
           "storage"
           "custom-cpu-temp"
-          # "seperator"
           "network"
           "volume"
           "microphone"
+          "brightness"
+          "battery"
           "notifications"
         ];
       }
