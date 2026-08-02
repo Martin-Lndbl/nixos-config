@@ -10,6 +10,10 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
+    # nixpkgs defaults the embedded Wayland compositor to weston, whose
+    # generated weston.ini has no cursor-theme entry — the greeter renders
+    # no cursor at all. kwin_wayland honours the [Theme].CursorTheme below.
+    wayland.compositor = "kwin";
     settings = {
       # SDDM on Wayland reads the cursor from [Theme], not [General].
       # https://discourse.nixos.org/t/sddm-ignoring-cursor-theming/71645
@@ -27,7 +31,7 @@
   # Theme directory names live under https://github.com/Darkkal44/qylock/tree/main/themes
   programs.qylock = {
     enable = true;
-    theme = "nier-automata";
+    theme = "pixel-dusk-city";
     quickshell.enable = false; # not using qylock's lockscreen; hyprlock covers that
   };
 
