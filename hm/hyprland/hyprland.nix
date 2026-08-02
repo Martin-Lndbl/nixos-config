@@ -1,4 +1,8 @@
 { config, lib, ... }:
+# NOTE: package + portalPackage are `null` so the Hyprland binary and portal
+# come from the NixOS module (`programs.hyprland.enable`). Mixing versions
+# between the NixOS module and this one is unsupported per
+# https://wiki.hypr.land/Nix/Hyprland-on-Home-Manager/#using-the-home-manager-module-with-nixos
 
 let
   inline = lib.generators.mkLuaInline;
@@ -26,6 +30,13 @@ in
 {
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.configType = "lua";
+  wayland.windowManager.hyprland.package = null;
+  wayland.windowManager.hyprland.portalPackage = null;
+
+  # Feed home-manager's session variables into the UWSM-managed Hyprland
+  # session so it can find $XDG_CONFIG_HOME (and thus hyprland.lua).
+  xdg.configFile."uwsm/env".source =
+    "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
 
   wayland.windowManager.hyprland.settings = {
     config = {
