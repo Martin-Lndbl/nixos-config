@@ -5,6 +5,13 @@
   programs.hyprland.withUWSM = true;
   programs.hyprlock.enable = true;
 
+  # Route ssh passphrase prompts through gcr's askpass helper (talks to
+  # gnome-keyring via libsecret), so gcr-ssh-agent can store passphrases.
+  # `enableAskPassword` defaults to `services.xserver.enable`, which is
+  # false on a Wayland-only host.
+  programs.ssh.enableAskPassword = true;
+  programs.ssh.askPassword = "${pkgs.gcr_4}/libexec/gcr4-ssh-askpass";
+
   # `programs.hyprlock.enable` implicitly turns on `services.hypridle`, which
   # then crash-loops without a hypridle.conf. Locking is triggered manually
   # (SUPER+ALT+L binding), so keep the daemon off.

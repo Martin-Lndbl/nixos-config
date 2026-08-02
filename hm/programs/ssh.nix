@@ -7,6 +7,9 @@
     settings = {
       "*" = {
         userKnownHostsFile = "~/.ssh/known_hosts";
+        # First use of a key adds it to gcr-ssh-agent, which persists the
+        # passphrase to gnome-keyring so subsequent sessions auto-load it.
+        addKeysToAgent = "yes";
       };
       "eos" = {
         hostname = "10.10.0.1";
