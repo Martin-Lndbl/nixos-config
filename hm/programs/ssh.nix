@@ -1,5 +1,21 @@
 { ... }:
 {
+  # gcr-ssh-agent (auto-enabled by services.gnome.gnome-keyring at the NixOS
+  # level) ships a socket unit that sets SSH_AUTH_SOCK via
+  # `systemctl --user set-environment`. That propagates to services started
+  # after it — but not to shells or non-UWSM Hyprland launches.
+  # `sshAuthSock` is HM's shared plumbing that ssh-agent-like modules use to
+  # export the var into shell init, systemd user env, and D-Bus.
+  sshAuthSock = {
+    enable = true;
+    initialization = {
+      bash = ''export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"'';
+      fish = ''set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"'';
+      nushell = ''$env.SSH_AUTH_SOCK = ($env.XDG_RUNTIME_DIR | path join "gcr/ssh")'';
+    };
+    systemd.socketProviderUnit = "gcr-ssh-agent.socket";
+  };
+
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
