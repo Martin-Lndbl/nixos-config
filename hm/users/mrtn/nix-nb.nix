@@ -24,9 +24,6 @@ let
         exit 1
       fi
 
-      # Expose tablet-mode state to other processes as a sentinel file.
-      # The wayle `keyboard` custom module (defined below) uses its presence
-      # to decide whether to show itself in the bar.
       state_file="$XDG_RUNTIME_DIR/tablet-mode"
 
       apply() {
@@ -57,11 +54,9 @@ rec {
     prismlauncher
     iio-sensor-proxy
     iio-hyprland
-    wvkbd # on-screen keyboard for tablet mode; toggle bind below
+    wvkbd
   ];
 
-  # Toggle wvkbd on-screen keyboard (SUPER + ALT + K).
-  # wvkbd is a Wayland layer-shell keyboard — no windowrule needed.
   wayland.windowManager.hyprland.extraConfig = ''
     hl.bind("SUPER + ALT + K", hl.dsp.exec_cmd(
       [[sh -c 'pkill -x wvkbd-mobintl || wvkbd-mobintl -L 250 &']]))
@@ -101,8 +96,6 @@ rec {
     };
   };
 
-  # nix-nb-only keyboard toggle module. `hide-if-empty = true` + the command
-  # reading the tablet-mode sentinel file makes it appear only in tablet mode.
   services.wayle.settings.modules.custom = [
     {
       id = "keyboard";

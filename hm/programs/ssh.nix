@@ -1,11 +1,5 @@
 { ... }:
 {
-  # gcr-ssh-agent (auto-enabled by services.gnome.gnome-keyring at the NixOS
-  # level) ships a socket unit that sets SSH_AUTH_SOCK via
-  # `systemctl --user set-environment`. That propagates to services started
-  # after it — but not to shells or non-UWSM Hyprland launches.
-  # `sshAuthSock` is HM's shared plumbing that ssh-agent-like modules use to
-  # export the var into shell init, systemd user env, and D-Bus.
   sshAuthSock = {
     enable = true;
     initialization = {
@@ -23,8 +17,6 @@
     settings = {
       "*" = {
         userKnownHostsFile = "~/.ssh/known_hosts";
-        # First use of a key adds it to gcr-ssh-agent, which persists the
-        # passphrase to gnome-keyring so subsequent sessions auto-load it.
         addKeysToAgent = "yes";
       };
       "eos" = {

@@ -1,8 +1,4 @@
 { config, lib, ... }:
-# NOTE: package + portalPackage are `null` so the Hyprland binary and portal
-# come from the NixOS module (`programs.hyprland.enable`). Mixing versions
-# between the NixOS module and this one is unsupported per
-# https://wiki.hypr.land/Nix/Hyprland-on-Home-Manager/#using-the-home-manager-module-with-nixos
 
 let
   workspaceBinds = lib.concatMapStrings (ws: ''
@@ -62,7 +58,6 @@ in
       ];
 
       window_rule = [
-        # Local rules
         {
           match.tag = "code";
           opacity = 0.98;
@@ -71,9 +66,6 @@ in
           match.class = "feishin";
           suppress_event = "maximize";
         }
-        # Route startup apps onto their target workspace on spawn.
-        # Effect syntax per https://wiki.hypr.land/Configuring/Basics/Window-Rules/#effects
-        # `workspace = "<id> silent"` opens the window without switching to it.
         {
           match.class = "thunderbird";
           workspace = "9 silent";
@@ -116,11 +108,7 @@ in
       ];
     };
 
-    # Anything that needs to be a multi-arg call (hl.bind, hl.on) is written
-    # directly as Lua. hl.bind(keys, dispatcher, opts?) — see
-    # https://wiki.hypr.land/Configuring/Basics/Binds/
     extraConfig = ''
-      -- Startup apps. Placement is handled by workspace-assigning window_rules above.
       hl.on("hyprland.start", function()
         hl.exec_cmd("thunderbird")
         hl.exec_cmd([[element-desktop --password-store="gnome-libsecret"]])
@@ -134,8 +122,8 @@ in
       hl.bind("SUPER + d", hl.dsp.exec_cmd("wofi --show drun"))
       hl.bind("SUPER + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 firefox"))
       hl.bind("SUPER + SHIFT + Q", hl.dsp.window.close())
-      hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("hyprlock"))
-      hl.bind("SUPER + ALT + S", hl.dsp.exec_cmd("(hyprlock & systemctl suspend -i)"))
+      hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("qylock-lock"))
+      hl.bind("SUPER + ALT + S", hl.dsp.exec_cmd("(qylock-lock & systemctl suspend -i)"))
 
       -- Move focus
       hl.bind("SUPER + left",  hl.dsp.focus({ direction = "left" }))
@@ -192,13 +180,10 @@ in
       hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+"), { repeating = true })
       hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"), { repeating = true })
 
-      -- Per-workspace switch / move binds
       ${workspaceBinds}
     '';
   };
 
-  # Feed home-manager's session variables into the UWSM-managed Hyprland
-  # session so it can find $XDG_CONFIG_HOME (and thus hyprland.lua).
   xdg.configFile."uwsm/env".source =
     "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
 }

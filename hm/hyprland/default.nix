@@ -5,7 +5,6 @@
 {
   imports = [
     ./hyprland.nix
-    ./hyprlock.nix
     ./wayle.nix
     ./wofi.nix
     ./grimblast.nix
