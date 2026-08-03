@@ -17,6 +17,7 @@
     grim
     slurp
     swappy
+    papirus-icon-theme
   ];
   home.pointerCursor.enable = true;
 

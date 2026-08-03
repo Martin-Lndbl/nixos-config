@@ -55,34 +55,6 @@
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  services.displayManager.sddm.wayland.compositor = "weston";
-  services.displayManager.sddm.settings.Wayland.CompositorCommand =
-    let
-      xkb = config.services.xserver.xkb;
-      mouse = config.services.libinput.mouse;
-      westonIni = pkgs.writeText "weston.ini" ''
-        [libinput]
-        enable-tap=${lib.boolToString mouse.tapping}
-        left-handed=${lib.boolToString mouse.leftHanded}
-
-        [keyboard]
-        keymap_model=${xkb.model}
-        keymap_layout=${xkb.layout}
-        keymap_variant=${xkb.variant}
-        keymap_options=${xkb.options}
-
-        [output]
-        name=DP-2
-        mode=preferred
-        position=0,0
-
-        [output]
-        name=DP-1
-        mode=preferred
-        position=3840,0
-      '';
-    in
-    "${lib.getExe pkgs.weston} --shell=kiosk -c ${westonIni}";
 
   programs.gamemode.enable = true;
   programs.coolercontrol.enable = true;

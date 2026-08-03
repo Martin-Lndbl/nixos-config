@@ -39,7 +39,15 @@
       enable = true;
       target = "graphical-session.target";
     };
-    cli.enable = true;
+    cli = {
+      enable = true;
+      package = inputs.caelestia-shell.inputs.caelestia-cli.packages.${pkgs.system}.default.overrideAttrs (old: {
+        postInstall = (old.postInstall or "") + ''
+          schemedir=$(find $out -type d -name schemes -print -quit)
+          cp -r ${./schemes}/. "$schemedir/"
+        '';
+      });
+    };
   };
 
   xdg.configFile."caelestia/templates/ghostty-theme".text = ''

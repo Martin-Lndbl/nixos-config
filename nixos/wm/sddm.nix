@@ -1,12 +1,13 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [ inputs.qylock.nixosModules.default ];
-
+  services.xserver.enable = true;
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = lib.mkDefault true;
-    wayland.compositor = lib.mkDefault "kwin";
+    wayland.enable = false;
+    theme = "sddm-chili-theme";
+    package = pkgs.kdePackages.sddm;
+    extraPackages = [ pkgs.sddm-chili-theme ];
     settings = {
       Theme = {
         CursorTheme = "phinger-cursors-light";
@@ -17,11 +18,6 @@
   services.displayManager.defaultSession = "hyprland";
 
   security.pam.services.sddm.enableGnomeKeyring = true;
-
-  programs.qylock = {
-    enable = true;
-    theme = "pixel-dusk-city";
-  };
 
   environment.systemPackages = [ pkgs.phinger-cursors ];
 }
