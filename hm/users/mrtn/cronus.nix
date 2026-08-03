@@ -16,8 +16,8 @@
   appearance.fontSize = 16;
   stylix.fonts.sizes.terminal = 16;
 
-  monitors.center = "DP-3";
-  monitors.right = "DP-4";
+  monitors.center = "DP-2";
+  monitors.right = "DP-1";
   monitors.primary_id = 1;
 
   services.wayle.settings.bar = {

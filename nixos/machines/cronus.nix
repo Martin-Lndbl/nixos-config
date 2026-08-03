@@ -56,6 +56,20 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
   services.displayManager.sddm.wayland.compositor = "weston";
+  environment.etc."xdg/weston/weston.ini".text = ''
+    [core]
+    backend=drm-backend.so
+
+    [output]
+    name=DP-2
+    mode=preferred
+    position=0,0
+
+    [output]
+    name=DP-1
+    mode=preferred
+    position=3840,0
+  '';
 
   programs.gamemode.enable = true;
   programs.coolercontrol.enable = true;
