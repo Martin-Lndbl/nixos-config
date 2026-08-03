@@ -171,7 +171,7 @@ in
       hl.bind("XF86AudioMute",    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
       hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SOURCE@ toggle"))
       hl.bind("XF86Calculator",   hl.dsp.exec_cmd("ghostty --title=popup -e calc"))
-      hl.bind("SUPER + SHIFT + s", hl.dsp.exec_cmd("caelestia screenshot -r slurp"))
+      hl.bind("SUPER + SHIFT + s", hl.dsp.exec_cmd("grimblast copy area"))
 
       -- Mouse
       hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })

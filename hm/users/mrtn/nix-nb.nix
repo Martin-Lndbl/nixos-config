@@ -14,7 +14,7 @@ let
         --class=tablet-buttons \
         --no-buttons --undecorated --sticky --skip-taskbar --on-top \
         --form --columns=1 \
-        --field="󰄀 Screenshot!!Take a screenshot region":FBTN "caelestia screenshot -r slurp" \
+        --field="󰄀 Screenshot!!Copy screenshot region to clipboard":FBTN "grimblast copy area" \
         --field="󰌌 Keyboard!!Toggle on-screen keyboard":FBTN "sh -c 'pkill -x wvkbd-mobintl || wvkbd-mobintl -L 250 &'"
     '';
   };

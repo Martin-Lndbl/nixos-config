@@ -6,7 +6,7 @@
   xdg.configFile."caelestia/shell.json".force = true;
   xdg.configFile."caelestia/cli.json".force = true;
 
-  home.activation.caelestiaMutableConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.caelestiaMutableConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     for f in "$HOME/.config/caelestia/shell.json" "$HOME/.config/caelestia/cli.json"; do
       if [ -L "$f" ]; then
         target=$(readlink -f "$f")
@@ -17,7 +17,7 @@
     done
   '';
 
-  home.activation.caelestiaSeedGhosttyTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.caelestiaSeedGhosttyTheme = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     target="$HOME/.local/state/caelestia/theme/ghostty-theme"
     if [ ! -e "$target" ]; then
       mkdir -p "$(dirname "$target")"
@@ -76,7 +76,7 @@ import qs.services' \
                 icon: "photo_camera"
                 type: IconButton.Tonal
                 font: Tokens.font.icon.medium
-                onClicked: Quickshell.execDetached(["caelestia", "screenshot", "-r", "slurp"])
+                onClicked: Quickshell.execDetached(["grimblast", "copy", "area"])
 
                 implicitWidth: {
                     const h = label.implicitHeight + Tokens.padding.large * 2;
