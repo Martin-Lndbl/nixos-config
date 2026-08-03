@@ -1,7 +1,37 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 
 {
   imports = [ inputs.caelestia-shell.homeManagerModules.default ];
+
+  home.activation.caelestiaSeedGhosttyTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    target="$HOME/.local/state/caelestia/theme/ghostty-theme"
+    if [ ! -e "$target" ]; then
+      mkdir -p "$(dirname "$target")"
+      cat > "$target" <<'EOF'
+    background = 181818
+    foreground = d8d8d8
+    cursor-color = 7cafc2
+    selection-background = 383838
+    selection-foreground = d8d8d8
+    palette = 0=#181818
+    palette = 1=#ab4642
+    palette = 2=#a1b56c
+    palette = 3=#f7ca88
+    palette = 4=#7cafc2
+    palette = 5=#ba8baf
+    palette = 6=#86c1b9
+    palette = 7=#d8d8d8
+    palette = 8=#585858
+    palette = 9=#ab4642
+    palette = 10=#a1b56c
+    palette = 11=#f7ca88
+    palette = 12=#7cafc2
+    palette = 13=#ba8baf
+    palette = 14=#86c1b9
+    palette = 15=#f8f8f8
+    EOF
+    fi
+  '';
 
   programs.caelestia = {
     enable = true;

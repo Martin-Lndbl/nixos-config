@@ -40,13 +40,23 @@
     clock = {
       showDate = true;
       showIcon = true;
+      background = true;
     };
     scrollActions = {
       workspaces = true;
       volume = true;
       brightness = false;
     };
-    activeWindow.compact = false;
+    entries = [
+      { id = "logo"; enabled = true; }
+      { id = "workspaces"; enabled = true; }
+      { id = "spacer"; enabled = true; }
+      { id = "clock"; enabled = true; }
+      { id = "spacer"; enabled = true; }
+      { id = "tray"; enabled = true; }
+      { id = "statusIcons"; enabled = true; }
+      { id = "power"; enabled = true; }
+    ];
   };
 
   wayland.windowManager.hyprland.settings.monitor = [
