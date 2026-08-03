@@ -43,7 +43,13 @@
       enable = true;
       package = inputs.caelestia-shell.inputs.caelestia-cli.packages.${pkgs.system}.default.overrideAttrs (old: {
         postInstall = (old.postInstall or "") + ''
-          schemedir=$(find $out -type d -name schemes -print -quit)
+          schemedir=$(find $out -type d -path '*/caelestia/data/schemes' -print -quit)
+          if [ -z "$schemedir" ]; then
+            echo "ERROR: caelestia schemes directory not found in $out" >&2
+            find $out -type d | head -50 >&2
+            exit 1
+          fi
+          echo "Installing custom schemes into $schemedir"
           cp -r ${./schemes}/. "$schemedir/"
         '';
       });

@@ -6,7 +6,6 @@
   imports = [
     ./hyprland.nix
     ./caelestia.nix
-    ./fuzzel.nix
     ./grimblast.nix
   ];
 

@@ -119,7 +119,7 @@ in
 
       -- App binds
       hl.bind("SUPER + return", hl.dsp.exec_cmd("ghostty"))
-      hl.bind("SUPER + d", hl.dsp.exec_cmd("fuzzel"))
+      hl.bind("SUPER + d", hl.dsp.exec_cmd("hyprctl dispatch global caelestia:launcher"))
       hl.bind("SUPER + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 firefox"))
       hl.bind("SUPER + SHIFT + Q", hl.dsp.window.close())
       hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("qs -c caelestia ipc call lock lock"))
