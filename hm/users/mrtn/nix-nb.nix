@@ -63,13 +63,9 @@ rec {
       showKbLayout = false;
     };
     clock = {
-      showDate = false;
+      showDate = true;
       showIcon = true;
       background = true;
-    };
-    activeWindow = {
-      compact = true;
-      showOnHover = true;
     };
     tray.compact = true;
     scrollActions = {
@@ -78,42 +74,14 @@ rec {
       brightness = true;
     };
     entries = [
-      {
-        id = "logo";
-        enabled = true;
-      }
-      {
-        id = "workspaces";
-        enabled = true;
-      }
-      {
-        id = "spacer";
-        enabled = true;
-      }
-      {
-        id = "activeWindow";
-        enabled = true;
-      }
-      {
-        id = "spacer";
-        enabled = true;
-      }
-      {
-        id = "tray";
-        enabled = true;
-      }
-      {
-        id = "clock";
-        enabled = true;
-      }
-      {
-        id = "statusIcons";
-        enabled = true;
-      }
-      {
-        id = "power";
-        enabled = true;
-      }
+      { id = "logo"; enabled = true; }
+      { id = "workspaces"; enabled = true; }
+      { id = "spacer"; enabled = true; }
+      { id = "clock"; enabled = true; }
+      { id = "spacer"; enabled = true; }
+      { id = "tray"; enabled = true; }
+      { id = "statusIcons"; enabled = true; }
+      { id = "power"; enabled = true; }
     ];
   };
 }

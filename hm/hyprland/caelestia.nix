@@ -54,6 +54,8 @@
       target = "graphical-session.target";
       environment = [
         "PATH=/run/wrappers/bin:${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
+        "XDG_VIDEOS_DIR=${config.xdg.userDirs.videos}"
+        "XDG_PICTURES_DIR=${config.xdg.userDirs.pictures}"
       ];
     };
     package = inputs.caelestia-shell.packages.${pkgs.system}.default.overrideAttrs (old: {

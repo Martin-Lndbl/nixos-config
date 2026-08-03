@@ -6,7 +6,8 @@
       #bash
       ''
         export EDITOR="vim"
-        export PS1="\n\[\033[1;32m\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\$\[\033[0m\] ";
+        export PS1="\[\033[1;32m\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\$\[\033[0m\] ";
+        PROMPT_COMMAND='[ "''${_first_prompt:-}" ] && echo; _first_prompt=1'
       '';
     shellAliases = {
       "l" = "ls -la --color";
