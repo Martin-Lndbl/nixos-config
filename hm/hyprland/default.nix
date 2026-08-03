@@ -5,7 +5,7 @@
 {
   imports = [
     ./hyprland.nix
-    ./wayle.nix
+    ./caelestia.nix
     ./fuzzel.nix
     ./grimblast.nix
   ];

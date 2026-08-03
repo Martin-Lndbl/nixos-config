@@ -17,6 +17,9 @@
 
     qylock.url = "github:Darkkal44/qylock";
     qylock.inputs.nixpkgs.follows = "nixpkgs";
+
+    caelestia-shell.url = "github:caelestia-dots/shell";
+    caelestia-shell.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
