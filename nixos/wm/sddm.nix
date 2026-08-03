@@ -5,7 +5,7 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = false;
-    theme = "catppuccin-sddm-corners";
+    theme = "sddm-astronaut-theme";
     settings = {
       Theme = {
         CursorTheme = "phinger-cursors-light";
@@ -19,6 +19,9 @@
 
   environment.systemPackages = with pkgs; [
     phinger-cursors
-    catppuccin-sddm-corners
+    sddm-astronaut
+    kdePackages.qtmultimedia
+    kdePackages.qtsvg
+    kdePackages.qtvirtualkeyboard
   ];
 }
