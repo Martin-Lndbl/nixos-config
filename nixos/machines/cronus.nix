@@ -56,20 +56,31 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
   services.displayManager.sddm.wayland.compositor = "weston";
-  environment.etc."xdg/weston/weston.ini".text = ''
-    [core]
-    backend=drm-backend.so
+  services.displayManager.sddm.settings.Wayland.CompositorCommand =
+    let
+      westonIni = pkgs.writeText "weston.ini" ''
+        [keyboard]
+        keymap_layout=us
+        keymap_model=pc104
+        keymap_options=terminate:ctrl_alt_bksp
+        keymap_variant=
 
-    [output]
-    name=DP-2
-    mode=preferred
-    position=0,0
+        [libinput]
+        enable-tap=true
+        left-handed=false
 
-    [output]
-    name=DP-1
-    mode=preferred
-    position=3840,0
-  '';
+        [output]
+        name=DP-2
+        mode=preferred
+        position=0,0
+
+        [output]
+        name=DP-1
+        mode=preferred
+        position=3840,0
+      '';
+    in
+    "${pkgs.weston}/bin/weston --shell=kiosk -c ${westonIni}";
 
   programs.gamemode.enable = true;
   programs.coolercontrol.enable = true;
