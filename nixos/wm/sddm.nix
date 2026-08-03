@@ -5,7 +5,7 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = false;
-    theme = "sugar-dark";
+    theme = "catppuccin-sddm-corners";
     settings = {
       Theme = {
         CursorTheme = "phinger-cursors-light";
@@ -17,5 +17,8 @@
 
   security.pam.services.sddm.enableGnomeKeyring = true;
 
-  environment.systemPackages = with pkgs; [ phinger-cursors sddm-sugar-dark ];
+  environment.systemPackages = with pkgs; [
+    phinger-cursors
+    catppuccin-sddm-corners
+  ];
 }
