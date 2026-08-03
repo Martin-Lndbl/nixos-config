@@ -16,21 +16,22 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.includeDefaultModules = false;
-  boot.initrd.availableKernelModules = lib.mkForce [
+  boot.initrd.availableKernelModules = [
     "nvme"
+    "xhci_pci"
     "ahci"
+    "thunderbolt"
+    "usbhid"
+    "usb_storage"
     "sd_mod"
-    "ext4"
   ];
-  boot.initrd.systemd.enable = true;
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
-
   boot.kernelParams = [
     "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "rd.udev.event_timeout=10"
+    "udev.event_timeout=30"
   ];
 
   i18n.extraLocaleSettings = {
@@ -44,8 +45,6 @@
     LC_TELEPHONE = "de_DE.UTF-8";
     LC_TIME = "de_DE.UTF-8";
   };
-
-  system.stateVersion = lib.mkForce "24.11";
 
   hardware.nvidia = {
     modesetting.enable = true;
