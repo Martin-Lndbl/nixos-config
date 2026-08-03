@@ -13,30 +13,25 @@
 
   networking.hostName = "cronus";
 
-  services.openssh = {
-    enable = true;
-    ports = [ 22 ];
-    settings = {
-      PasswordAuthentication = false;
-      AllowUsers = null;
-      UseDns = true;
-      X11Forwarding = false;
-      PermitRootLogin = "prohibit-password";
-    };
-  };
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.availableKernelModules = [
+
+  boot.initrd.includeDefaultModules = false;
+  boot.initrd.availableKernelModules = lib.mkForce [
     "nvme"
     "ahci"
     "sd_mod"
+    "ext4"
   ];
-  boot.initrd.kernelModules = [ ];
   boot.initrd.systemd.enable = true;
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+
+  boot.kernelParams = [
+    "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+  ];
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
@@ -60,34 +55,12 @@
     nvidiaSettings = true;
   };
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "nvidia" ];
-  };
-
-  services.displayManager.sddm.wayland.enable = false;
-
-  boot = {
-    kernelParams = [
-      # To allow cooler control
-      "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
-      "nvidia.NVreg_UsePageAttributeTable=1"
-      "nvidia_modeset.disable_vrr_memclk_switch=1"
-      # for suspend/wakeup issues, recommended by https://wiki.hyprland.org/Nvidia/
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-    ];
-  };
+  services.xserver.videoDrivers = [ "nvidia" ];
+  services.displayManager.sddm.wayland.compositor = "weston";
 
   programs.gamemode.enable = true;
-
-  services.hardware.openrgb = {
-    enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    egl-wayland
-    nvidia-system-monitor-qt
-  ];
+  programs.coolercontrol.enable = true;
+  services.hardware.openrgb.enable = true;
 
   environment.variables = {
     LIBVA_DRIVER_NAME = "nvidia";
@@ -113,8 +86,6 @@
   ];
 
   networking.useDHCP = lib.mkDefault true;
-
-  programs.coolercontrol.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
