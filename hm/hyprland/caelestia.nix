@@ -3,6 +3,9 @@
 {
   imports = [ inputs.caelestia-shell.homeManagerModules.default ];
 
+  xdg.configFile."caelestia/shell.json".force = true;
+  xdg.configFile."caelestia/cli.json".force = true;
+
   home.activation.caelestiaMutableConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     for f in "$HOME/.config/caelestia/shell.json" "$HOME/.config/caelestia/cli.json"; do
       if [ -L "$f" ]; then
@@ -53,8 +56,40 @@
         "PATH=${config.home.profileDirectory}/bin:/run/current-system/sw/bin:/run/wrappers/bin"
       ];
     };
+    package = inputs.caelestia-shell.packages.${pkgs.system}.default.overrideAttrs (old: {
+      postPatch = (old.postPatch or "") + ''
+        substituteInPlace modules/utilities/cards/Record.qml \
+          --replace-fail 'import qs.services' 'import Quickshell
+import qs.services' \
+          --replace-fail 'onClicked: Recorder.start(["-sr"])
+                    }
+                ]
+            }
+        }' 'onClicked: Recorder.start(["-sr"])
+                    }
+                ]
+            }
+
+            IconButton {
+                shapeMorph: true
+                isRound: true
+                icon: "photo_camera"
+                type: IconButton.Tonal
+                font: Tokens.font.icon.medium
+                onClicked: Quickshell.execDetached(["caelestia", "screenshot", "-r", "slurp"])
+
+                implicitWidth: {
+                    const h = label.implicitHeight + Tokens.padding.large * 2;
+                    if (h % 2 !== 0) return h + 1;
+                    return h;
+                }
+            }
+        }'
+      '';
+    });
     cli = {
       enable = true;
+      settings.theme.postHook = "pkill -USR2 ghostty || true";
       package = inputs.caelestia-shell.inputs.caelestia-cli.packages.${pkgs.system}.default.overrideAttrs (old: {
         postFixup = (old.postFixup or "") + ''
           echo "=== caelestia custom-scheme injection ==="

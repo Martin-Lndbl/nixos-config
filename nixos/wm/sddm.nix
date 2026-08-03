@@ -5,9 +5,9 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = false;
-    theme = "sddm-chili-theme";
+    theme = "sugar-dark";
     package = pkgs.kdePackages.sddm;
-    extraPackages = [ pkgs.sddm-chili-theme ];
+    extraPackages = [ pkgs.sddm-sugar-dark ];
     settings = {
       Theme = {
         CursorTheme = "phinger-cursors-light";

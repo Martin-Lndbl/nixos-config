@@ -10,7 +10,6 @@
       window-padding-y = 8;
       confirm-close-surface = false;
       shell-integration-features = "no-cursor";
-      gtk-single-instance = false;
       font-size = config.appearance.fontSize;
       theme = "${config.xdg.stateHome}/caelestia/theme/ghostty-theme";
     };
