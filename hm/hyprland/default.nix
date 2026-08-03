@@ -13,6 +13,10 @@
   home.packages = with pkgs; [
     wl-clipboard
     hyprctl-rotate
+    gpu-screen-recorder
+    grim
+    slurp
+    swappy
   ];
   home.pointerCursor.enable = true;
 
