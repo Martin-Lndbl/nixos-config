@@ -4,9 +4,6 @@
   programs.firefox.enable = true;
   programs.firefox.configPath = "${config.xdg.configHome}/mozilla/firefox";
 
-  stylix.targets.firefox.enable = false;
-  stylix.targets.firefox.profileNames = [ ];
-
   wayland.windowManager.hyprland.settings.window_rule = [
     # Downloads
     {

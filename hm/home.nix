@@ -7,7 +7,6 @@
 {
   imports = [
     ./programs
-    ./stylix.nix
   ];
 
   home.username = "mrtn";
@@ -54,7 +53,7 @@
     cava
   ];
 
-  stylix.cursor = {
+  home.pointerCursor = {
     name = "phinger-cursors-light";
     package = pkgs.phinger-cursors;
     size = 28;

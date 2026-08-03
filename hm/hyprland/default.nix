@@ -10,7 +10,6 @@
     ./grimblast.nix
   ];
 
-  stylix.targets.hyprland.enable = true;
   home.packages = with pkgs; [
     wl-clipboard
     hyprctl-rotate
