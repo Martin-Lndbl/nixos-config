@@ -3,6 +3,17 @@
 {
   imports = [ inputs.caelestia-shell.homeManagerModules.default ];
 
+  home.activation.caelestiaMutableConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    for f in "$HOME/.config/caelestia/shell.json" "$HOME/.config/caelestia/cli.json"; do
+      if [ -L "$f" ]; then
+        target=$(readlink -f "$f")
+        rm "$f"
+        cp "$target" "$f"
+        chmod u+w "$f"
+      fi
+    done
+  '';
+
   home.activation.caelestiaSeedGhosttyTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     target="$HOME/.local/state/caelestia/theme/ghostty-theme"
     if [ ! -e "$target" ]; then
@@ -38,6 +49,9 @@
     systemd = {
       enable = true;
       target = "graphical-session.target";
+      environment = [
+        "PATH=${config.home.profileDirectory}/bin:/run/current-system/sw/bin:/run/wrappers/bin"
+      ];
     };
     cli = {
       enable = true;
