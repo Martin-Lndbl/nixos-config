@@ -79,7 +79,7 @@ in
           workspace = "9 silent";
         }
         {
-          match.class = "Alacritty";
+          match.class = "com.mitchellh.ghostty";
           workspace = "1 silent";
         }
       ];
@@ -113,13 +113,13 @@ in
         hl.exec_cmd("thunderbird")
         hl.exec_cmd([[element-desktop --password-store="gnome-libsecret"]])
         hl.exec_cmd("feishin")
-        hl.exec_cmd("alacritty")
-        hl.exec_cmd("alacritty")
+        hl.exec_cmd("ghostty")
+        hl.exec_cmd("ghostty")
       end)
 
       -- App binds
-      hl.bind("SUPER + return", hl.dsp.exec_cmd("alacritty"))
-      hl.bind("SUPER + d", hl.dsp.exec_cmd("wofi --show drun"))
+      hl.bind("SUPER + return", hl.dsp.exec_cmd("ghostty"))
+      hl.bind("SUPER + d", hl.dsp.exec_cmd("fuzzel"))
       hl.bind("SUPER + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 firefox"))
       hl.bind("SUPER + SHIFT + Q", hl.dsp.window.close())
       hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("qylock-lock"))
@@ -170,7 +170,7 @@ in
       -- Media / screenshot
       hl.bind("XF86AudioMute",    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
       hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SOURCE@ toggle"))
-      hl.bind("XF86Calculator",   hl.dsp.exec_cmd("alacritty -t popup -e calc"))
+      hl.bind("XF86Calculator",   hl.dsp.exec_cmd("ghostty --title=popup -e calc"))
       hl.bind("SUPER + SHIFT + s", hl.dsp.exec_cmd("grimblast copy area"))
 
       -- Mouse

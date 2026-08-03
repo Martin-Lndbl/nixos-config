@@ -6,7 +6,7 @@
   imports = [
     ./hyprland.nix
     ./wayle.nix
-    ./wofi.nix
+    ./fuzzel.nix
     ./grimblast.nix
   ];
 
