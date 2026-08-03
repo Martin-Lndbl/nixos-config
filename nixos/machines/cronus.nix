@@ -29,14 +29,11 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [
     "nvme"
-    "xhci_pci"
     "ahci"
-    "thunderbolt"
-    "usbhid"
-    "usb_storage"
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
+  boot.initrd.systemd.enable = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
@@ -68,6 +65,8 @@
     videoDrivers = [ "nvidia" ];
   };
 
+  services.displayManager.sddm.wayland.enable = false;
+
   boot = {
     kernelParams = [
       # To allow cooler control
@@ -76,9 +75,6 @@
       "nvidia_modeset.disable_vrr_memclk_switch=1"
       # for suspend/wakeup issues, recommended by https://wiki.hyprland.org/Nvidia/
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-      # for wayland issues, but breaks tty
-      # see https://github.com/NixOS/nixpkgs/issues/343774#issuecomment-2370293678
-      # "initcall_blacklist=simpledrm_platform_driver_init"
     ];
   };
 

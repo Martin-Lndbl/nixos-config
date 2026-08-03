@@ -1,12 +1,12 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
   imports = [ inputs.qylock.nixosModules.default ];
 
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true;
-    wayland.compositor = "kwin";
+    wayland.enable = lib.mkDefault true;
+    wayland.compositor = lib.mkDefault "kwin";
     settings = {
       Theme = {
         CursorTheme = "phinger-cursors-light";
