@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   programs.ghostty = {
@@ -10,6 +10,7 @@
       window-padding-y = 8;
       confirm-close-surface = false;
       shell-integration-features = "no-cursor";
+      theme = "${config.xdg.stateHome}/caelestia/theme/ghostty-theme";
     };
   };
 }

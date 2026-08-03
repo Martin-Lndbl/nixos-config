@@ -66,22 +66,6 @@ in
           match.class = "feishin";
           suppress_event = "maximize";
         }
-        {
-          match.class = "thunderbird";
-          workspace = "9 silent";
-        }
-        {
-          match.class = "element";
-          workspace = "9 silent";
-        }
-        {
-          match.class = "feishin";
-          workspace = "9 silent";
-        }
-        {
-          match.class = "com.mitchellh.ghostty";
-          workspace = "1 silent";
-        }
       ];
 
       workspace_rule = [
@@ -110,11 +94,11 @@ in
 
     extraConfig = ''
       hl.on("hyprland.start", function()
-        hl.exec_cmd("thunderbird")
-        hl.exec_cmd([[element-desktop --password-store="gnome-libsecret"]])
-        hl.exec_cmd("feishin")
-        hl.exec_cmd("ghostty")
-        hl.exec_cmd("ghostty")
+        hl.exec_cmd("[workspace 9 silent] thunderbird")
+        hl.exec_cmd([[[workspace 9 silent] element-desktop --password-store="gnome-libsecret"]])
+        hl.exec_cmd("[workspace 9 silent] feishin")
+        hl.exec_cmd("[workspace 1 silent] ghostty")
+        hl.exec_cmd("[workspace 1 silent] ghostty")
       end)
 
       -- App binds
