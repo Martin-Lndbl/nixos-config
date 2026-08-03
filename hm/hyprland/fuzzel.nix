@@ -1,6 +1,7 @@
 { ... }:
 
 {
+  xdg.configFile."fuzzel/fuzzel.ini".force = true;
   programs.fuzzel = {
     enable = true;
     settings = {

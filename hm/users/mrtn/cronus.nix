@@ -7,8 +7,8 @@
   imports = [ ./secrets.nix ];
 
   appearance.wallpaper = pkgs.fetchurl {
-    url = "https://4kwallpapers.com/images/wallpapers/cozy-winterscape-3840x2160-21319.jpg";
-    hash = "sha256-knweYThXi1bhUBz2sjjdwhbyRE5Jni1y9A1TWIbO0do=";
+    url = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp8017938.jpg&f=1&nofb=1&ipt=3161ddd63762459e69e12e25c7135e5754bf4fdd78c9dddd54e09528cc3b2174";
+    hash = "sha256-Oaw8NURPHSpDOSjfNe2JUwiGlBXgjmqvlhkeqfpU9tA=";
   };
 
   appearance.opacity = 0.95;

@@ -5,6 +5,20 @@
 }:
 
 let
+  tabletButtons = pkgs.writeShellApplication {
+    name = "tablet-buttons";
+    runtimeInputs = with pkgs; [ yad ];
+    text = ''
+      exec yad \
+        --title=tablet-buttons \
+        --class=tablet-buttons \
+        --no-buttons --undecorated --sticky --skip-taskbar --on-top \
+        --form --columns=1 \
+        --field="󰄀 Screenshot!!Take a screenshot region":FBTN "caelestia screenshot -r slurp" \
+        --field="󰌌 Keyboard!!Toggle on-screen keyboard":FBTN "sh -c 'pkill -x wvkbd-mobintl || wvkbd-mobintl -L 250 &'"
+    '';
+  };
+
   tabletModeWatcher = pkgs.writeShellApplication {
     name = "tablet-mode-watch";
     runtimeInputs = with pkgs; [ evtest gawk ];
@@ -25,8 +39,11 @@ let
       apply() {
         if [ "$1" = "1" ]; then
           touch "$state_file"
+          pkill -x tablet-buttons 2>/dev/null || true
+          setsid ${tabletButtons}/bin/tablet-buttons >/dev/null 2>&1 &
         else
           rm -f "$state_file"
+          pkill -x tablet-buttons 2>/dev/null || true
         fi
       }
 
