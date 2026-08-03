@@ -5,7 +5,7 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = false;
-    theme = "sddm-astronaut-theme";
+    theme = "Elegant";
     extraPackages = with pkgs; [
       kdePackages.qtmultimedia
       kdePackages.qtsvg
@@ -24,6 +24,6 @@
 
   environment.systemPackages = with pkgs; [
     phinger-cursors
-    sddm-astronaut
+    elegant-sddm
   ];
 }
