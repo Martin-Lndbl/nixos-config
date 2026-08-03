@@ -98,6 +98,53 @@ rec {
       mirror = "eDP-1";
     }
   ];
+  programs.caelestia.settings.bar = {
+    persistent = true;
+    showOnHover = false;
+    workspaces = {
+      shown = 9;
+      showWindows = true;
+      maxWindowIcons = 3;
+      activeIndicator = true;
+      perMonitorWorkspaces = false;
+    };
+    status = {
+      showAudio = true;
+      showMicrophone = true;
+      showNetwork = true;
+      showWifi = true;
+      showBluetooth = true;
+      showBattery = true;
+      showKbLayout = false;
+    };
+    clock = {
+      showDate = false;
+      showIcon = true;
+      background = true;
+    };
+    activeWindow = {
+      compact = true;
+      showOnHover = true;
+    };
+    tray.compact = true;
+    scrollActions = {
+      workspaces = true;
+      volume = true;
+      brightness = true;
+    };
+    entries = [
+      { id = "logo"; enabled = true; }
+      { id = "workspaces"; enabled = true; }
+      { id = "spacer"; enabled = true; }
+      { id = "activeWindow"; enabled = true; }
+      { id = "spacer"; enabled = true; }
+      { id = "tray"; enabled = true; }
+      { id = "clock"; enabled = true; }
+      { id = "statusIcons"; enabled = true; }
+      { id = "power"; enabled = true; }
+    ];
+  };
+
   systemd.user.services.tablet-mode = {
     Unit.Description = "Track tablet-mode switch state in $XDG_RUNTIME_DIR/tablet-mode";
     Install.WantedBy = [ "graphical-session.target" ];
