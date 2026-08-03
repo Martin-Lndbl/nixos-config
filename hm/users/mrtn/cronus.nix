@@ -20,6 +20,36 @@
   monitors.right = "DP-1";
   monitors.primary_id = 1;
 
+  programs.caelestia.settings.bar = {
+    persistent = true;
+    showOnHover = false;
+    workspaces = {
+      shown = 9;
+      showWindows = true;
+      maxWindowIcons = 5;
+      activeIndicator = true;
+      perMonitorWorkspaces = true;
+    };
+    status = {
+      showAudio = true;
+      showMicrophone = true;
+      showNetwork = true;
+      showBluetooth = false;
+      showBattery = false;
+      showKbLayout = false;
+    };
+    clock = {
+      showDate = true;
+      showIcon = true;
+    };
+    scrollActions = {
+      workspaces = true;
+      volume = true;
+      brightness = false;
+    };
+    activeWindow.compact = false;
+  };
+
   wayland.windowManager.hyprland.settings.monitor = [
     {
       output = config.monitors.center;

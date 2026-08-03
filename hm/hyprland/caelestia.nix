@@ -3,10 +3,7 @@
 {
   imports = [ inputs.caelestia-shell.homeManagerModules.default ];
 
-  stylix.targets.gtk.enable = false;
-  stylix.targets.qt.enable = false;
-  stylix.targets.fuzzel.enable = false;
-  stylix.targets.hyprland.enable = false;
+  stylix.enable = false;
 
   programs.caelestia = {
     enable = true;
