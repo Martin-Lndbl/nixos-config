@@ -10,6 +10,7 @@
       kdePackages.qtmultimedia
       kdePackages.qtsvg
       kdePackages.qtvirtualkeyboard
+      kdePackages.qt5compat
     ];
     settings = {
       Theme = {
