@@ -53,6 +53,11 @@
     ];
   };
 
+  wayland.windowManager.hyprland.settings.workspace_rule = [
+    { workspace = "1"; monitor = config.monitors.center; default = true; }
+    { workspace = "9"; monitor = config.monitors.right; default = true; }
+  ];
+
   wayland.windowManager.hyprland.settings.monitor = [
     {
       output = config.monitors.center;

@@ -114,7 +114,6 @@ in
         hl.exec_cmd([[[workspace 9 silent] element-desktop --password-store="gnome-libsecret"]])
         hl.exec_cmd("[workspace 9 silent] feishin")
         hl.exec_cmd("[workspace 1 silent] ghostty")
-        hl.exec_cmd("[workspace 1 silent] ghostty")
       end)
 
       -- App binds

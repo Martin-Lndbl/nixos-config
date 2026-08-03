@@ -6,7 +6,6 @@
     enable = true;
     wayland.enable = false;
     theme = "sugar-dark";
-    extraPackages = [ pkgs.sddm-sugar-dark ];
     settings = {
       Theme = {
         CursorTheme = "phinger-cursors-light";
@@ -18,5 +17,5 @@
 
   security.pam.services.sddm.enableGnomeKeyring = true;
 
-  environment.systemPackages = [ pkgs.phinger-cursors ];
+  environment.systemPackages = with pkgs; [ phinger-cursors sddm-sugar-dark ];
 }
