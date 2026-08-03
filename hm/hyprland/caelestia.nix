@@ -3,10 +3,6 @@
 {
   imports = [ inputs.caelestia-shell.homeManagerModules.default ];
 
-  home.activation.caelestiaSetWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${config.programs.caelestia.cli.package}/bin/caelestia wallpaper -f ${config.appearance.wallpaper} || true
-  '';
-
   home.activation.caelestiaSeedGhosttyTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     target="$HOME/.local/state/caelestia/theme/ghostty-theme"
     if [ ! -e "$target" ]; then
