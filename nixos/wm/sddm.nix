@@ -6,7 +6,6 @@
     enable = true;
     wayland.enable = false;
     theme = "sugar-dark";
-    package = pkgs.kdePackages.sddm;
     extraPackages = [ pkgs.sddm-sugar-dark ];
     settings = {
       Theme = {
