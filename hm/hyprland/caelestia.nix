@@ -53,7 +53,7 @@
       enable = true;
       target = "graphical-session.target";
       environment = [
-        "PATH=${config.home.profileDirectory}/bin:/run/current-system/sw/bin:/run/wrappers/bin"
+        "PATH=/run/wrappers/bin:${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
       ];
     };
     package = inputs.caelestia-shell.packages.${pkgs.system}.default.overrideAttrs (old: {

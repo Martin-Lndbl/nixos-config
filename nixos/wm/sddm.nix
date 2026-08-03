@@ -6,6 +6,11 @@
     enable = true;
     wayland.enable = false;
     theme = "sddm-astronaut-theme";
+    extraPackages = with pkgs; [
+      kdePackages.qtmultimedia
+      kdePackages.qtsvg
+      kdePackages.qtvirtualkeyboard
+    ];
     settings = {
       Theme = {
         CursorTheme = "phinger-cursors-light";
@@ -20,8 +25,5 @@
   environment.systemPackages = with pkgs; [
     phinger-cursors
     sddm-astronaut
-    kdePackages.qtmultimedia
-    kdePackages.qtsvg
-    kdePackages.qtvirtualkeyboard
   ];
 }
