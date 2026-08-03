@@ -58,16 +58,18 @@
   services.displayManager.sddm.wayland.compositor = "weston";
   services.displayManager.sddm.settings.Wayland.CompositorCommand =
     let
+      xkb = config.services.xserver.xkb;
+      mouse = config.services.libinput.mouse;
       westonIni = pkgs.writeText "weston.ini" ''
-        [keyboard]
-        keymap_layout=us
-        keymap_model=pc104
-        keymap_options=terminate:ctrl_alt_bksp
-        keymap_variant=
-
         [libinput]
-        enable-tap=true
-        left-handed=false
+        enable-tap=${lib.boolToString mouse.tapping}
+        left-handed=${lib.boolToString mouse.leftHanded}
+
+        [keyboard]
+        keymap_model=${xkb.model}
+        keymap_layout=${xkb.layout}
+        keymap_variant=${xkb.variant}
+        keymap_options=${xkb.options}
 
         [output]
         name=DP-2
@@ -80,7 +82,7 @@
         position=3840,0
       '';
     in
-    "${pkgs.weston}/bin/weston --shell=kiosk -c ${westonIni}";
+    "${lib.getExe pkgs.weston} --shell=kiosk -c ${westonIni}";
 
   programs.gamemode.enable = true;
   programs.coolercontrol.enable = true;
