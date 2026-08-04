@@ -98,8 +98,10 @@ import qs.services' \
     Layout.preferredHeight: size'
 
         substituteInPlace services/Colours.qml \
-          --replace-fail 'Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03))]);' 'const winOpacity = transparency.enabled ? transparency.base : 1;
-        Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03)), "keyword decoration:active_opacity " + winOpacity, "keyword decoration:inactive_opacity " + winOpacity]);'
+          --replace-fail 'Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03))]);' 'Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03))]);
+        const winOpacity = (transparency.enabled ? transparency.base : 1).toFixed(3);
+        Quickshell.execDetached(["hyprctl", "keyword", "decoration:active_opacity", winOpacity]);
+        Quickshell.execDetached(["hyprctl", "keyword", "decoration:inactive_opacity", winOpacity]);'
       '';
     });
     cli = {
