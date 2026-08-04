@@ -48,6 +48,7 @@ rec {
     clock = {
       background = false;
       showDate = true;
+      showIcon = true;
     };
     entries = [
       { id = "workspaces"; enabled = true; }

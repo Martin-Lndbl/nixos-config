@@ -21,6 +21,7 @@
     clock = {
       background = false;
       showDate = true;
+      showIcon = true;
     };
     status.showBattery = false;
     entries = [
