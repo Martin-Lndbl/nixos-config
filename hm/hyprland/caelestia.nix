@@ -74,6 +74,26 @@
             Layout.preferredHeight: size'
 
         substituteInPlace modules/dashboard/dash/DateTime.qml \
+          --replace-fail '            text: Time.minuteStr
+                    color: Colours.palette.m3secondary
+                    font: Tokens.font.clock.size(28).weight(Font.DemiBold).build()
+                }
+
+                Loader {' '            text: Time.minuteStr
+                    color: Colours.palette.m3secondary
+                    font: Tokens.font.clock.size(28).weight(Font.DemiBold).build()
+                }
+
+                StyledText {
+                    Layout.alignment: Qt.AlignHCenter
+                    text: Time.format("ss")
+                    color: Colours.palette.m3primary
+                    font: Tokens.font.clock.size(18).weight(Font.DemiBold).build()
+                }
+
+                Loader {'
+
+        substituteInPlace modules/dashboard/dash/DateTime.qml \
           --replace-fail '        spacing: 0
 
                 StyledText {
