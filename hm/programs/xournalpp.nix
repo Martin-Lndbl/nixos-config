@@ -1,8 +1,20 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
     xournalpp
   ];
+
+  xdg.configFile."xournalpp/settings.xml".force = true;
+
+  home.activation.xournalppMutableConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    f="$HOME/.config/xournalpp/settings.xml"
+    if [ -L "$f" ]; then
+      target=$(readlink -f "$f")
+      rm "$f"
+      cp "$target" "$f"
+      chmod u+w "$f"
+    fi
+  '';
 
   xdg.configFile."xournalpp/settings.xml".source =
     let
