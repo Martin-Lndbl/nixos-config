@@ -85,7 +85,10 @@
                         icon: "photo_camera"
                         type: IconButton.Tonal
                         font: Tokens.font.icon.medium
-                        onClicked: Quickshell.execDetached(["grimblast", "copy", "area"])
+                        onClicked: {
+                            root.screenState.utilities = false;
+                            Quickshell.execDetached(["sh", "-c", "sleep 0.3 && grimblast copy area"]);
+                        }
 
                         implicitWidth: {
                             const h = label.implicitHeight + Tokens.padding.large * 2;
@@ -94,6 +97,42 @@
                         }
                     }
                 }'
+
+        substituteInPlace modules/session/Content.qml \
+          --replace-fail '    AnimatedImage {
+                width: Tokens.sizes.session.button
+                height: Tokens.sizes.session.button
+                sourceSize.width: width * ((QsWindow.window as QsWindow)?.devicePixelRatio ?? 1)
+
+                playing: visible
+                asynchronous: true
+                speed: Config.general.sessionGifSpeed
+                source: Paths.absolutePath(Config.paths.sessionGif)
+                fillMode: AnimatedImage.PreserveAspectFit
+            }' '    Item {}' \
+          --replace-fail '    SessionButton {
+                id: logout
+
+                icon: Config.session.icons.logout
+                command: Config.session.commands.logout
+
+                KeyNavigation.down: shutdown' '    SessionButton {
+                id: lock
+
+                icon: "lock"
+                command: ["caelestia-shell", "ipc", "call", "lock", "lock"]
+
+                KeyNavigation.down: logout
+            }
+
+            SessionButton {
+                id: logout
+
+                icon: Config.session.icons.logout
+                command: Config.session.commands.logout
+
+                KeyNavigation.up: lock
+                KeyNavigation.down: shutdown'
 
         substituteInPlace modules/bar/components/workspaces/Workspace.qml \
           --replace-fail '    Layout.alignment: Qt.AlignHCenter
