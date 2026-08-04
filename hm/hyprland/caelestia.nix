@@ -59,6 +59,9 @@
       ];
     };
     package = inputs.caelestia-shell.packages.${pkgs.system}.default.overrideAttrs (old: {
+      qtWrapperArgs = (old.qtWrapperArgs or [ ]) ++ [
+        "--prefix" "QT_PLUGIN_PATH" ":" "${pkgs.qt6.qtsvg}/lib/qt-6/plugins"
+      ];
       postPatch = (old.postPatch or "") + ''
         substituteInPlace modules/utilities/cards/Record.qml \
           --replace-fail 'import qs.services' 'import Quickshell
@@ -93,6 +96,10 @@ import qs.services' \
     Layout.preferredHeight: size' '    visible: root.isOccupied || root.activeWsId === root.ws
     Layout.alignment: Qt.AlignHCenter
     Layout.preferredHeight: size'
+
+        substituteInPlace services/Colours.qml \
+          --replace-fail 'Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03))]);' 'const winOpacity = transparency.enabled ? transparency.base : 1;
+        Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03)), "keyword decoration:active_opacity " + winOpacity, "keyword decoration:inactive_opacity " + winOpacity]);'
       '';
     });
     cli = {

@@ -11,7 +11,7 @@
       confirm-close-surface = false;
       shell-integration-features = "no-cursor";
       font-size = config.appearance.fontSize;
-      theme = "${config.xdg.stateHome}/caelestia/theme/ghostty-theme";
+      config-file = "${config.xdg.stateHome}/caelestia/theme/ghostty-theme";
       working-directory = "home";
       window-inherit-working-directory = false;
     };
