@@ -14,33 +14,12 @@
   monitors.primary_id = 1;
 
   programs.caelestia.settings.bar = {
-    persistent = true;
-    showOnHover = false;
     workspaces = {
       shown = 9;
-      showWindows = true;
-      maxWindowIcons = 5;
-      activeIndicator = true;
       perMonitorWorkspaces = true;
     };
-    status = {
-      showAudio = true;
-      showMicrophone = true;
-      showNetwork = true;
-      showBluetooth = false;
-      showBattery = false;
-      showKbLayout = false;
-    };
-    clock = {
-      showDate = true;
-      showIcon = true;
-      background = false;
-    };
-    scrollActions = {
-      workspaces = true;
-      volume = true;
-      brightness = false;
-    };
+    clock.background = false;
+    status.showBattery = false;
     entries = [
       { id = "workspaces"; enabled = true; }
       { id = "spacer"; enabled = true; }

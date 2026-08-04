@@ -50,6 +50,8 @@
     # Notes
     trilium-desktop
 
+    nautilus
+
     # Browser
     tor-browser
 
@@ -63,19 +65,11 @@
     size = 28;
   };
 
-  gtk = {
-    enable = true;
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-  };
-
   xdg.enable = true;
   xdg.cacheHome = config.home.homeDirectory + "/.local/cache";
   xdg.userDirs = {
     enable = true;
-    createDirectories = false;
+    createDirectories = true;
     setSessionVariables = true;
     documents = "${config.home.homeDirectory}/documents";
     download = "${config.home.homeDirectory}/downloads";

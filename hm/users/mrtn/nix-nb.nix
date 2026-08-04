@@ -44,39 +44,8 @@ rec {
     }
   ];
   programs.caelestia.settings.bar = {
-    persistent = true;
-    showOnHover = false;
-    workspaces = {
-      shown = 9;
-      showWindows = true;
-      maxWindowIcons = 3;
-      activeIndicator = true;
-      perMonitorWorkspaces = false;
-    };
-    status = {
-      showAudio = true;
-      showMicrophone = true;
-      showNetwork = true;
-      showWifi = true;
-      showBluetooth = true;
-      showBattery = true;
-      showKbLayout = false;
-    };
-    clock = {
-      showDate = true;
-      showIcon = true;
-      background = false;
-    };
-    tray = {
-      compact = true;
-      background = false;
-    };
-    popouts.tray = true;
-    scrollActions = {
-      workspaces = true;
-      volume = true;
-      brightness = true;
-    };
+    workspaces.shown = 9;
+    clock.background = false;
     entries = [
       { id = "workspaces"; enabled = true; }
       { id = "spacer"; enabled = true; }

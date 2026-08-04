@@ -49,6 +49,7 @@
 
   programs.caelestia = {
     enable = true;
+    settings.paths.wallpaperDir = "${config.xdg.userDirs.pictures}/wallpaper";
     systemd = {
       enable = true;
       target = "graphical-session.target";
@@ -59,49 +60,12 @@
       ];
     };
     package = inputs.caelestia-shell.packages.${pkgs.system}.default.overrideAttrs (old: {
-      qtWrapperArgs = (old.qtWrapperArgs or [ ]) ++ [
-        "--prefix" "QT_PLUGIN_PATH" ":" "${pkgs.qt6.qtsvg}/lib/qt-6/plugins"
-      ];
       postPatch = (old.postPatch or "") + ''
-        substituteInPlace modules/utilities/cards/Record.qml \
-          --replace-fail 'import qs.services' 'import Quickshell
-import qs.services' \
-          --replace-fail 'onClicked: Recorder.start(["-sr"])
-                    }
-                ]
-            }
-        }' 'onClicked: Recorder.start(["-sr"])
-                    }
-                ]
-            }
-
-            IconButton {
-                shapeMorph: true
-                isRound: true
-                icon: "photo_camera"
-                type: IconButton.Tonal
-                font: Tokens.font.icon.medium
-                onClicked: Quickshell.execDetached(["grimblast", "copy", "area"])
-
-                implicitWidth: {
-                    const h = label.implicitHeight + Tokens.padding.large * 2;
-                    if (h % 2 !== 0) return h + 1;
-                    return h;
-                }
-            }
-        }'
-
         substituteInPlace modules/bar/components/workspaces/Workspace.qml \
           --replace-fail '    Layout.alignment: Qt.AlignHCenter
-    Layout.preferredHeight: size' '    visible: root.isOccupied || root.activeWsId === root.ws
-    Layout.alignment: Qt.AlignHCenter
-    Layout.preferredHeight: size'
-
-        substituteInPlace services/Colours.qml \
-          --replace-fail 'Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03))]);' 'Hypr.extras.batchMessage([rule.arg("blur").arg(trEnabled), rule.arg("ignore_alpha").arg(Math.max(0, transparency.base - 0.03))]);
-        const winOpacity = (transparency.enabled ? transparency.base : 1).toFixed(3);
-        Quickshell.execDetached(["hyprctl", "keyword", "decoration:active_opacity", winOpacity]);
-        Quickshell.execDetached(["hyprctl", "keyword", "decoration:inactive_opacity", winOpacity]);'
+            Layout.preferredHeight: size' '    visible: root.isOccupied || root.activeWsId === root.ws
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredHeight: size'
       '';
     });
     cli = {
@@ -109,15 +73,12 @@ import qs.services' \
       settings.theme.postHook = "pkill -USR2 ghostty || true";
       package = inputs.caelestia-shell.inputs.caelestia-cli.packages.${pkgs.system}.default.overrideAttrs (old: {
         postFixup = (old.postFixup or "") + ''
-          echo "=== caelestia custom-scheme injection ==="
           schemedir=$(find $out -type d -path '*/caelestia/data/schemes' -print -quit)
-          echo "found schemedir: $schemedir"
           if [ -z "$schemedir" ]; then
             echo "ERROR: caelestia schemes directory not found in $out" >&2
-            find $out -type d 2>&1 | head -60 >&2
             exit 1
           fi
-          cp -rv ${./schemes}/. "$schemedir/"
+          cp -r ${./schemes}/. "$schemedir/"
         '';
       });
     };
