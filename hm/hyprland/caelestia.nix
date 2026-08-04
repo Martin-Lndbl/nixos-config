@@ -67,6 +67,34 @@
     };
     package = inputs.caelestia-shell.packages.${pkgs.system}.default.overrideAttrs (old: {
       postPatch = (old.postPatch or "") + ''
+        substituteInPlace modules/utilities/cards/Record.qml \
+          --replace-fail 'import qs.services' 'import Quickshell
+                import qs.services' \
+          --replace-fail '                        onClicked: Recorder.start(["-sr"])
+                            }
+                        ]
+                    }
+                }' '                        onClicked: Recorder.start(["-sr"])
+                            }
+                        ]
+                    }
+
+                    IconButton {
+                        shapeMorph: true
+                        isRound: true
+                        icon: "photo_camera"
+                        type: IconButton.Tonal
+                        font: Tokens.font.icon.medium
+                        onClicked: Quickshell.execDetached(["grimblast", "copy", "area"])
+
+                        implicitWidth: {
+                            const h = label.implicitHeight + Tokens.padding.large * 2;
+                            if (h % 2 !== 0) return h + 1;
+                            return h;
+                        }
+                    }
+                }'
+
         substituteInPlace modules/bar/components/workspaces/Workspace.qml \
           --replace-fail '    Layout.alignment: Qt.AlignHCenter
             Layout.preferredHeight: size' '    visible: root.isOccupied || root.activeWsId === root.ws

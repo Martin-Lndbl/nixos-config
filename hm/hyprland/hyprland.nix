@@ -21,6 +21,9 @@ in
           gaps_in = 5;
           gaps_out = 10;
           resize_on_border = true;
+          border_size = 2;
+          "col.active_border" = "rgba(6a9fb5ff)";
+          "col.inactive_border" = "rgba(00000000)";
         };
 
         decoration = {
