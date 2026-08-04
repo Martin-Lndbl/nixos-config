@@ -18,7 +18,10 @@
       shown = 9;
       perMonitorWorkspaces = true;
     };
-    clock.background = false;
+    clock = {
+      background = false;
+      showDate = true;
+    };
     status.showBattery = false;
     entries = [
       { id = "workspaces"; enabled = true; }

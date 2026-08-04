@@ -66,6 +66,32 @@
             Layout.preferredHeight: size' '    visible: root.isOccupied || root.activeWsId === root.ws
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredHeight: size'
+
+        substituteInPlace modules/dashboard/dash/DateTime.qml \
+          --replace-fail '        spacing: 0
+
+                StyledText {
+                    Layout.bottomMargin: -(font.pointSize * 0.4)
+                    Layout.alignment: Qt.AlignHCenter
+                    text: Time.hourStr' '        spacing: 0
+
+                StyledText {
+                    Layout.alignment: Qt.AlignHCenter
+                    text: Time.format("dddd")
+                    color: Colours.palette.m3primary
+                }
+
+                StyledText {
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.bottomMargin: 8
+                    text: Time.format("MMM d")
+                    color: Colours.palette.m3secondary
+                }
+
+                StyledText {
+                    Layout.bottomMargin: -(font.pointSize * 0.4)
+                    Layout.alignment: Qt.AlignHCenter
+                    text: Time.hourStr'
       '';
     });
     cli = {

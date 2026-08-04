@@ -45,7 +45,10 @@ rec {
   ];
   programs.caelestia.settings.bar = {
     workspaces.shown = 9;
-    clock.background = false;
+    clock = {
+      background = false;
+      showDate = true;
+    };
     entries = [
       { id = "workspaces"; enabled = true; }
       { id = "spacer"; enabled = true; }

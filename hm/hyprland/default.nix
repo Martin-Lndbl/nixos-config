@@ -13,10 +13,6 @@
     wl-clipboard
     hyprctl-rotate
     gpu-screen-recorder
-    grim
-    slurp
-    swappy
-    papirus-icon-theme
   ];
   home.pointerCursor.enable = true;
 
