@@ -134,6 +134,14 @@
                 KeyNavigation.up: lock
                 KeyNavigation.down: shutdown'
 
+        substituteInPlace modules/sidebar/NotifActionList.qml \
+          --replace-fail '                            } else if (action.modelData.invoke) {
+                                        action.modelData.invoke();
+                                    } else if (!root.notif.resident) {' '                            } else if (action.modelData.invoke) {
+                                        action.modelData.invoke();
+                                        Quickshell.execDetached(["hyprctl", "dispatch", "focuswindow", "class:^(?i)" + root.notif.appName + "$"]);
+                                    } else if (!root.notif.resident) {'
+
         substituteInPlace modules/bar/components/workspaces/Workspace.qml \
           --replace-fail '    Layout.alignment: Qt.AlignHCenter
             Layout.preferredHeight: size' '    visible: root.isOccupied || root.activeWsId === root.ws
