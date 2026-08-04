@@ -24,7 +24,7 @@ in
         };
 
         decoration = {
-          rounding = 5;
+          rounding = 20;
           blur = {
             enabled = true;
             size = 3;

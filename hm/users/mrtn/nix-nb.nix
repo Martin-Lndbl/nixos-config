@@ -65,7 +65,7 @@ rec {
     clock = {
       showDate = true;
       showIcon = true;
-      background = true;
+      background = false;
     };
     tray = {
       compact = true;
@@ -78,7 +78,6 @@ rec {
       brightness = true;
     };
     entries = [
-      { id = "logo"; enabled = true; }
       { id = "workspaces"; enabled = true; }
       { id = "spacer"; enabled = true; }
       { id = "clock"; enabled = true; }

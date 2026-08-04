@@ -87,6 +87,12 @@ import qs.services' \
                 }
             }
         }'
+
+        substituteInPlace modules/bar/components/workspaces/Workspace.qml \
+          --replace-fail '    Layout.alignment: Qt.AlignHCenter
+    Layout.preferredHeight: size' '    visible: root.isOccupied || root.activeWsId === root.ws
+    Layout.alignment: Qt.AlignHCenter
+    Layout.preferredHeight: size'
       '';
     });
     cli = {
