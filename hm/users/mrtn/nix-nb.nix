@@ -48,8 +48,8 @@ rec {
     clock = {
       background = false;
       showDate = true;
-      showIcon = true;
     };
+    popouts.tray = true;
     entries = [
       { id = "workspaces"; enabled = true; }
       { id = "spacer"; enabled = true; }
