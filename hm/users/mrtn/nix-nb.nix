@@ -63,11 +63,15 @@ rec {
       showKbLayout = false;
     };
     clock = {
-      showDate = true;
+      showDate = false;
       showIcon = true;
-      background = true;
+      background = false;
     };
-    tray.compact = true;
+    tray = {
+      compact = true;
+      background = false;
+    };
+    popouts.tray = true;
     scrollActions = {
       workspaces = true;
       volume = true;
@@ -77,10 +81,9 @@ rec {
       { id = "logo"; enabled = true; }
       { id = "workspaces"; enabled = true; }
       { id = "spacer"; enabled = true; }
-      { id = "clock"; enabled = true; }
-      { id = "spacer"; enabled = true; }
       { id = "tray"; enabled = true; }
       { id = "statusIcons"; enabled = true; }
+      { id = "clock"; enabled = true; }
       { id = "power"; enabled = true; }
     ];
   };
