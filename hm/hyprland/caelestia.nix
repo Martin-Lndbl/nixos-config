@@ -165,7 +165,7 @@
       base00 = '#{{ background.hex }}',
       base01 = '#{{ surfaceContainerLow.hex }}',
       base02 = '#{{ surfaceContainer.hex }}',
-      base03 = '#{{ surfaceContainerHigh.hex }}',
+      base03 = '#{{ outline.hex }}',
       base04 = '#{{ subtext0.hex }}',
       base05 = '#{{ onSurface.hex }}',
       base06 = '#{{ onBackground.hex }}',

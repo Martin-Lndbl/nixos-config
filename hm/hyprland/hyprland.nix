@@ -30,12 +30,6 @@ in
             size = 3;
             passes = 2;
           };
-          shadow = {
-            enabled = true;
-            range = 30;
-            render_power = 3;
-            color = "rgba(00000099)";
-          };
         };
 
         animations.enabled = true;

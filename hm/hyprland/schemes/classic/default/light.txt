@@ -28,10 +28,10 @@ onPrimary f5f5f5
 primaryContainer d0d0d0
 onPrimaryContainer 6a9fb5
 inversePrimary 4a7f95
-secondary 75b5aa
+secondary 8ab89e
 onSecondary f5f5f5
 secondaryContainer d0d0d0
-onSecondaryContainer 75b5aa
+onSecondaryContainer 8ab89e
 tertiary aa759f
 onTertiary f5f5f5
 tertiaryContainer d0d0d0
@@ -44,8 +44,8 @@ primaryFixed 6a9fb5
 primaryFixedDim 4a7f95
 onPrimaryFixed f5f5f5
 onPrimaryFixedVariant d0d0d0
-secondaryFixed 75b5aa
-secondaryFixedDim 55958a
+secondaryFixed 8ab89e
+secondaryFixedDim 6a9880
 onSecondaryFixed f5f5f5
 onSecondaryFixedVariant d0d0d0
 tertiaryFixed aa759f
