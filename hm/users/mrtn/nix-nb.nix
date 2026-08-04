@@ -48,8 +48,9 @@ rec {
     clock = {
       background = false;
       showDate = true;
+      showIcon = false;
     };
-    popouts.tray = true;
+    tray.compact = true;
     entries = [
       { id = "workspaces"; enabled = true; }
       { id = "spacer"; enabled = true; }

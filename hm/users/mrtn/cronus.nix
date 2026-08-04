@@ -21,8 +21,9 @@
     clock = {
       background = false;
       showDate = true;
+      showIcon = false;
     };
-    popouts.tray = true;
+    tray.compact = true;
     status.showBattery = false;
     entries = [
       { id = "workspaces"; enabled = true; }
