@@ -62,6 +62,10 @@ in
 
       window_rule = [
         {
+          match.focus = false;
+          bordersize = 0;
+        }
+        {
           match.tag = "code";
           opacity = 0.98;
         }
