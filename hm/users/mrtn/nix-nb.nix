@@ -63,9 +63,9 @@ rec {
       showKbLayout = false;
     };
     clock = {
-      showDate = false;
+      showDate = true;
       showIcon = true;
-      background = false;
+      background = true;
     };
     tray = {
       compact = true;
@@ -81,9 +81,10 @@ rec {
       { id = "logo"; enabled = true; }
       { id = "workspaces"; enabled = true; }
       { id = "spacer"; enabled = true; }
+      { id = "clock"; enabled = true; }
+      { id = "spacer"; enabled = true; }
       { id = "tray"; enabled = true; }
       { id = "statusIcons"; enabled = true; }
-      { id = "clock"; enabled = true; }
       { id = "power"; enabled = true; }
     ];
   };
