@@ -32,6 +32,10 @@
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     "rd.udev.event_timeout=10"
     "udev.event_timeout=30"
+    # Steam's HTTP client threads take bus_lock traps continuously (thousands
+    # per session). The kernel default only rate-limits the logging, the trap
+    # itself still stalls the thread each time.
+    "split_lock_detect=off"
   ];
 
   i18n.extraLocaleSettings = {
