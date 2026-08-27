@@ -30,9 +30,6 @@
       forAllSystems = lib.genAttrs [ "x86_64-linux" ];
       specialArgs = { inherit inputs outputs; };
 
-      # Every machine gets the same base and window-manager stack; `extra` is the
-      # hardware/role remainder. Order matters: list-valued options (systemPackages
-      # and friends) merge in module order, so keep `extra` in the middle.
       mkNixos =
         extra:
         lib.nixosSystem {
@@ -63,14 +60,16 @@
         };
 
       # Full graphical workstation: shared home + hyprland stack + option modules.
-      mkDesktop = extra: mkHome {
-        modules = [
-          ./hm/home.nix
-          ./hm/hyprland
-        ]
-        ++ extra
-        ++ import ./modules/hm;
-      };
+      mkDesktop =
+        extra:
+        mkHome {
+          modules = [
+            ./hm/home.nix
+            ./hm/hyprland
+          ]
+          ++ extra
+          ++ import ./modules/hm;
+        };
 
       # Headless remote: just the one host file, which pulls in the shared base.
       mkHeadless = file: mkHome { modules = [ file ]; };
