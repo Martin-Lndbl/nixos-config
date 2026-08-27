@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    ./common.nix
     ./programs
   ];
 
@@ -17,18 +18,6 @@
     hash = "sha256-xUB6FICXhoX8lK/tZI9yiVAY2VFuKXePwGnhQhKHWg0=";
   };
   home.file.".face".source = config.appearance.profile.picture;
-
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.nixpkgs-stable
-    ]
-    ++ outputs.overlays.modifications;
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
-  };
 
   home.packages = with pkgs; [
     universal-ctags
@@ -42,6 +31,8 @@
     brightnessctl
     ripgrep
     btop
+    claude-code
+    gh
 
     # meetings
     discord

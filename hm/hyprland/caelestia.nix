@@ -56,6 +56,16 @@
   programs.caelestia = {
     enable = true;
     settings.paths.wallpaperDir = "${config.xdg.userDirs.pictures}/wallpaper";
+    settings.utilities.toasts.kbLayoutChanged = false;
+    settings.bar.statusIcons = [
+      { id = "lockStatus"; enabled = true; }
+      { id = "audio"; enabled = true; }
+      { id = "microphone"; enabled = true; }
+      { id = "kbLayout"; enabled = false; }
+      { id = "network"; enabled = true; }
+      { id = "bluetooth"; enabled = true; }
+      { id = "battery"; enabled = true; }
+    ];
     systemd = {
       enable = true;
       target = "graphical-session.target";
@@ -193,6 +203,11 @@
                     Layout.bottomMargin: -(font.pointSize * 0.4)
                     Layout.alignment: Qt.AlignHCenter
                     text: Time.hourStr'
+
+        substituteInPlace services/IdleInhibitor.qml \
+          --replace-fail '        property bool enabled
+                property date enabledSince' '        property bool enabled: true
+                property date enabledSince'
       '';
     });
     cli = {
@@ -210,6 +225,9 @@
       });
     };
   };
+
+  # avoid SIGKILLing apps launched via the caelestia launcher on shell restart
+  systemd.user.services.caelestia.Service.KillMode = "process";
 
   xdg.configFile."caelestia/templates/ghostty-theme".text = ''
     background = {{ background.hex }}

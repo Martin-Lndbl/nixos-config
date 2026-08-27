@@ -5,6 +5,30 @@ let
     hl.bind("SUPER + ${ws}", hl.dsp.focus({ workspace = "${ws}" }))
     hl.bind("SUPER + SHIFT + ${ws}", hl.dsp.window.move({ workspace = "${ws}" }))
   '') config.workspaces;
+
+  # vim-style keys double up on the arrow keys for every directional bind below
+  directions = [
+    { key = "left"; dir = "left"; }
+    { key = "right"; dir = "right"; }
+    { key = "up"; dir = "up"; }
+    { key = "down"; dir = "down"; }
+    { key = "h"; dir = "left"; }
+    { key = "l"; dir = "right"; }
+    { key = "k"; dir = "up"; }
+    { key = "j"; dir = "down"; }
+  ];
+
+  focusBinds = lib.concatMapStrings (d: ''
+    hl.bind("SUPER + ${d.key}", hl.dsp.focus({ direction = "${d.dir}" }))
+  '') directions;
+
+  moveWindowBinds = lib.concatMapStrings (d: ''
+    hl.bind("SUPER + SHIFT + ${d.key}", hl.dsp.window.move({ direction = "${d.dir}" }))
+  '') directions;
+
+  moveIntoGroupBinds = lib.concatMapStrings (d: ''
+    hl.bind("SUPER + CTRL + ${d.key}", hl.dsp.window.move({ into_group = "${d.dir}" }))
+  '') directions;
 in
 {
   wayland.windowManager.hyprland = {
@@ -129,24 +153,9 @@ in
       hl.bind("SUPER + ALT + S", hl.dsp.exec_cmd("(caelestia-shell ipc call lock lock & systemctl suspend -i)"))
 
       -- Move focus
-      hl.bind("SUPER + left",  hl.dsp.focus({ direction = "left" }))
-      hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
-      hl.bind("SUPER + up",    hl.dsp.focus({ direction = "up" }))
-      hl.bind("SUPER + down",  hl.dsp.focus({ direction = "down" }))
-      hl.bind("SUPER + h",     hl.dsp.focus({ direction = "left" }))
-      hl.bind("SUPER + l",     hl.dsp.focus({ direction = "right" }))
-      hl.bind("SUPER + k",     hl.dsp.focus({ direction = "up" }))
-      hl.bind("SUPER + j",     hl.dsp.focus({ direction = "down" }))
-
+      ${focusBinds}
       -- Move window
-      hl.bind("SUPER + SHIFT + left",  hl.dsp.window.move({ direction = "left" }))
-      hl.bind("SUPER + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
-      hl.bind("SUPER + SHIFT + up",    hl.dsp.window.move({ direction = "up" }))
-      hl.bind("SUPER + SHIFT + down",  hl.dsp.window.move({ direction = "down" }))
-      hl.bind("SUPER + SHIFT + h",     hl.dsp.window.move({ direction = "left" }))
-      hl.bind("SUPER + SHIFT + l",     hl.dsp.window.move({ direction = "right" }))
-      hl.bind("SUPER + SHIFT + k",     hl.dsp.window.move({ direction = "up" }))
-      hl.bind("SUPER + SHIFT + j",     hl.dsp.window.move({ direction = "down" }))
+      ${moveWindowBinds}
 
       -- Layout / floating / fullscreen
       hl.bind("SUPER + q", hl.dsp.layout("togglesplit"))
@@ -161,14 +170,7 @@ in
       hl.bind("SUPER + CTRL + g", hl.dsp.group.toggle())
       hl.bind("SUPER + CTRL + w", hl.dsp.group.next())
       hl.bind("SUPER + CTRL + e", hl.dsp.window.move({ out_of_group = true }))
-      hl.bind("SUPER + CTRL + left",  hl.dsp.window.move({ into_group = "left" }))
-      hl.bind("SUPER + CTRL + right", hl.dsp.window.move({ into_group = "right" }))
-      hl.bind("SUPER + CTRL + up",    hl.dsp.window.move({ into_group = "up" }))
-      hl.bind("SUPER + CTRL + down",  hl.dsp.window.move({ into_group = "down" }))
-      hl.bind("SUPER + CTRL + h",     hl.dsp.window.move({ into_group = "left" }))
-      hl.bind("SUPER + CTRL + l",     hl.dsp.window.move({ into_group = "right" }))
-      hl.bind("SUPER + CTRL + k",     hl.dsp.window.move({ into_group = "up" }))
-      hl.bind("SUPER + CTRL + j",     hl.dsp.window.move({ into_group = "down" }))
+      ${moveIntoGroupBinds}
 
       -- Media / screenshot
       hl.bind("XF86AudioMute",    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))

@@ -24,7 +24,6 @@
       showIcon = false;
     };
     tray.compact = true;
-    status.showBattery = false;
     entries = [
       { id = "logo"; enabled = true; }
       { id = "workspaces"; enabled = true; }

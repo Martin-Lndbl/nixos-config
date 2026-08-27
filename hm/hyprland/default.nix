@@ -33,5 +33,7 @@
     SDL_VIDEODRIVER = "wayland";
     XDG_SESSION_TYPE = "wayland";
     NIXOS_OZONE_WL = "1";
+    # nvidia hardware cursor plane renders oversized in Xwayland clients
+    WLR_NO_HARDWARE_CURSORS = "1";
   };
 }
