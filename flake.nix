@@ -12,8 +12,8 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:nix-community/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
+    caelestia-shell.url = "github:caelestia-dots/shell";
+    caelestia-shell.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -21,7 +21,6 @@
       self,
       nixpkgs,
       hm,
-      stylix,
       ...
     }@inputs:
     let
@@ -48,38 +47,6 @@
       overlays = import ./overlays { inherit inputs; };
 
       # -----------------------------------------------
-      #                   nix-gt
-      # -----------------------------------------------
-      nixosConfigurations.nix-gt = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-        };
-        modules = [
-          ./nixos/base.nix
-          ./nixos/wireguard.nix
-          ./nixos/printer.nix
-          ./nixos/machines/nix-gt.nix
-          ./nixos/wm/hyprland.nix
-        ]
-        ++ import ./modules/nixos;
-      };
-      homeConfigurations = {
-        "mrtn@nix-gt" = hm.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-            stylix.homeModules.stylix
-            ./hm/home.nix
-            ./hm/hyprland
-            ./hm/users/mrtn/nix-gt.nix
-          ]
-          ++ import ./modules/hm;
-        };
-      };
-
-      # -----------------------------------------------
       #                   nix-nb
       # -----------------------------------------------
       nixosConfigurations.nix-nb = nixpkgs.lib.nixosSystem {
@@ -92,7 +59,9 @@
           ./nixos/printer.nix
           ./nixos/container/template.nix
           ./nixos/machines/nix-nb.nix
+          ./nixos/wm/hyprland.nix
           ./nixos/wm/gnome.nix
+          ./nixos/wm/sddm.nix
         ]
         ++ import ./modules/nixos;
       };
@@ -103,8 +72,7 @@
             inherit inputs outputs;
           };
           modules = [
-            stylix.homeModules.stylix
-            ./hm/home.nix
+./hm/home.nix
             ./hm/hyprland
             ./hm/users/mrtn/nix-nb.nix
           ]
@@ -122,8 +90,7 @@
             inherit inputs outputs;
           };
           modules = [
-            stylix.homeModules.stylix
-            ./hm/users/mrtn/irene.nix
+./hm/users/mrtn/irene.nix
           ];
         };
       };
@@ -138,8 +105,7 @@
             inherit inputs outputs;
           };
           modules = [
-            stylix.homeModules.stylix
-            ./hm/users/mrtn/eliza.nix
+./hm/users/mrtn/eliza.nix
           ];
         };
       };
@@ -153,8 +119,7 @@
             inherit inputs outputs;
           };
           modules = [
-            stylix.homeModules.stylix
-            ./hm/users/mrtn/eos.nix
+./hm/users/mrtn/eos.nix
           ];
         };
       };
@@ -169,8 +134,7 @@
             inherit inputs outputs;
           };
           modules = [
-            stylix.homeModules.stylix
-            ./hm/users/ubuntu/aws.nix
+./hm/users/ubuntu/aws.nix
           ];
         };
       };
@@ -186,8 +150,7 @@
             inherit inputs outputs;
           };
           modules = [
-            stylix.homeModules.stylix
-            ./hm/users/mrtn/pyroeis.nix
+./hm/users/mrtn/pyroeis.nix
           ];
         };
       };
@@ -203,7 +166,9 @@
           ./nixos/wireguard.nix
           ./nixos/printer.nix
           ./nixos/machines/cronus.nix
+          ./nixos/wm/hyprland.nix
           ./nixos/wm/gnome.nix
+          ./nixos/wm/sddm.nix
         ]
         ++ import ./modules/nixos;
       };
@@ -214,8 +179,7 @@
             inherit inputs outputs;
           };
           modules = [
-            stylix.homeModules.stylix
-            ./hm/home.nix
+./hm/home.nix
             ./hm/hyprland
             ./hm/games
             ./hm/users/mrtn/cronus.nix

@@ -5,16 +5,14 @@
 {
   imports = [
     ./hyprland.nix
-    ./hyprlock.nix
-    ./hyprpanel.nix
-    ./wofi.nix
-    ./grim.nix
+    ./caelestia.nix
+    ./grimblast.nix
   ];
 
-  stylix.targets.hyprland.enable = true;
   home.packages = with pkgs; [
     wl-clipboard
     hyprctl-rotate
+    gpu-screen-recorder
   ];
   home.pointerCursor.enable = true;
 
@@ -35,5 +33,7 @@
     SDL_VIDEODRIVER = "wayland";
     XDG_SESSION_TYPE = "wayland";
     NIXOS_OZONE_WL = "1";
+    # nvidia hardware cursor plane renders oversized in Xwayland clients
+    WLR_NO_HARDWARE_CURSORS = "1";
   };
 }

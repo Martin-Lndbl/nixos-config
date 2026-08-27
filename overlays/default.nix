@@ -1,12 +1,6 @@
 { inputs, ... }:
 {
-  modifications = [
-    # (import ./bash.nix)
-    (import ./code.nix)
-    # (import ./discord.nix)
-    # (import ./trilium.nix)
-    (import ./waybar.nix)
-  ];
+  modifications = [ ];
 
   additions = final: _prev: import ../pkgs { pkgs = final; };
 

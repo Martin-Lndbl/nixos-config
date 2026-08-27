@@ -13,7 +13,6 @@
   home.sessionVariables = {
     TERM = "xterm";
   };
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
 
   programs.home-manager.enable = true;
   programs.direnv.enable = true;

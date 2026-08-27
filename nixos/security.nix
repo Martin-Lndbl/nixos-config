@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 {
   boot.kernel.sysctl = {
     # The Magic SysRq key is a key combo that allows users connected to the
@@ -8,7 +8,7 @@
 
     # allow perf as user
     "kernel.perf_event_paranoid" = -1;
-    "kernel.kptr_restrict" = lib.mkForce 0;
+    "kernel.kptr_restrict" = 0;
 
     ## TCP hardening
     # Prevent bogus ICMP errors from filling up logs.

@@ -13,20 +13,9 @@
 
   networking.hostName = "cronus";
 
-  services.openssh = {
-    enable = true;
-    ports = [ 22 ];
-    settings = {
-      PasswordAuthentication = false;
-      AllowUsers = null;
-      UseDns = true;
-      X11Forwarding = false;
-      PermitRootLogin = "prohibit-password";
-    };
-  };
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
@@ -36,10 +25,14 @@
     "usb_storage"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelParams = [
+    "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "rd.udev.event_timeout=10"
+    "udev.event_timeout=30"
+  ];
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
@@ -53,8 +46,6 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
-  system.stateVersion = lib.mkForce "24.11";
-
   hardware.nvidia = {
     modesetting.enable = true;
     open = true;
@@ -63,35 +54,11 @@
     nvidiaSettings = true;
   };
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "nvidia" ];
-  };
-
-  boot = {
-    kernelParams = [
-      # To allow cooler control
-      "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
-      "nvidia.NVreg_UsePageAttributeTable=1"
-      "nvidia_modeset.disable_vrr_memclk_switch=1"
-      # for suspend/wakeup issues, recommended by https://wiki.hyprland.org/Nvidia/
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-      # for wayland issues, but breaks tty
-      # see https://github.com/NixOS/nixpkgs/issues/343774#issuecomment-2370293678
-      # "initcall_blacklist=simpledrm_platform_driver_init"
-    ];
-  };
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   programs.gamemode.enable = true;
-
-  services.hardware.openrgb = {
-    enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    egl-wayland
-    nvidia-system-monitor-qt
-  ];
+  programs.coolercontrol.enable = true;
+  services.hardware.openrgb.enable = true;
 
   environment.variables = {
     LIBVA_DRIVER_NAME = "nvidia";
@@ -117,8 +84,6 @@
   ];
 
   networking.useDHCP = lib.mkDefault true;
-
-  programs.coolercontrol.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

@@ -1,8 +1,20 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
     xournalpp
   ];
+
+  xdg.configFile."xournalpp/settings.xml".force = true;
+
+  home.activation.xournalppMutableConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    f="$HOME/.config/xournalpp/settings.xml"
+    if [ -L "$f" ]; then
+      target=$(readlink -f "$f")
+      rm "$f"
+      cp "$target" "$f"
+      chmod u+w "$f"
+    fi
+  '';
 
   xdg.configFile."xournalpp/settings.xml".source =
     let
@@ -61,7 +73,7 @@
             <!--The icon theme, allowed values are "iconsColor", "iconsLucide"-->
             <property name="iconTheme" value="iconsLucide"/>
             <!--Dark/light mode, allowed values are "useSystem", "forceLight", "forceDark"-->
-            <property name="themeVariant" value="forceDark"/>
+            <property name="themeVariant" value="useSystem"/>
             <property name="highlightPosition" value="false"/>
             <property name="cursorHighlightColor" value="2164260608"/>
             <property name="cursorHighlightBorderColor" value="2147483903"/>

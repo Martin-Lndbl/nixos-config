@@ -1,5 +1,6 @@
 { pkgs, config, ... }:
 {
+  xdg.configFile."cava/config".force = true;
   xdg.configFile."cava/config".text =
     ''
       [general]

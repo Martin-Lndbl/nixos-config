@@ -9,5 +9,7 @@
     "image/webp" = [ "firefox.desktop" ];
     "image/svg+xml" = [ "firefox.desktop" ];
     "text/html" = [ "neovim.desktop" ];
+    "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
+    "x-scheme-handler/file" = [ "org.gnome.Nautilus.desktop" ];
   };
 }

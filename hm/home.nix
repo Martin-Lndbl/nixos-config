@@ -6,26 +6,18 @@
 }:
 {
   imports = [
+    ./common.nix
     ./programs
-    ./colorschemes
   ];
 
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
-  appearance.profile.picture = "${config.xdg.userDirs.pictures}/profile.jpeg";
-
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.nixpkgs-stable
-    ]
-    ++ outputs.overlays.modifications;
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
+  appearance.profile.picture = pkgs.fetchurl {
+    url = "https://avatars.githubusercontent.com/u/77677509?v=4";
+    hash = "sha256-xUB6FICXhoX8lK/tZI9yiVAY2VFuKXePwGnhQhKHWg0=";
   };
+  home.file.".face".source = config.appearance.profile.picture;
 
   home.packages = with pkgs; [
     universal-ctags
@@ -39,6 +31,8 @@
     brightnessctl
     ripgrep
     btop
+    claude-code
+    gh
 
     # meetings
     discord
@@ -47,6 +41,8 @@
     # Notes
     trilium-desktop
 
+    nautilus
+
     # Browser
     tor-browser
 
@@ -54,7 +50,7 @@
     cava
   ];
 
-  stylix.cursor = {
+  home.pointerCursor = {
     name = "phinger-cursors-light";
     package = pkgs.phinger-cursors;
     size = 28;
@@ -64,7 +60,7 @@
   xdg.cacheHome = config.home.homeDirectory + "/.local/cache";
   xdg.userDirs = {
     enable = true;
-    createDirectories = false;
+    createDirectories = true;
     setSessionVariables = true;
     documents = "${config.home.homeDirectory}/documents";
     download = "${config.home.homeDirectory}/downloads";

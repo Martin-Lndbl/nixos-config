@@ -7,6 +7,11 @@
     prismlauncher
   ];
 
-  wayland.windowManager.hyprland.settings.windowrule = [ "opacity 1, match:title (SevTech Ages)" ];
+  wayland.windowManager.hyprland.settings.window_rule = [
+    {
+      match.title = "(SevTech Ages)";
+      opacity = 1;
+    }
+  ];
 
 }

@@ -4,23 +4,38 @@
   programs.firefox.enable = true;
   programs.firefox.configPath = "${config.xdg.configHome}/mozilla/firefox";
 
-  stylix.targets.firefox.enable = false;
-  stylix.targets.firefox.profileNames = [ ];
+  wayland.windowManager.hyprland.settings.window_rule = [
+    # Downloads
+    {
+      match.title = "^(Save)(.*)$";
+      size = "800 400";
+    }
+    {
+      match.title = "^(Save)(.*)$";
+      float = true;
+    }
 
-  wayland.windowManager.hyprland.settings.windowrule = [
-    #	Downloads
-    "size 800 400, match:title ^(Save)(.*)$"
-    "float yes, match:title ^(Save)(.*)$"
+    {
+      match = {
+        title = "^(Choose a color)$";
+        class = "^(firefox)$";
+      };
+      size = "488 316";
+    }
 
-    "size 488 316, match:title ^(Choose a color)$, match:class ^(firefox)$"
-
-    #	Popups
-    "size 50% 50%, match:title ^((?!Save)(?!Mozilla firefox).)*$, match:class ^(firefox)$"
+    # Popups
+    {
+      match = {
+        title = "^((?!Save)(?!Mozilla firefox).)*$";
+        class = "^(firefox)$";
+      };
+      size = "50% 50%";
+    }
 
     # Streaming
-    "opacity 1, match:title ^(Netflix — Mozilla Firefox)"
-    "opacity 1, match:title ^(Netflix — Mozilla Firefox)"
-    "opacity 1, match:title ^(Netflix — Mozilla Firefox)"
+    {
+      match.title = "^(Netflix — Mozilla Firefox)";
+      opacity = 1;
+    }
   ];
-
 }

@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [
-    ./alacritty.nix
+    ./ghostty.nix
     ./anki.nix
     ./bash.nix
     ./calc.nix
@@ -10,7 +10,6 @@
     ./firefox.nix
     ./git.nix
     ./mime.nix
-    # ./nextcloud.nix
     ./nvim
     ./spotify.nix
     ./ssh.nix

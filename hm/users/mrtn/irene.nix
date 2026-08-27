@@ -29,7 +29,13 @@ in
   programs.direnv.enable = true;
   programs.bash.bashrcExtra = "source ~/.profile";
 
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
+  services.ssh-agent.enable = true;
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    settings."*".addKeysToAgent = "yes";
+  };
+
 
   xdg = {
     enable = true;

@@ -1,69 +1,64 @@
 {
   config,
-  pkgs,
   ...
 }:
 {
   imports = [ ./secrets.nix ];
 
-  appearance.wallpaper = pkgs.fetchurl {
-    url = "https://4kwallpapers.com/images/wallpapers/cozy-winterscape-3840x2160-21319.jpg";
-    hash = "sha256-knweYThXi1bhUBz2sjjdwhbyRE5Jni1y9A1TWIbO0do=";
-  };
-
   appearance.opacity = 0.95;
 
   appearance.fontSize = 16;
-  stylix.fonts.sizes.terminal = 16;
 
-  monitors.center = "DP-3";
-  monitors.right = "DP-4";
+  monitors.center = "DP-2";
+  monitors.right = "DP-1";
   monitors.primary_id = 1;
 
-  services.wayle.settings.bar = {
-    scale = 0.9;
-    layout = [
-      {
-        monitor = config.monitors.center;
-        show = true;
-        left = [
-          "dashboard"
-          "hyprland-workspaces"
-        ];
-        center = [
-          "clock"
-        ];
-        right = [
-          "cpu"
-          "ram"
-          "storage"
-          "custom-cpu-temp"
-          "notifications"
-        ];
-      }
-      {
-        monitor = config.monitors.right;
-        show = true;
-        left = [
-          "dashboard"
-          "hyprland-workspaces"
-        ];
-        center = [
-          "media"
-        ];
-        right = [
-          "network"
-          "volume"
-          "microphone"
-          "notifications"
-        ];
-      }
+  programs.caelestia.settings.bar = {
+    workspaces = {
+      shown = 9;
+      perMonitorWorkspaces = true;
+    };
+    clock = {
+      background = false;
+      showDate = true;
+      showIcon = false;
+    };
+    tray.compact = true;
+    entries = [
+      { id = "logo"; enabled = true; }
+      { id = "workspaces"; enabled = true; }
+      { id = "spacer"; enabled = true; }
+      { id = "clock"; enabled = true; }
+      { id = "spacer"; enabled = true; }
+      { id = "tray"; enabled = true; }
+      { id = "statusIcons"; enabled = true; }
+      { id = "power"; enabled = true; }
     ];
   };
 
+  wayland.windowManager.hyprland.settings.workspace_rule = [
+    { workspace = "1"; monitor = config.monitors.center; default = true; }
+    { workspace = "9"; monitor = config.monitors.right; default = true; }
+  ];
+
   wayland.windowManager.hyprland.settings.monitor = [
-    "${config.monitors.center}, 3840x2160, 0x0, 1"
-    "${config.monitors.right}, 3840x2160, 3840x0, 1"
-    "HDMI-A-2, preferred, auto, 1"
+    {
+      output = config.monitors.center;
+      mode = "3840x2160";
+      position = "0x0";
+      scale = 1;
+    }
+    {
+      output = config.monitors.right;
+      mode = "3840x2160";
+      position = "3840x0";
+      scale = 1;
+    }
+    {
+      output = "HDMI-A-2";
+      mode = "preferred";
+      position = "auto";
+      scale = 1;
+    }
   ];
 }
