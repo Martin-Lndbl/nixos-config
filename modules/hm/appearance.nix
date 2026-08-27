@@ -1,9 +1,12 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 let
-  cfg = config.appearance;
+  inherit (lib) mkOption types;
+  pathOrStr = types.oneOf [
+    types.path
+    types.str
+  ];
 in
-with lib;
 {
   options.appearance = {
     fontSize = mkOption {
@@ -18,30 +21,11 @@ with lib;
     };
     wallpaper = mkOption {
       description = "Wallpaper";
-      type = types.oneOf [
-        types.path
-        types.str
-      ];
-    };
-    lockScreen = mkOption {
-      description = "Lockscreen wallpaper";
-      type = types.oneOf [
-        types.path
-        types.str
-      ];
-      default = cfg.wallpaper;
+      type = pathOrStr;
     };
     profile.picture = mkOption {
       description = "Profile picture";
-      type = types.oneOf [
-        types.path
-        types.str
-      ];
-    };
-    hasBattery = mkOption {
-      description = "Used to display battery information in status bar";
-      type = types.bool;
-      default = false;
+      type = pathOrStr;
     };
   };
 }

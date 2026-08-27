@@ -25,166 +25,84 @@
     }@inputs:
     let
       inherit (self) outputs;
-      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+      inherit (nixpkgs) lib;
 
+      forAllSystems = lib.genAttrs [ "x86_64-linux" ];
+      specialArgs = { inherit inputs outputs; };
+
+      # Every machine gets the same base and window-manager stack; `extra` is the
+      # hardware/role remainder. Order matters: list-valued options (systemPackages
+      # and friends) merge in module order, so keep `extra` in the middle.
+      mkNixos =
+        extra:
+        lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            ./nixos/base.nix
+            ./nixos/wireguard.nix
+            ./nixos/printer.nix
+          ]
+          ++ extra
+          ++ [
+            ./nixos/wm/hyprland.nix
+            ./nixos/wm/gnome.nix
+            ./nixos/wm/sddm.nix
+          ]
+          ++ import ./modules/nixos;
+        };
+
+      mkHome =
+        {
+          system ? "x86_64-linux",
+          modules,
+        }:
+        hm.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          extraSpecialArgs = specialArgs;
+          inherit modules;
+        };
+
+      # Full graphical workstation: shared home + hyprland stack + option modules.
+      mkDesktop = extra: mkHome {
+        modules = [
+          ./hm/home.nix
+          ./hm/hyprland
+        ]
+        ++ extra
+        ++ import ./modules/hm;
+      };
+
+      # Headless remote: just the one host file, which pulls in the shared base.
+      mkHeadless = file: mkHome { modules = [ file ]; };
     in
-    rec {
-      packages = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        import ./pkgs { inherit pkgs; }
-      );
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        import ./shell.nix { inherit pkgs; }
-      );
+    {
+      packages = forAllSystems (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; });
 
       overlays = import ./overlays { inherit inputs; };
 
-      # -----------------------------------------------
-      #                   nix-nb
-      # -----------------------------------------------
-      nixosConfigurations.nix-nb = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-        };
-        modules = [
-          ./nixos/base.nix
-          ./nixos/wireguard.nix
-          ./nixos/printer.nix
+      nixosConfigurations = {
+        nix-nb = mkNixos [
           ./nixos/container/template.nix
           ./nixos/machines/nix-nb.nix
-          ./nixos/wm/hyprland.nix
-          ./nixos/wm/gnome.nix
-          ./nixos/wm/sddm.nix
-        ]
-        ++ import ./modules/nixos;
-      };
-      homeConfigurations = {
-        "mrtn@nix-nb" = hm.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-./hm/home.nix
-            ./hm/hyprland
-            ./hm/users/mrtn/nix-nb.nix
-          ]
-          ++ import ./modules/hm;
-        };
+        ];
+        cronus = mkNixos [ ./nixos/machines/cronus.nix ];
       };
 
-      # -----------------------------------------------
-      #                   irene
-      # -----------------------------------------------
       homeConfigurations = {
-        "mrtn@irene" = hm.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-./hm/users/mrtn/irene.nix
-          ];
-        };
-      };
+        "mrtn@nix-nb" = mkDesktop [ ./hm/users/mrtn/nix-nb.nix ];
+        "mrtn@cronus" = mkDesktop [
+          ./hm/games
+          ./hm/users/mrtn/cronus.nix
+        ];
 
-      # -----------------------------------------------
-      #                   eliza
-      # -----------------------------------------------
-      homeConfigurations = {
-        "mrtn@eliza" = hm.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-./hm/users/mrtn/eliza.nix
-          ];
-        };
-      };
-      # -----------------------------------------------
-      #                   eos
-      # -----------------------------------------------
-      homeConfigurations = {
-        "mrtn@eos" = hm.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-./hm/users/mrtn/eos.nix
-          ];
-        };
-      };
+        "mrtn@irene" = mkHeadless ./hm/users/mrtn/irene.nix;
+        "mrtn@eliza" = mkHeadless ./hm/users/mrtn/eliza.nix;
+        "mrtn@pyroeis" = mkHeadless ./hm/users/mrtn/pyroeis.nix;
+        "ubuntu@aws" = mkHeadless ./hm/users/ubuntu/aws.nix;
 
-      # -----------------------------------------------
-      #                   aws
-      # -----------------------------------------------
-      homeConfigurations = {
-        "ubuntu@aws" = hm.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-./hm/users/ubuntu/aws.nix
-          ];
-        };
-      };
-
-
-      # -----------------------------------------------
-      #                   pyroeis
-      # -----------------------------------------------
-      homeConfigurations = {
-        "mrtn@pyroeis" = hm.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-./hm/users/mrtn/pyroeis.nix
-          ];
-        };
-      };
-      # -----------------------------------------------
-      #                   cronus
-      # -----------------------------------------------
-      nixosConfigurations.cronus = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-        };
-        modules = [
-          ./nixos/base.nix
-          ./nixos/wireguard.nix
-          ./nixos/printer.nix
-          ./nixos/machines/cronus.nix
-          ./nixos/wm/hyprland.nix
-          ./nixos/wm/gnome.nix
-          ./nixos/wm/sddm.nix
-        ]
-        ++ import ./modules/nixos;
-      };
-      homeConfigurations = {
-        "mrtn@cronus" = hm.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-./hm/home.nix
-            ./hm/hyprland
-            ./hm/games
-            ./hm/users/mrtn/cronus.nix
-          ]
-          ++ import ./modules/hm;
+        "mrtn@eos" = mkHome {
+          system = "aarch64-linux";
+          modules = [ ./hm/users/mrtn/eos.nix ];
         };
       };
     };

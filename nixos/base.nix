@@ -13,10 +13,10 @@
   ];
 
   nixpkgs = {
-    overlays = [
-      outputs.overlays.nixpkgs-stable
-    ]
-    ++ outputs.overlays.modifications;
+    overlays = with outputs.overlays; [
+      nixpkgs-stable
+      modifications
+    ];
     config.allowUnfree = true;
   };
 

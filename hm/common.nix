@@ -1,14 +1,10 @@
 { outputs, ... }:
 {
   nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.nixpkgs-stable
-    ]
-    ++ outputs.overlays.modifications;
+    overlays = builtins.attrValues outputs.overlays;
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = (_: true);
+      allowUnfreePredicate = _: true;
     };
   };
 }

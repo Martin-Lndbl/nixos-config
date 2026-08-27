@@ -1,28 +1,16 @@
+{ pkgs, ... }:
 {
-  pkgs,
-  ...
-}:
-{
-  imports = [
-    ../../common.nix
-    ../../programs/nvim
-    ../../programs/bash.nix
-  ];
-
-  nix = {
-    package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
-  };
+  imports = [ ../headless.nix ];
 
   home.username = "ubuntu";
   home.homeDirectory = "/home/ubuntu";
-  home.sessionVariables = {
-    TERM = "xterm";
+
+  # Not NixOS, so nix itself comes from home-manager.
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
-
-  programs.home-manager.enable = true;
-  programs.direnv.enable = true;
-  programs.bash.bashrcExtra = "source ~/.profile";
-
-  home.stateVersion = "25.11";
 }
