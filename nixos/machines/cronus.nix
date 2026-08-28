@@ -32,7 +32,17 @@
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     "rd.udev.event_timeout=10"
     "udev.event_timeout=30"
+    # Steam's HTTP client threads take bus_lock traps continuously (thousands
+    # per session). The kernel default only rate-limits the logging, the trap
+    # itself still stalls the thread each time.
+    "split_lock_detect=off"
   ];
+
+  # asus-ec-sensors logs "Concurrent access to the ACPI EC" on every read
+  # coolercontrold triggers (~60/min); nothing serializes the EC against the
+  # firmware here, and mutex_path=:GLOBAL_LOCK doesn't help either. Its
+  # channels (MB/VRM temps, CPU_Opt tach) are unused - CPU temp is k10temp.
+  boot.blacklistedKernelModules = [ "asus_ec_sensors" ];
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";

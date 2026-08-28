@@ -9,9 +9,6 @@
     {
       match.title = "^(Save)(.*)$";
       size = "800 400";
-    }
-    {
-      match.title = "^(Save)(.*)$";
       float = true;
     }
 
@@ -21,15 +18,6 @@
         class = "^(firefox)$";
       };
       size = "488 316";
-    }
-
-    # Popups
-    {
-      match = {
-        title = "^((?!Save)(?!Mozilla firefox).)*$";
-        class = "^(firefox)$";
-      };
-      size = "50% 50%";
     }
 
     # Streaming

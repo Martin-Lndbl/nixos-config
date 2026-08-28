@@ -1,6 +1,12 @@
 { lib, ... }:
 
-with lib;
+let
+  inherit (lib) mkOption types;
+  pathOrStr = types.oneOf [
+    types.path
+    types.str
+  ];
+in
 {
   options.appearance = {
     fontSize = mkOption {
@@ -15,15 +21,7 @@ with lib;
     };
     profile.picture = mkOption {
       description = "Profile picture";
-      type = types.oneOf [
-        types.path
-        types.str
-      ];
-    };
-    hasBattery = mkOption {
-      description = "Used to display battery information in status bar";
-      type = types.bool;
-      default = false;
+      type = pathOrStr;
     };
   };
 }

@@ -13,17 +13,13 @@
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
-  appearance.profile.picture = pkgs.fetchurl {
-    url = "https://avatars.githubusercontent.com/u/77677509?v=4";
-    hash = "sha256-xUB6FICXhoX8lK/tZI9yiVAY2VFuKXePwGnhQhKHWg0=";
-  };
+  appearance.profile.picture = import ../avatar.nix pkgs;
   home.file.".face".source = config.appearance.profile.picture;
 
   home.packages = with pkgs; [
     universal-ctags
     xdg-utils
     unzip
-    calc
     fd
     xclip
     acpi
@@ -42,6 +38,12 @@
     trilium-desktop
 
     nautilus
+
+    # Keyring management. Both used to come in via the GNOME closure; with
+    # autologin the login keyring needs an empty password to unlock unattended,
+    # and seahorse is the only way to change it.
+    seahorse
+    libsecret
 
     # Browser
     tor-browser

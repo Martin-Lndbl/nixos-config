@@ -1,5 +1,12 @@
 { inputs, lib, config, pkgs, ... }:
 
+let
+  # Bar entry lists are just ordered ids; anything omitted is simply not shown.
+  shown = map (id: {
+    inherit id;
+    enabled = true;
+  });
+in
 {
   imports = [ inputs.caelestia-shell.homeManagerModules.default ];
 
@@ -55,17 +62,38 @@
 
   programs.caelestia = {
     enable = true;
-    settings.paths.wallpaperDir = "${config.xdg.userDirs.pictures}/wallpaper";
-    settings.utilities.toasts.kbLayoutChanged = false;
-    settings.bar.statusIcons = [
-      { id = "lockStatus"; enabled = true; }
-      { id = "audio"; enabled = true; }
-      { id = "microphone"; enabled = true; }
-      { id = "kbLayout"; enabled = false; }
-      { id = "network"; enabled = true; }
-      { id = "bluetooth"; enabled = true; }
-      { id = "battery"; enabled = true; }
-    ];
+    settings = {
+      paths.wallpaperDir = "${config.xdg.userDirs.pictures}/wallpaper";
+      utilities.toasts.kbLayoutChanged = false;
+
+      bar = {
+        workspaces.shown = 9;
+        tray.compact = true;
+        clock = {
+          background = false;
+          showDate = true;
+          showIcon = false;
+        };
+        entries = shown [
+          "logo"
+          "workspaces"
+          "spacer"
+          "clock"
+          "spacer"
+          "tray"
+          "statusIcons"
+          "power"
+        ];
+        statusIcons = shown [
+          "lockStatus"
+          "audio"
+          "microphone"
+          "network"
+          "bluetooth"
+          "battery"
+        ];
+      };
+    };
     systemd = {
       enable = true;
       target = "graphical-session.target";
