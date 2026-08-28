@@ -176,6 +176,10 @@ in
       hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+"), { repeating = true })
       hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"), { repeating = true })
 
+      -- Brightness (repeating, routed through caelestia so the OSD shows)
+      hl.bind("XF86MonBrightnessUp",   hl.dsp.global("caelestia:brightnessUp"),   { repeating = true })
+      hl.bind("XF86MonBrightnessDown", hl.dsp.global("caelestia:brightnessDown"), { repeating = true })
+
       ${workspaceBinds}
     '';
   };
