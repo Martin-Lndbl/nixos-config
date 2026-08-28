@@ -71,12 +71,6 @@ in
 
       animation = [
         {
-          leaf = "windows";
-          enabled = true;
-          speed = 7;
-          bezier = "default";
-        }
-        {
           leaf = "workspaces";
           enabled = true;
           speed = 6;
@@ -127,6 +121,16 @@ in
     };
 
     extraConfig = ''
+      -- Sync active border colour with caelestia's live scheme
+      local colorsOk, caelestiaColors = pcall(dofile, os.getenv("HOME") .. "/.local/state/caelestia/theme/caelestia-colors.lua")
+      if colorsOk and type(caelestiaColors) == "table" and caelestiaColors.active then
+        hl.config({ general = { ["col.active_border"] = caelestiaColors.active } })
+      end
+
+      -- Overshoot animation for windows, matching caelestia's own popups
+      hl.curve("windowSpring", { type = "spring", mass = 0.8, stiffness = 170, dampening = 19 })
+      hl.animation({ leaf = "windows", enabled = true, speed = 7, spring = "windowSpring" })
+
       hl.on("hyprland.start", function()
         hl.exec_cmd("[workspace 9 silent] thunderbird")
         hl.exec_cmd([[[workspace 9 silent] element-desktop --password-store="gnome-libsecret"]])
