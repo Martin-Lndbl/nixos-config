@@ -42,8 +42,7 @@
           ++ extra
           ++ [
             ./nixos/wm/hyprland.nix
-            ./nixos/wm/gnome.nix
-            ./nixos/wm/sddm.nix
+            ./nixos/wm/autologin.nix
           ]
           ++ import ./modules/nixos;
         };

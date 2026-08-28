@@ -20,15 +20,6 @@
       size = "488 316";
     }
 
-    # Popups
-    {
-      match = {
-        title = "^((?!Save)(?!Mozilla firefox).)*$";
-        class = "^(firefox)$";
-      };
-      size = "50% 50%";
-    }
-
     # Streaming
     {
       match.title = "^(Netflix — Mozilla Firefox)";

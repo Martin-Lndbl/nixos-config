@@ -71,6 +71,7 @@
   # virtualisation.docker.enable = true;
   environment.systemPackages = with pkgs; [
     vim
+    ethtool
   ];
 
   services.gnome.gnome-keyring.enable = true;
