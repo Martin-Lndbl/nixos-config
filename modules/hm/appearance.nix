@@ -1,8 +1,5 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
-let
-  cfg = config.appearance;
-in
 with lib;
 {
   options.appearance = {
@@ -15,21 +12,6 @@ with lib;
       description = "Set the opacity for inactive hyprland clients";
       type = types.float;
       default = 0.95;
-    };
-    wallpaper = mkOption {
-      description = "Wallpaper";
-      type = types.oneOf [
-        types.path
-        types.str
-      ];
-    };
-    lockScreen = mkOption {
-      description = "Lockscreen wallpaper";
-      type = types.oneOf [
-        types.path
-        types.str
-      ];
-      default = cfg.wallpaper;
     };
     profile.picture = mkOption {
       description = "Profile picture";

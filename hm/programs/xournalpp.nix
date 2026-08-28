@@ -158,10 +158,10 @@
             <property name="stabilizerMass" value="5"/>
             <property name="stabilizerCuspDetection" value="true"/>
             <property name="stabilizerFinalizeStroke" value="true"/>
-            <property name="colorPalette" value="/nix/store/lxak56vamsa31cfk32lbqdw21mjxycf4-xournalpp-1.3.1/share/xournalpp/palettes/xournal.gpl"/>
+            <property name="colorPalette" value="${pkgs.xournalpp}/share/xournalpp/palettes/xournal.gpl"/>
             <property name="latexSettings.autoCheckDependencies" value="true"/>
             <property name="latexSettings.defaultText" value="x^2"/>
-            <property name="latexSettings.globalTemplatePath" value="/nix/store/127khina0rwzs8rzjsi8nlvhd5mhxbg1-xournalpp-1.2.8/share/xournalpp/resources/default_template.tex"/>
+            <property name="latexSettings.globalTemplatePath" value="${pkgs.xournalpp}/share/xournalpp/resources/default_template.tex"/>
             <property name="latexSettings.genCmd" value="pdflatex -halt-on-error -interaction=nonstopmode '{}'"/>
             <property name="latexSettings.sourceViewThemeId" value="classic"/>
             <property name="latexSettings.editorFont" value="Monospace 12"/>
