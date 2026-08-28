@@ -5,19 +5,21 @@
     platformTheme.name = "gtk3";
   };
 
-  # Icon theme lookup keys off the directory name under share/icons, not the
-  # index.theme "Name=" field -- breeze-icons installs to "breeze", lowercase.
+  # Must be Papirus. Applying a caelestia theme (which happens on every
+  # wallpaper/scheme change) unconditionally runs
+  #   dconf write /org/gnome/desktop/interface/icon-theme 'Papirus-<mode>'
+  # unless cli.settings.theme.iconTheme overrides it, and GTK -- and so the
+  # qgtk3 Qt platform theme -- prefers that dconf value over settings.ini.
+  # Anything else here gets silently clobbered the next time the theme is
+  # applied, leaving icons unresolvable. Papirus-Dark inherits breeze-dark and
+  # hicolor, both shipped by the same package.
   gtk = {
     enable = true;
     iconTheme = {
-      name = "breeze";
-      package = pkgs.kdePackages.breeze-icons;
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
   };
-
-  # breeze only inherits hicolor, so keep Adwaita around as a fallback for
-  # apps that ship icons under GNOME-style names.
-  home.packages = [ pkgs.adwaita-icon-theme ];
 
   i18n.inputMethod = {
     enable = true;

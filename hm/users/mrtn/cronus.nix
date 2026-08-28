@@ -11,30 +11,9 @@
 
   monitors.center = "DP-2";
   monitors.right = "DP-1";
-  monitors.primary_id = 1;
 
-  programs.caelestia.settings.bar = {
-    workspaces = {
-      shown = 9;
-      perMonitorWorkspaces = true;
-    };
-    clock = {
-      background = false;
-      showDate = true;
-      showIcon = false;
-    };
-    tray.compact = true;
-    entries = [
-      { id = "logo"; enabled = true; }
-      { id = "workspaces"; enabled = true; }
-      { id = "spacer"; enabled = true; }
-      { id = "clock"; enabled = true; }
-      { id = "spacer"; enabled = true; }
-      { id = "tray"; enabled = true; }
-      { id = "statusIcons"; enabled = true; }
-      { id = "power"; enabled = true; }
-    ];
-  };
+  # Only this host has more than one monitor.
+  programs.caelestia.settings.bar.workspaces.perMonitorWorkspaces = true;
 
   wayland.windowManager.hyprland.settings.workspace_rule = [
     { workspace = "1"; monitor = config.monitors.center; default = true; }

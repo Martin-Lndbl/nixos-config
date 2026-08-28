@@ -11,7 +11,6 @@
 
   home.packages = with pkgs; [
     wl-clipboard
-    hyprctl-rotate
     gpu-screen-recorder
   ];
   home.pointerCursor.enable = true;

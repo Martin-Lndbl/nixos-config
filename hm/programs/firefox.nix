@@ -9,9 +9,6 @@
     {
       match.title = "^(Save)(.*)$";
       size = "800 400";
-    }
-    {
-      match.title = "^(Save)(.*)$";
       float = true;
     }
 

@@ -96,17 +96,8 @@ in
         {
           match.class = "tablet-buttons";
           float = true;
-        }
-        {
-          match.class = "tablet-buttons";
           pin = true;
-        }
-        {
-          match.class = "tablet-buttons";
           size = "180 140";
-        }
-        {
-          match.class = "tablet-buttons";
           move = "100%-190 100%-260";
         }
       ];
