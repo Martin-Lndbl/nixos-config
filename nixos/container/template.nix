@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 let containerName = "template";
 in

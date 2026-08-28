@@ -1,10 +1,7 @@
 { pkgs, ... }:
 
 let
-  avatar = pkgs.fetchurl {
-    url = "https://avatars.githubusercontent.com/u/77677509?v=4";
-    hash = "sha256-xUB6FICXhoX8lK/tZI9yiVAY2VFuKXePwGnhQhKHWg0=";
-  };
+  avatar = import ../../avatar.nix pkgs;
   facesDir = pkgs.runCommand "sddm-faces" { } ''
     mkdir -p $out
     cp ${avatar} $out/mrtn.face.icon
