@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   ...
 }:
@@ -32,7 +33,19 @@
     SDL_VIDEODRIVER = "wayland";
     XDG_SESSION_TYPE = "wayland";
     NIXOS_OZONE_WL = "1";
-    # nvidia hardware cursor plane renders oversized in Xwayland clients
-    WLR_NO_HARDWARE_CURSORS = "1";
   };
+
+  # home.sessionVariables only ever reach a login shell. Hyprland inherits them
+  # (greetd runs the session through "bash --login"), so anything Hyprland
+  # spawns itself is fine -- but the systemd user manager is started by PAM
+  # before any of that and never sees them. Everything launched out of a user
+  # unit, which includes anything started from the caelestia launcher, is
+  # therefore missing XCURSOR_SIZE/XCURSOR_THEME and NIXOS_OZONE_WL: Xwayland
+  # clients such as Steam and Discord fall back to libXcursor's default size of
+  # screen height / 48, i.e. 45px on these 4K monitors instead of 28.
+  #
+  # uwsm would normally import these, but autologin.nix deliberately does not
+  # use it. Writing them to environment.d gets them into the user manager at
+  # session start instead.
+  systemd.user.sessionVariables = config.home.sessionVariables;
 }
