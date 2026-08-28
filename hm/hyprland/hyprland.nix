@@ -121,10 +121,12 @@ in
     };
 
     extraConfig = ''
-      -- Sync active border colour with caelestia's live scheme
-      local colorsOk, caelestiaColors = pcall(dofile, os.getenv("HOME") .. "/.local/state/caelestia/theme/caelestia-colors.lua")
-      if colorsOk and type(caelestiaColors) == "table" and caelestiaColors.active then
-        hl.config({ general = { ["col.active_border"] = caelestiaColors.active } })
+      -- Active border colour derived from the wallpaper, see border-colour.nix.
+      -- Absent until that unit has run once, in which case the colour set in
+      -- general above stands.
+      local borderOk, border = pcall(dofile, "${config.xdg.stateHome}/hypr/border-colour.lua")
+      if borderOk and type(border) == "table" and border.active then
+        hl.config({ general = { ["col.active_border"] = border.active } })
       end
 
       -- Overshoot animation for windows, matching caelestia's own popups

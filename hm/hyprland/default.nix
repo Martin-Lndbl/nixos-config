@@ -8,6 +8,7 @@
     ./hyprland.nix
     ./caelestia.nix
     ./grimblast.nix
+    ./border-colour.nix
   ];
 
   home.packages = with pkgs; [
