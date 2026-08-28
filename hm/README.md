@@ -5,7 +5,7 @@ This directory contains my [HomeManager](https://github.com/nix-community/home-m
 > This is a highly opinionated solution for a generic problem and might not be the right approach for your use case.
 
 ## Structure
-Distictions between host and user config happens in `../flake.nix`. There user- and device-specific modules containing settings for window-manager, wallpaper, fontsize, etc. can be pieced together.
+Distictions between host and user config happens in `../flake.nix`. There user- and device-specific modules containing settings for window-manager, monitors, fontsize, etc. can be pieced together.
 
 * `games` for game-specific config.
 * `hyprland` can be selected as window-manager if `../nixos/wm/hyprland.nix` is active in the nixos config. Theming on hyprland hosts is driven by [caelestia-shell](https://github.com/caelestia-dots/shell); the caelestia CLI writes a base16 palette to `~/.local/state/caelestia/theme/base16-nvim.lua` (see `hyprland/caelestia.nix` template) which `programs/nvim/plugins/base16-nvim.nix` sources.

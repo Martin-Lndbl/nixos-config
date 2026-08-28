@@ -4,21 +4,16 @@ All my configurations in one spot.
 
 Currently I'm using
 * [Hyprland](https://github.com/hyprwm/Hyprland) as tiling compositor
-* [Eww](https://github.com/elkowar/eww) for my widgets
+* [caelestia-shell](https://github.com/caelestia-dots/shell) for my bar and widgets
 * [Neovim](https://github.com/neovim/neovim) as editor
 
 ## Highlights
 * Readable approach to manage multiple hosts and users
-* Extensive NeoVim configuration based on my [module](https://github.com/Martin-Lndbl/nix-neovim-module)
+* Extensive NeoVim configuration
 * Hyprland as tiling compositor, providing latest wayland features
-* Highly customizable widgets implemented in [eww](https://github.com/elkowar/eww)
+* Highly customizable widgets implemented in [caelestia-shell](https://github.com/caelestia-dots/shell)
 * Users color scheme is built automatically from base16 colors
-
-### How it looks
- <p float="center">
-   <img src="https://github.com/Martin-Lndbl/nixos-config/assets/77677509/ca2af5e7-193f-4f13-a38d-2b0b2567db0e" width="49%" />
-   <img src="https://github.com/Martin-Lndbl/nixos-config/assets/77677509/96deb7b0-ed78-40ac-b492-ef91d001e607" width="49%" />
-</p>
+* Wallpapers kept in sync across hosts by a declared [Nextcloud](https://github.com/nextcloud/desktop) folder
 
 ### Set one colorscheme for everything
  <p float="center">
