@@ -38,6 +38,12 @@
     "split_lock_detect=off"
   ];
 
+  # asus-ec-sensors logs "Concurrent access to the ACPI EC" on every read
+  # coolercontrold triggers (~60/min); nothing serializes the EC against the
+  # firmware here, and mutex_path=:GLOBAL_LOCK doesn't help either. Its
+  # channels (MB/VRM temps, CPU_Opt tach) are unused - CPU temp is k10temp.
+  boot.blacklistedKernelModules = [ "asus_ec_sensors" ];
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
     LC_IDENTIFICATION = "de_DE.UTF-8";
