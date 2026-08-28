@@ -66,6 +66,11 @@ in
       paths.wallpaperDir = "${config.xdg.userDirs.pictures}/wallpaper";
       utilities.toasts.kbLayoutChanged = false;
 
+      border = {
+        thickness = 0;
+        rounding = 0;
+      };
+
       bar = {
         workspaces.shown = 9;
         tray.compact = true;
