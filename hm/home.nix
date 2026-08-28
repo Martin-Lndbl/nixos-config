@@ -43,6 +43,12 @@
 
     nautilus
 
+    # Keyring management. Both used to come in via the GNOME closure; with
+    # autologin the login keyring needs an empty password to unlock unattended,
+    # and seahorse is the only way to change it.
+    seahorse
+    libsecret
+
     # Browser
     tor-browser
 
