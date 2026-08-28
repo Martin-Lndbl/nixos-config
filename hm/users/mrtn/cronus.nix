@@ -5,6 +5,9 @@
 {
   imports = [ ./secrets.nix ];
 
+  # commits from this box are tagged with it, as on the other machines
+  programs.git.settings.user.name = "Martin-Lindbuechl@cronus";
+
   appearance.opacity = 0.95;
 
   appearance.fontSize = 16;

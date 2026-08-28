@@ -1,9 +1,18 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  # $HOME is expanded by vim and by the activation shell alike
+  undodir = "$HOME/.tmp/undo";
+in
 {
 
   imports = [
     ./plugins
   ];
+
+  # nvim writes no undo history at all when this is missing
+  home.activation.nvimUndoDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run mkdir -p "${undodir}"
+  '';
 
   programs.neovim = {
     enable = true;
@@ -21,7 +30,7 @@
       set mouse=a
 
       set undofile
-      set undodir=$HOME/.tmp/undo
+      set undodir=${undodir}
       set undolevels=1000
       set undoreload=1000
 

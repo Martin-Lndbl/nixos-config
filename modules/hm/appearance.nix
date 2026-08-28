@@ -19,10 +19,6 @@ in
       type = types.float;
       default = 0.95;
     };
-    wallpaper = mkOption {
-      description = "Wallpaper";
-      type = pathOrStr;
-    };
     profile.picture = mkOption {
       description = "Profile picture";
       type = pathOrStr;

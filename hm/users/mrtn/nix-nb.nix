@@ -18,10 +18,6 @@
       [[sh -c 'pkill -x wvkbd-mobintl || wvkbd-mobintl -L 250 &']]))
   '';
 
-  appearance.wallpaper = pkgs.fetchurl {
-    url = "https://4kwallpapers.com/images/wallpapers/cozy-winterscape-3840x2160-21319.jpg";
-    hash = "sha256-knweYThXi1bhUBz2sjjdwhbyRE5Jni1y9A1TWIbO0do=";
-  };
   appearance.opacity = 0.95;
   appearance.fontSize = 12;
   monitors.center = "eDP-1";
