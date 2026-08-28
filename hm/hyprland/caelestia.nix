@@ -241,6 +241,13 @@ in
           --replace-fail '        property bool enabled
                 property date enabledSince' '        property bool enabled: true
                 property date enabledSince'
+
+        # launch apps in their own scope so they leave caelestia's cgroup
+        substituteInPlace modules/launcher/services/Apps.qml \
+          --replace-fail '            entry.execute();' '            Quickshell.execDetached({
+                command: ["${pkgs.systemd}/bin/systemd-run", "--user", "--scope", "--quiet", "--collect", ...entry.command],
+                workingDirectory: entry.workingDirectory
+            });'
       '';
     });
     cli = {
@@ -258,9 +265,6 @@ in
       });
     };
   };
-
-  # avoid SIGKILLing apps launched via the caelestia launcher on shell restart
-  systemd.user.services.caelestia.Service.KillMode = "process";
 
   xdg.configFile."caelestia/templates/ghostty-theme".text = ''
     background = {{ background.hex }}
