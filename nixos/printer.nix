@@ -2,7 +2,9 @@
 {
   services.printing = {
     enable = true;
-    drivers = with pkgs; [ samsung-unified-linux-driver ];
+    # CLX-3170 speaks SPL-C; the samsung blob's filter paths get baked into
+    # /etc/cups/ppd and break on the next garbage collection.
+    drivers = with pkgs; [ splix ];
   };
   services.avahi = {
     enable = true;
