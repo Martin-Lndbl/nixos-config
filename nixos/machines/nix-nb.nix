@@ -6,6 +6,20 @@
   ...
 }:
 
+let
+  hideNode = name: {
+    matches = [ { "node.name" = name; } ];
+    actions.update-props."node.disabled" = true;
+  };
+
+  renameNode = name: label: {
+    matches = [ { "node.name" = name; } ];
+    actions.update-props = {
+      "node.description" = label;
+      "node.nick" = label;
+    };
+  };
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -61,6 +75,10 @@
   hardware.sensor.iio.enable = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.upower.enable = true;
+
   hardware.graphics.extraPackages = with pkgs; [
     intel-media-driver
     intel-vaapi-driver
@@ -75,6 +93,17 @@
     "options iwlwifi power_save=1 uapsd_disable=1"
   ];
   services.thermald.enable = true;
+
+  services.pipewire.wireplumber.extraConfig."51-audio-devices" = {
+    "monitor.alsa.rules" = [
+      (renameNode "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink" "Speakers")
+      (renameNode "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source" "Mic")
+      (hideNode "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink")
+      (hideNode "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI2__sink")
+      (hideNode "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI3__sink")
+      (hideNode "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic2__source")
+    ];
+  };
 
   services.udev.extraRules = lib.mkMerge [
     # autosuspend USB devices
