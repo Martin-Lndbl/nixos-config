@@ -26,7 +26,8 @@
     type = "fcitx5";
     fcitx5 = {
       waylandFrontend = true;
-      ignoreUserConfig = true;
+      # No ignoreUserConfig: it sets SKIP_FCITX_USER_PATH=1, which makes fcitx5
+      # skip ~/.config/fcitx5 - the only place this module writes the profile.
       addons = with pkgs; [
         fcitx5-mozc
       ];
