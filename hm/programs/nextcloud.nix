@@ -9,13 +9,38 @@ let
   cfg = config.services.nextcloud-client;
 
   # The account id is the [Accounts] group name in nextcloud.cfg. The keychain
-  # entry holding the login token is keyed on "<webflow_user>:<url>/:<id>"
+  # entry holding the login token is keyed on "<dav_user>:<url>/:<id>"
   # (AbstractCredentials::keychainKey), so changing this id logs the account
   # out. It stays at the id the account got when it was first added.
   accountId = "1";
   serverUrl = "https://nextcloud.lndbl.de";
   davUser = "martin";
   webflowUser = "Martin";
+  keychainUser = "${davUser}:${serverUrl}/:${accountId}";
+
+  # gnome-keyring's Secret Service item registration lags a couple of seconds
+  # behind PAM unlocking the collection at login (a duplicate daemon spawns
+  # and re-registers items -- see "asked to register item ... already
+  # registered" in the journal), so the client can start before its stored
+  # token is actually readable and fall back to a fresh webflow login.
+  waitForSecret = pkgs.writeShellApplication {
+    name = "wait-for-nextcloud-secret";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.libsecret
+    ];
+    text = ''
+      have_secret() {
+        timeout 2 secret-tool lookup server Nextcloud user "${keychainUser}" type plaintext >/dev/null 2>&1
+      }
+
+      waited=0
+      while ! have_secret && [ "$waited" -lt 15 ]; do
+        sleep 1
+        waited=$((waited + 1))
+      done
+    '';
+  };
 
   # caelestia picks its wallpapers straight out of this directory, see
   # programs.caelestia.settings.paths.wallpaperDir in ../hyprland/caelestia.nix.
@@ -34,9 +59,10 @@ in
     startInBackground = true;
   };
 
-  # Same pyroeis race as thunderbird/feishin in hm/hyprland/hyprland.nix.
   systemd.user.services.nextcloud-client.Service.ExecStartPre = [
+    # Same pyroeis race as thunderbird/feishin in hm/hyprland/hyprland.nix.
     "${pkgs.wait-for-pyroeis}/bin/wait-for-pyroeis"
+    "${waitForSecret}/bin/wait-for-nextcloud-secret"
   ];
 
   # Mirrors what the client writes itself, so it round-trips cleanly:
