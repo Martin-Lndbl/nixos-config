@@ -1,36 +1,9 @@
 { config, lib, pkgs, ... }:
 
 let
-  # NetworkManager activates the pyroeis tunnel in parallel with the graphical
-  # session, so the autostarted apps that need it would otherwise come up first
-  # and stick on their offline/unreachable screen.
-  vpnTimeout = 60;
-
-  waitForVpn = pkgs.writeShellApplication {
-    name = "wait-for-pyroeis";
-    runtimeInputs = [ pkgs.networkmanager ];
-    text = ''
-      vpn_up() {
-        [ "$(nmcli -g GENERAL.STATE connection show pyroeis 2>/dev/null)" = "activated" ]
-      }
-
-      waited=0
-      while ! vpn_up && [ "$waited" -lt ${toString vpnTimeout} ]; do
-        sleep 1
-        waited=$((waited + 1))
-      done
-
-      if ! vpn_up; then
-        echo "pyroeis still down after ${toString vpnTimeout}s, starting $1 anyway" >&2
-      fi
-
-      exec "$@"
-    '';
-  };
-
   # exec keeps the pid hyprland spawned, so the exec_cmd workspace rule still
   # matches the window that eventually opens.
-  waitForVpnCmd = "${waitForVpn}/bin/wait-for-pyroeis";
+  waitForVpnCmd = "${pkgs.wait-for-pyroeis}/bin/wait-for-pyroeis";
 
   workspaceBinds = lib.concatMapStrings (ws: ''
     hl.bind("SUPER + ${ws}", hl.dsp.focus({ workspace = "${ws}" }))

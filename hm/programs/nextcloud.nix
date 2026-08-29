@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -32,6 +33,11 @@ in
     enable = true;
     startInBackground = true;
   };
+
+  # Same pyroeis race as thunderbird/feishin in hm/hyprland/hyprland.nix.
+  systemd.user.services.nextcloud-client.Service.ExecStartPre = [
+    "${pkgs.wait-for-pyroeis}/bin/wait-for-pyroeis"
+  ];
 
   # Mirrors what the client writes itself, so it round-trips cleanly:
   # AccountManager::saveAccountHelper produces the "<id>\..." keys and
