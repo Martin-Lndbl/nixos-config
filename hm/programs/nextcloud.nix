@@ -15,32 +15,13 @@ let
   accountId = "1";
   serverUrl = "https://nextcloud.lndbl.de";
   davUser = "martin";
-  webflowUser = "Martin";
-  keychainUser = "${davUser}:${serverUrl}/:${accountId}";
-
-  # gnome-keyring's Secret Service item registration lags a couple of seconds
-  # behind PAM unlocking the collection at login (a duplicate daemon spawns
-  # and re-registers items -- see "asked to register item ... already
-  # registered" in the journal), so the client can start before its stored
-  # token is actually readable and fall back to a fresh webflow login.
-  waitForSecret = pkgs.writeShellApplication {
-    name = "wait-for-nextcloud-secret";
-    runtimeInputs = [
-      pkgs.coreutils
-      pkgs.libsecret
-    ];
-    text = ''
-      have_secret() {
-        timeout 2 secret-tool lookup server Nextcloud user "${keychainUser}" type plaintext >/dev/null 2>&1
-      }
-
-      waited=0
-      while ! have_secret && [ "$waited" -lt 15 ]; do
-        sleep 1
-        waited=$((waited + 1))
-      done
-    '';
-  };
+  # AbstractCredentials::keychainKey() keys the stored token on this value,
+  # case-sensitively. It has to match dav_user exactly: the client itself
+  # saves the token under the lowercase dav_user after a successful login,
+  # so a differently-cased webflow_user here makes the *next* cold start's
+  # keychain lookup miss and forces a fresh login every time nextcloud.cfg
+  # gets rewritten (force = true below resets it on every rebuild).
+  webflowUser = davUser;
 
   # caelestia picks its wallpapers straight out of this directory, see
   # programs.caelestia.settings.paths.wallpaperDir in ../hyprland/caelestia.nix.
@@ -59,10 +40,9 @@ in
     startInBackground = true;
   };
 
+  # Same pyroeis race as thunderbird/feishin in hm/hyprland/hyprland.nix.
   systemd.user.services.nextcloud-client.Service.ExecStartPre = [
-    # Same pyroeis race as thunderbird/feishin in hm/hyprland/hyprland.nix.
     "${pkgs.wait-for-pyroeis}/bin/wait-for-pyroeis"
-    "${waitForSecret}/bin/wait-for-nextcloud-secret"
   ];
 
   # Mirrors what the client writes itself, so it round-trips cleanly:
