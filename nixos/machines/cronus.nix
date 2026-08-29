@@ -6,6 +6,15 @@
   ...
 }:
 
+let
+  renameNode = name: label: {
+    matches = [ { "node.name" = name; } ];
+    actions.update-props = {
+      "node.description" = label;
+      "node.nick" = label;
+    };
+  };
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -65,6 +74,31 @@
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  # UCM exposes every jack as a permanent node. ACP instead collapses each card
+  # into one sink/source and picks the profile by jack detection, so empty jacks
+  # drop out on their own and reappear when something is plugged in.
+  services.pipewire.wireplumber.extraConfig."51-audio-devices" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [ { "device.name" = "~alsa_card\\..*"; } ];
+        actions.update-props."api.alsa.use-ucm" = false;
+      }
+      (renameNode "alsa_output.usb-Generic_USB_Audio-00.analog-stereo" "Speakers")
+      (renameNode "alsa_input.usb-Generic_USB_Audio-00.analog-stereo" "Mic")
+      # Really capture device 0; the card has no digital capture at all.
+      (renameNode "alsa_input.usb-Generic_USB_Audio-00.iec958-stereo" "Analog In")
+      (renameNode "alsa_output.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo" "HyperX")
+      (renameNode "alsa_input.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo" "HyperX")
+      (renameNode "alsa_input.usb-046d_HD_Pro_Webcam_C920_66AD175F-02.analog-stereo" "Webcam")
+      (renameNode "alsa_output.usb-Sony_Interactive_Entertainment_DualSense_Wireless_Controller-00.analog-surround-40" "DualSense")
+      # The pad has one capture path. ACP names it analog-stereo while the
+      # headset jack reads connected and iec958-stereo once it does not, so both
+      # spellings need the rename to keep the label stable across replug.
+      (renameNode "alsa_input.usb-Sony_Interactive_Entertainment_DualSense_Wireless_Controller-00.analog-stereo" "DualSense")
+      (renameNode "alsa_input.usb-Sony_Interactive_Entertainment_DualSense_Wireless_Controller-00.iec958-stereo" "DualSense")
+    ];
+  };
 
   programs.gamemode.enable = true;
   programs.coolercontrol.enable = true;
