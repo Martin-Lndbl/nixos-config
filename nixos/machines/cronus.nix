@@ -7,6 +7,16 @@
 }:
 
 let
+  hideCard = name: {
+    matches = [ { "device.name" = name; } ];
+    actions.update-props."device.disabled" = true;
+  };
+
+  hideNode = name: {
+    matches = [ { "node.name" = name; } ];
+    actions.update-props."node.disabled" = true;
+  };
+
   renameNode = name: label: {
     matches = [ { "node.name" = name; } ];
     actions.update-props = {
@@ -84,10 +94,17 @@ in
         matches = [ { "device.name" = "~alsa_card\\..*"; } ];
         actions.update-props."api.alsa.use-ucm" = false;
       }
+      # The monitor claims audio over DP, so ELD never marks it unavailable.
+      # Hide the whole card: the node name follows the active HDMI profile
+      # (hdmi-stereo, -extra1, -extra2), so matching one name would not hold.
+      (hideCard "alsa_card.pci-0000_01_00.1")
       (renameNode "alsa_output.usb-Generic_USB_Audio-00.analog-stereo" "Speakers")
       (renameNode "alsa_input.usb-Generic_USB_Audio-00.analog-stereo" "Mic")
-      # Really capture device 0; the card has no digital capture at all.
-      (renameNode "alsa_input.usb-Generic_USB_Audio-00.iec958-stereo" "Analog In")
+      # "Analog In" (really capture device 0 - the card has no digital capture).
+      # Its route is avail=unknown, so it never hides itself; it is only picked
+      # as the fallback while the mic jack is empty, so dropping the node leaves
+      # the card silent until a mic appears on analog-stereo above.
+      (hideNode "alsa_input.usb-Generic_USB_Audio-00.iec958-stereo")
       (renameNode "alsa_output.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo" "HyperX")
       (renameNode "alsa_input.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo" "HyperX")
       (renameNode "alsa_input.usb-046d_HD_Pro_Webcam_C920_66AD175F-02.analog-stereo" "Webcam")
