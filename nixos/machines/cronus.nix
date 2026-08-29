@@ -120,6 +120,7 @@ in
   programs.gamemode.enable = true;
   programs.coolercontrol.enable = true;
   services.hardware.openrgb.enable = true;
+  hardware.bluetooth.enable = false;
 
   environment.variables = {
     LIBVA_DRIVER_NAME = "nvidia";
