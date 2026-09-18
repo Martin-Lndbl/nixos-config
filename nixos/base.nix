@@ -13,10 +13,7 @@
   ];
 
   nixpkgs = {
-    overlays = with outputs.overlays; [
-      nixpkgs-stable
-      modifications
-    ];
+    overlays = builtins.attrValues outputs.overlays;
     config.allowUnfree = true;
   };
 
@@ -29,7 +26,10 @@
     options = "--delete-older-than 7d";
   };
   nix.settings = {
-    experimental-features = "nix-command flakes";
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
     sandbox = true;
   };
@@ -55,7 +55,7 @@
     pulse.enable = true;
   };
 
-  environment.etc."/openal/alsoft.conf".text = ''
+  environment.etc."openal/alsoft.conf".text = ''
     drivers=pulse,alsa
   '';
 

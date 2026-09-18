@@ -7,23 +7,7 @@
 }:
 
 let
-  hideCard = name: {
-    matches = [ { "device.name" = name; } ];
-    actions.update-props."device.disabled" = true;
-  };
-
-  hideNode = name: {
-    matches = [ { "node.name" = name; } ];
-    actions.update-props."node.disabled" = true;
-  };
-
-  renameNode = name: label: {
-    matches = [ { "node.name" = name; } ];
-    actions.update-props = {
-      "node.description" = label;
-      "node.nick" = label;
-    };
-  };
+  inherit (import ../alsa-rules.nix) hideCard hideNode renameNode;
 in
 {
   imports = [
@@ -117,10 +101,26 @@ in
     ];
   };
 
+  # The package alone is just the FHS wrapper; the module is what installs the
+  # udev rules for controllers (hardware.steam-hardware), so steam is declared
+  # here rather than in ../../hm/games. Remote Play and local network game
+  # transfer stay off: both only work by opening ports, and neither is used.
+  programs.steam.enable = true;
+
   programs.gamemode.enable = true;
   programs.coolercontrol.enable = true;
   services.hardware.openrgb.enable = true;
+
+  # No bluetooth radio in this box. Without also dropping wireplumber's bluez
+  # monitor it retries the absent BlueZ service and logs about it on every
+  # session start.
   hardware.bluetooth.enable = false;
+  services.pipewire.wireplumber.extraConfig."51-disable-bluetooth" = {
+    "wireplumber.profiles".main = {
+      "monitor.bluez" = "disabled";
+      "monitor.bluez.seat-monitoring" = "disabled";
+    };
+  };
 
   environment.variables = {
     LIBVA_DRIVER_NAME = "nvidia";

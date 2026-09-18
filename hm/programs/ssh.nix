@@ -46,6 +46,21 @@
         user = "mrtn";
         proxyJump = "tunnel@login.dos.cit.tum.de";
       };
+      "xavier" = {
+        hostname = "xavier.dos.cit.tum.de";
+        user = "mrtn";
+        proxyJump = "tunnel@login.dos.cit.tum.de";
+      };
+      "polly" = {
+        hostname = "polly.dos.cit.tum.de";
+        user = "mrtn";
+        proxyJump = "tunnel@login.dos.cit.tum.de";
+      };
+      "joy" = {
+        hostname = "joy.dos.cit.tum.de";
+        user = "mrtn";
+        proxyJump = "tunnel@login.dos.cit.tum.de";
+      };
     };
   };
 }

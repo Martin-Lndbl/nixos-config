@@ -10,19 +10,11 @@ in
 {
   imports = [ inputs.caelestia-shell.homeManagerModules.default ];
 
-  xdg.configFile."caelestia/shell.json".force = true;
-  xdg.configFile."caelestia/cli.json".force = true;
-
-  home.activation.caelestiaMutableConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    for f in "$HOME/.config/caelestia/shell.json" "$HOME/.config/caelestia/cli.json"; do
-      if [ -L "$f" ]; then
-        target=$(readlink -f "$f")
-        rm "$f"
-        cp "$target" "$f"
-        chmod u+w "$f"
-      fi
-    done
-  '';
+  # Both are rewritten by the shell/cli themselves, see modules/hm.
+  xdg.mutableConfigFiles = [
+    "caelestia/shell.json"
+    "caelestia/cli.json"
+  ];
 
   home.activation.caelestiaRepairMonitorConfigs = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     for f in "$HOME/.config/caelestia/monitors/"*/shell.json; do
@@ -108,7 +100,7 @@ in
         "XDG_PICTURES_DIR=${config.xdg.userDirs.pictures}"
       ];
     };
-    package = inputs.caelestia-shell.packages.${pkgs.system}.default.overrideAttrs (old: {
+    package = inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
       postPatch = (old.postPatch or "") + ''
         substituteInPlace modules/utilities/cards/Record.qml \
           --replace-fail 'import qs.services' 'import Quickshell
@@ -185,11 +177,13 @@ in
                                         Quickshell.execDetached(["hyprctl", "dispatch", "focuswindow", "class:^(?i)" + root.notif.appName + "$"]);
                                     } else if (!root.notif.resident) {'
 
+        # bar.workspaces.shown renders a fixed count, so empty ones would sit
+        # there as dots. Upstream only dims them; hide them outright.
         substituteInPlace modules/bar/components/workspaces/Workspace.qml \
-          --replace-fail '    Layout.alignment: Qt.AlignHCenter
-            Layout.preferredHeight: size' '    visible: root.isOccupied || root.activeWsId === root.ws
-            Layout.alignment: Qt.AlignHCenter
-            Layout.preferredHeight: size'
+          --replace-fail '            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                    Layout.preferredHeight: Tokens.sizes.bar.innerWidth - Tokens.padding.small' '            visible: root.isOccupied || root.focused
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                    Layout.preferredHeight: Tokens.sizes.bar.innerWidth - Tokens.padding.small'
 
         substituteInPlace modules/dashboard/dash/DateTime.qml \
           --replace-fail '            text: Time.minuteStr
@@ -253,7 +247,7 @@ in
     cli = {
       enable = true;
       settings.theme.postHook = "pkill -USR2 ghostty || true; hyprctl reload";
-      package = inputs.caelestia-shell.inputs.caelestia-cli.packages.${pkgs.system}.default.overrideAttrs (old: {
+      package = inputs.caelestia-shell.inputs.caelestia-cli.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
         postFixup = (old.postFixup or "") + ''
           schemedir=$(find $out -type d -path '*/caelestia/data/schemes' -print -quit)
           if [ -z "$schemedir" ]; then

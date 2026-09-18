@@ -33,6 +33,32 @@ let
   moveIntoGroupBinds = lib.concatMapStrings (d: ''
     hl.bind("SUPER + CTRL + ${d.key}", hl.dsp.window.move({ into_group = "${d.dir}" }))
   '') directions;
+
+  # Workspaces pinned to a monitor, with the one new windows land on when
+  # nothing else claims them. Hosts that leave a monitor unset (see
+  # ../../modules/hm/monitors.nix) contribute no rules for it at all: a rule
+  # with an empty monitor would pin the workspace to nothing.
+  workspaceRules = lib.concatMap (
+    group:
+    lib.optionals (group.monitor != "") (
+      map (
+        workspace:
+        { inherit workspace; inherit (group) monitor; }
+        // lib.optionalAttrs (workspace == group.default) { default = true; }
+      ) group.workspaces
+    )
+  ) [
+    {
+      monitor = config.monitors.center;
+      workspaces = [ "1" "2" "3" ];
+      default = "1";
+    }
+    {
+      monitor = config.monitors.right;
+      workspaces = [ "8" "9" ];
+      default = "9";
+    }
+  ];
 in
 {
   wayland.windowManager.hyprland = {
@@ -56,6 +82,7 @@ in
 
         decoration = {
           rounding = 4;
+          inactive_opacity = config.appearance.opacity;
           blur = {
             enabled = true;
             size = 3;
@@ -100,28 +127,7 @@ in
         }
       ];
 
-      workspace_rule = [
-        {
-          workspace = "1";
-          monitor = config.monitors.center;
-        }
-        {
-          workspace = "2";
-          monitor = config.monitors.center;
-        }
-        {
-          workspace = "3";
-          monitor = config.monitors.center;
-        }
-        {
-          workspace = "8";
-          monitor = config.monitors.right;
-        }
-        {
-          workspace = "9";
-          monitor = config.monitors.right;
-        }
-      ];
+      workspace_rule = workspaceRules;
     };
 
     extraConfig = ''
@@ -148,7 +154,8 @@ in
       hl.bind("SUPER + return", hl.dsp.exec_cmd("ghostty"))
       hl.bind("SUPER + d", hl.dsp.global("caelestia:launcher"))
       hl.bind("SUPER + n", hl.dsp.global("caelestia:sidebar"))
-      hl.bind("SUPER + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 firefox"))
+      -- Wait mirrors the one patched into firefox.desktop, see ../programs/firefox.nix
+      hl.bind("SUPER + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 ${waitForVpnCmd} firefox"))
       hl.bind("SUPER + SHIFT + Q", hl.dsp.window.close())
       hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("caelestia-shell ipc call lock lock"))
       hl.bind("SUPER + ALT + S", hl.dsp.exec_cmd("(caelestia-shell ipc call lock lock & systemctl suspend -i)"))
