@@ -30,7 +30,7 @@
     }
     {
       output = "";
-      mode = "preferred";
+      mode = "3840x2160@25";
       position = "auto";
       scale = 1;
       mirror = "eDP-1";
