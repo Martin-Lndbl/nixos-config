@@ -242,6 +242,16 @@ in
                 command: ["${pkgs.systemd}/bin/systemd-run", "--user", "--scope", "--quiet", "--collect", ...entry.command],
                 workingDirectory: entry.workingDirectory
             });'
+
+        substituteInPlace services/Notifs.qml \
+          --replace-fail 'reloadableId: "notifs"' 'reloadableId: "notifs"
+
+                function syncElementMute(): void {
+                    Quickshell.execDetached(["${pkgs.element-sink-mute}/bin/element-sink-mute", dnd ? "1" : "0"]);
+                }
+
+                Component.onCompleted: syncElementMute()
+                onDndChanged: syncElementMute()'
       '';
     });
     cli = {
