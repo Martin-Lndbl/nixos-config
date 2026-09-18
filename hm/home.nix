@@ -6,32 +6,20 @@
 }:
 {
   imports = [
+    ./common.nix
     ./programs
-    ./colorschemes
   ];
 
   home.username = "mrtn";
   home.homeDirectory = "/home/mrtn";
 
-  appearance.profile.picture = "${config.xdg.userDirs.pictures}/profile.jpeg";
-
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.nixpkgs-stable
-    ]
-    ++ outputs.overlays.modifications;
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
-  };
+  appearance.profile.picture = import ../avatar.nix pkgs;
+  home.file.".face".source = config.appearance.profile.picture;
 
   home.packages = with pkgs; [
     universal-ctags
     xdg-utils
     unzip
-    calc
     fd
     xclip
     acpi
@@ -39,6 +27,8 @@
     brightnessctl
     ripgrep
     btop
+    claude-code
+    gh
 
     # meetings
     discord
@@ -47,6 +37,14 @@
     # Notes
     trilium-desktop
 
+    nautilus
+
+    # Keyring management. Both used to come in via the GNOME closure; with
+    # autologin the login keyring needs an empty password to unlock unattended,
+    # and seahorse is the only way to change it.
+    seahorse
+    libsecret
+
     # Browser
     tor-browser
 
@@ -54,7 +52,7 @@
     cava
   ];
 
-  stylix.cursor = {
+  home.pointerCursor = {
     name = "phinger-cursors-light";
     package = pkgs.phinger-cursors;
     size = 28;
@@ -64,7 +62,7 @@
   xdg.cacheHome = config.home.homeDirectory + "/.local/cache";
   xdg.userDirs = {
     enable = true;
-    createDirectories = false;
+    createDirectories = true;
     setSessionVariables = true;
     documents = "${config.home.homeDirectory}/documents";
     download = "${config.home.homeDirectory}/downloads";

@@ -4,8 +4,10 @@
     anki
   ];
 
-  wayland.windowManager.hyprland.settings.windowrule = [
-    "float no, match:class anki"
+  wayland.windowManager.hyprland.settings.window_rule = [
+    {
+      match.class = "anki";
+      tile = true;
+    }
   ];
-
 }

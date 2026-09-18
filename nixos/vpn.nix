@@ -1,3 +1,7 @@
+# Everything needed to make the two WireGuard tunnels (pyroeis, eos) usable:
+# split-DNS for the names behind them, and the firewall relaxation their
+# asymmetric routing needs. The tunnels themselves are NetworkManager profiles,
+# not declared here.
 {
   pkgs,
   ...

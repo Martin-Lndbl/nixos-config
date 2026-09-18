@@ -1,12 +1,12 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 let
-  cfg = config.appearance;
-
-  opacity = if builtins.match "[0/1].*" config.colorscheme.palette.base00 == null then 0.85 else 0.95;
-
+  inherit (lib) mkOption types;
+  pathOrStr = types.oneOf [
+    types.path
+    types.str
+  ];
 in
-with lib;
 {
   options.appearance = {
     fontSize = mkOption {
@@ -17,34 +17,11 @@ with lib;
     opacity = mkOption {
       description = "Set the opacity for inactive hyprland clients";
       type = types.float;
-      default = opacity;
-    };
-    wallpaper = mkOption {
-      description = "Wallpaper";
-      type = types.oneOf [
-        types.path
-        types.str
-      ];
-    };
-    lockScreen = mkOption {
-      description = "Lockscreen wallpaper";
-      type = types.oneOf [
-        types.path
-        types.str
-      ];
-      default = cfg.wallpaper;
+      default = 0.95;
     };
     profile.picture = mkOption {
       description = "Profile picture";
-      type = types.oneOf [
-        types.path
-        types.str
-      ];
-    };
-    hasBattery = mkOption {
-      description = "Used to display battery information in status bar";
-      type = types.bool;
-      default = false;
+      type = pathOrStr;
     };
   };
 }

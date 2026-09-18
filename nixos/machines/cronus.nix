@@ -6,6 +6,9 @@
   ...
 }:
 
+let
+  inherit (import ../alsa-rules.nix) hideCard hideNode renameNode;
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -13,20 +16,9 @@
 
   networking.hostName = "cronus";
 
-  services.openssh = {
-    enable = true;
-    ports = [ 22 ];
-    settings = {
-      PasswordAuthentication = false;
-      AllowUsers = null;
-      UseDns = true;
-      X11Forwarding = false;
-      PermitRootLogin = "prohibit-password";
-    };
-  };
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
@@ -36,10 +28,24 @@
     "usb_storage"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelParams = [
+    "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "rd.udev.event_timeout=10"
+    "udev.event_timeout=30"
+    # Steam's HTTP client threads take bus_lock traps continuously (thousands
+    # per session). The kernel default only rate-limits the logging, the trap
+    # itself still stalls the thread each time.
+    "split_lock_detect=off"
+  ];
+
+  # asus-ec-sensors logs "Concurrent access to the ACPI EC" on every read
+  # coolercontrold triggers (~60/min); nothing serializes the EC against the
+  # firmware here, and mutex_path=:GLOBAL_LOCK doesn't help either. Its
+  # channels (MB/VRM temps, CPU_Opt tach) are unused - CPU temp is k10temp.
+  boot.blacklistedKernelModules = [ "asus_ec_sensors" ];
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
@@ -53,8 +59,6 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
-  system.stateVersion = lib.mkForce "24.11";
-
   hardware.nvidia = {
     modesetting.enable = true;
     open = true;
@@ -63,35 +67,60 @@
     nvidiaSettings = true;
   };
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "nvidia" ];
-  };
+  services.xserver.videoDrivers = [ "nvidia" ];
 
-  boot = {
-    kernelParams = [
-      # To allow cooler control
-      "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
-      "nvidia.NVreg_UsePageAttributeTable=1"
-      "nvidia_modeset.disable_vrr_memclk_switch=1"
-      # for suspend/wakeup issues, recommended by https://wiki.hyprland.org/Nvidia/
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-      # for wayland issues, but breaks tty
-      # see https://github.com/NixOS/nixpkgs/issues/343774#issuecomment-2370293678
-      # "initcall_blacklist=simpledrm_platform_driver_init"
+  # UCM exposes every jack as a permanent node. ACP instead collapses each card
+  # into one sink/source and picks the profile by jack detection, so empty jacks
+  # drop out on their own and reappear when something is plugged in.
+  services.pipewire.wireplumber.extraConfig."51-audio-devices" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [ { "device.name" = "~alsa_card\\..*"; } ];
+        actions.update-props."api.alsa.use-ucm" = false;
+      }
+      # The monitor claims audio over DP, so ELD never marks it unavailable.
+      # Hide the whole card: the node name follows the active HDMI profile
+      # (hdmi-stereo, -extra1, -extra2), so matching one name would not hold.
+      (hideCard "alsa_card.pci-0000_01_00.1")
+      (renameNode "alsa_output.usb-Generic_USB_Audio-00.analog-stereo" "Speakers")
+      (renameNode "alsa_input.usb-Generic_USB_Audio-00.analog-stereo" "Mic")
+      # "Analog In" (really capture device 0 - the card has no digital capture).
+      # Its route is avail=unknown, so it never hides itself; it is only picked
+      # as the fallback while the mic jack is empty, so dropping the node leaves
+      # the card silent until a mic appears on analog-stereo above.
+      (hideNode "alsa_input.usb-Generic_USB_Audio-00.iec958-stereo")
+      (renameNode "alsa_output.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo" "HyperX")
+      (renameNode "alsa_input.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo" "HyperX")
+      (renameNode "alsa_input.usb-046d_HD_Pro_Webcam_C920_66AD175F-02.analog-stereo" "Webcam")
+      (renameNode "alsa_output.usb-Sony_Interactive_Entertainment_DualSense_Wireless_Controller-00.analog-surround-40" "DualSense")
+      # The pad has one capture path. ACP names it analog-stereo while the
+      # headset jack reads connected and iec958-stereo once it does not, so both
+      # spellings need the rename to keep the label stable across replug.
+      (renameNode "alsa_input.usb-Sony_Interactive_Entertainment_DualSense_Wireless_Controller-00.analog-stereo" "DualSense")
+      (renameNode "alsa_input.usb-Sony_Interactive_Entertainment_DualSense_Wireless_Controller-00.iec958-stereo" "DualSense")
     ];
   };
 
+  # The package alone is just the FHS wrapper; the module is what installs the
+  # udev rules for controllers (hardware.steam-hardware), so steam is declared
+  # here rather than in ../../hm/games. Remote Play and local network game
+  # transfer stay off: both only work by opening ports, and neither is used.
+  programs.steam.enable = true;
+
   programs.gamemode.enable = true;
+  programs.coolercontrol.enable = true;
+  services.hardware.openrgb.enable = true;
 
-  services.hardware.openrgb = {
-    enable = true;
+  # No bluetooth radio in this box. Without also dropping wireplumber's bluez
+  # monitor it retries the absent BlueZ service and logs about it on every
+  # session start.
+  hardware.bluetooth.enable = false;
+  services.pipewire.wireplumber.extraConfig."51-disable-bluetooth" = {
+    "wireplumber.profiles".main = {
+      "monitor.bluez" = "disabled";
+      "monitor.bluez.seat-monitoring" = "disabled";
+    };
   };
-
-  environment.systemPackages = with pkgs; [
-    egl-wayland
-    nvidia-system-monitor-qt
-  ];
 
   environment.variables = {
     LIBVA_DRIVER_NAME = "nvidia";
@@ -117,8 +146,6 @@
   ];
 
   networking.useDHCP = lib.mkDefault true;
-
-  programs.coolercontrol.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

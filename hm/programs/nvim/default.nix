@@ -1,9 +1,18 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  # $HOME is expanded by vim and by the activation shell alike
+  undodir = "$HOME/.tmp/undo";
+in
 {
 
   imports = [
     ./plugins
   ];
+
+  # nvim writes no undo history at all when this is missing
+  home.activation.nvimUndoDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run mkdir -p "${undodir}"
+  '';
 
   programs.neovim = {
     enable = true;
@@ -21,7 +30,7 @@
       set mouse=a
 
       set undofile
-      set undodir=$HOME/.tmp/undo
+      set undodir=${undodir}
       set undolevels=1000
       set undoreload=1000
 
@@ -32,10 +41,13 @@
       let mapleader = ","
     '';
 
+    # The servers for pyright/ts_ls/rust_analyzer/clangd/omnisharp, which
+    # plugins/lsp.nix also enables, are deliberately left to per-project
+    # devshells rather than pinned into every generation.
     extraPackages = with pkgs; [
       bash-language-server
       nixd
-      pkgs.nixfmt
+      nixfmt
       lua-language-server
       texlab
     ];
@@ -45,7 +57,7 @@
     name = "Neovim";
     genericName = "Text Editor";
     comment = "Edit text files";
-    exec = "alacritty --command nvim %F";
+    exec = "ghostty -e nvim %F";
     mimeType = [
       "text/english"
       "text/plain"

@@ -1,137 +1,203 @@
-{ config, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-  switch_workspace = map (ws: "SUPER, ${ws}, workspace, ${ws}") config.workspaces;
+  # exec keeps the pid hyprland spawned, so the exec_cmd workspace rule still
+  # matches the window that eventually opens.
+  waitForVpnCmd = "${pkgs.wait-for-pyroeis}/bin/wait-for-pyroeis";
 
-  move_workspace = map (ws: "SUPER_SHIFT, ${ws}, movetoworkspace, ${ws}") config.workspaces;
+  workspaceBinds = lib.concatMapStrings (ws: ''
+    hl.bind("SUPER + ${ws}", hl.dsp.focus({ workspace = "${ws}" }))
+    hl.bind("SUPER + SHIFT + ${ws}", hl.dsp.window.move({ workspace = "${ws}" }))
+  '') config.workspaces;
 
+  # vim-style keys double up on the arrow keys for every directional bind below
+  directions = [
+    { key = "left"; dir = "left"; }
+    { key = "right"; dir = "right"; }
+    { key = "up"; dir = "up"; }
+    { key = "down"; dir = "down"; }
+    { key = "h"; dir = "left"; }
+    { key = "l"; dir = "right"; }
+    { key = "k"; dir = "up"; }
+    { key = "j"; dir = "down"; }
+  ];
+
+  focusBinds = lib.concatMapStrings (d: ''
+    hl.bind("SUPER + ${d.key}", hl.dsp.focus({ direction = "${d.dir}" }))
+  '') directions;
+
+  moveWindowBinds = lib.concatMapStrings (d: ''
+    hl.bind("SUPER + SHIFT + ${d.key}", hl.dsp.window.move({ direction = "${d.dir}" }))
+  '') directions;
+
+  moveIntoGroupBinds = lib.concatMapStrings (d: ''
+    hl.bind("SUPER + CTRL + ${d.key}", hl.dsp.window.move({ into_group = "${d.dir}" }))
+  '') directions;
+
+  # Workspaces pinned to a monitor, with the one new windows land on when
+  # nothing else claims them. Hosts that leave a monitor unset (see
+  # ../../modules/hm/monitors.nix) contribute no rules for it at all: a rule
+  # with an empty monitor would pin the workspace to nothing.
+  workspaceRules = lib.concatMap (
+    group:
+    lib.optionals (group.monitor != "") (
+      map (
+        workspace:
+        { inherit workspace; inherit (group) monitor; }
+        // lib.optionalAttrs (workspace == group.default) { default = true; }
+      ) group.workspaces
+    )
+  ) [
+    {
+      monitor = config.monitors.center;
+      workspaces = [ "1" "2" "3" ];
+      default = "1";
+    }
+    {
+      monitor = config.monitors.right;
+      workspaces = [ "8" "9" ];
+      default = "9";
+    }
+  ];
 in
 {
-  wayland.windowManager.hyprland.enable = true;
-  wayland.windowManager.hyprland.configType = "hyprlang";
+  wayland.windowManager.hyprland = {
+    enable = true;
+    configType = "lua";
+    package = null;
+    portalPackage = null;
 
-  wayland.windowManager.hyprland.settings = {
-    exec-once = [
-      "[workspace 9 silent; noanim] thunderbird"
-      "[workspace 9 silent; noanim] element-desktop --password-store=\"gnome-libsecret\" "
-      "[workspace 9 silent; noanim] feishin"
-      "[workspace 1; noanim] alacritty"
-      "[workspace 1; noanim] alacritty"
-    ];
+    settings = {
+      config = {
+        input.follow_mouse = 1;
 
-    input = {
-      # kb_layout = "us,de";
-      # kb_variant = ",qwerty";
-      # kb_options = "grp:alt_shift_toggle";
-      follow_mouse = 1;
-    };
+        general = {
+          gaps_in = 5;
+          gaps_out = 10;
+          resize_on_border = true;
+          border_size = 1;
+          "col.active_border" = "rgba(6a9fb5ff)";
+          "col.inactive_border" = "rgba(00000000)";
+        };
 
-    general = {
-      gaps_in = 5;
-      gaps_out = 10;
-      resize_on_border = true;
-    };
+        decoration = {
+          rounding = 4;
+          inactive_opacity = config.appearance.opacity;
+          blur = {
+            enabled = true;
+            size = 3;
+            passes = 2;
+          };
+        };
 
-    decoration = {
-      rounding = 5;
-      blur = {
-        enabled = true;
-        size = 3;
-        passes = 2;
+        animations.enabled = true;
+
+        dwindle = {
+          force_split = 2;
+          preserve_split = true;
+        };
+
+        ecosystem.no_update_news = true;
       };
-    };
 
-    animations = {
-      enabled = 1;
       animation = [
-        "windows,1,7,default"
-        "workspaces,1,6,default"
+        {
+          leaf = "workspaces";
+          enabled = true;
+          speed = 6;
+          bezier = "default";
+        }
       ];
+
+      window_rule = [
+        {
+          match.tag = "code";
+          opacity = 0.98;
+        }
+        {
+          match.class = "feishin";
+          suppress_event = "maximize";
+        }
+        {
+          match.class = "tablet-buttons";
+          float = true;
+          pin = true;
+          size = "180 140";
+          move = "100%-190 100%-260";
+        }
+      ];
+
+      workspace_rule = workspaceRules;
     };
 
-    dwindle = {
-      force_split = 2;
-      preserve_split = true;
-    };
+    extraConfig = ''
+      -- Active border colour derived from the wallpaper, see border-colour.nix.
+      -- Absent until that unit has run once, in which case the colour set in
+      -- general above stands.
+      local borderOk, border = pcall(dofile, "${config.xdg.stateHome}/hypr/border-colour.lua")
+      if borderOk and type(border) == "table" and border.active then
+        hl.config({ general = { ["col.active_border"] = border.active } })
+      end
 
-    windowrule = [
-      "opacity 0.98 override ${toString config.appearance.opacity}, match:tag code"
-      "suppress_event maximize, match:class feishin"
-    ];
+      -- Overshoot animation for windows, matching caelestia's own popups
+      hl.curve("windowSpring", { type = "spring", mass = 0.8, stiffness = 170, dampening = 19 })
+      hl.animation({ leaf = "windows", enabled = true, speed = 7, spring = "windowSpring" })
 
-    bind = [
-      # App binds
-      "SUPER, return, exec, alacritty"
-      "SUPER, d, exec, wofi --show drun"
-      "SUPER, g, exec, MOZ_ENABLE_WAYLAND=1 firefox"
-      "SUPER_SHIFT, Q, killactive"
-      "SUPERALT, L, exec, hyprlock"
-      "SUPERALT, S, exec, (hyprlock & systemctl suspend -i)"
+      hl.on("hyprland.start", function()
+        hl.exec_cmd("[workspace 9 silent] ${waitForVpnCmd} thunderbird")
+        hl.exec_cmd([[[workspace 9 silent] element-desktop --password-store="gnome-libsecret"]])
+        hl.exec_cmd("[workspace 9 silent] ${waitForVpnCmd} feishin")
+        hl.exec_cmd("[workspace 1 silent] ghostty")
+      end)
 
-      # Move focus
-      "SUPER, left, movefocus, l"
-      "SUPER, right, movefocus, r"
-      "SUPER, up, movefocus, u"
-      "SUPER, down, movefocus, d"
+      -- App binds
+      hl.bind("SUPER + return", hl.dsp.exec_cmd("ghostty"))
+      hl.bind("SUPER + d", hl.dsp.global("caelestia:launcher"))
+      hl.bind("SUPER + n", hl.dsp.global("caelestia:sidebar"))
+      -- Wait mirrors the one patched into firefox.desktop, see ../programs/firefox.nix
+      hl.bind("SUPER + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 ${waitForVpnCmd} firefox"))
+      hl.bind("SUPER + SHIFT + Q", hl.dsp.window.close())
+      hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("caelestia-shell ipc call lock lock"))
+      hl.bind("SUPER + ALT + S", hl.dsp.exec_cmd("(caelestia-shell ipc call lock lock & systemctl suspend -i)"))
 
-      "SUPER, h, movefocus, l"
-      "SUPER, l, movefocus, r"
-      "SUPER, k, movefocus, u"
-      "SUPER, j, movefocus, d"
+      -- Move focus
+      ${focusBinds}
+      -- Move window
+      ${moveWindowBinds}
 
-      "SUPER_SHIFT, left, movewindow, l"
-      "SUPER_SHIFT, right, movewindow, r"
-      "SUPER_SHIFT, up, movewindow, u"
-      "SUPER_SHIFT, down, movewindow, d"
+      -- Layout / floating / fullscreen
+      hl.bind("SUPER + q", hl.dsp.layout("togglesplit"))
+      hl.bind("SUPER + v", function()
+        hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+        hl.dispatch(hl.dsp.window.center())
+      end)
+      hl.bind("SUPER + f", hl.dsp.window.fullscreen({ action = "toggle" }))
+      hl.bind("SUPER + SHIFT + f", hl.dsp.window.fullscreen_state({ internal = -1, client = 2 }))
 
-      "SUPER_SHIFT, h, movewindow, l"
-      "SUPER_SHIFT, l, movewindow, r"
-      "SUPER_SHIFT, k, movewindow, u"
-      "SUPER_SHIFT, j, movewindow, d"
+      -- Groups
+      hl.bind("SUPER + CTRL + g", hl.dsp.group.toggle())
+      hl.bind("SUPER + CTRL + w", hl.dsp.group.next())
+      hl.bind("SUPER + CTRL + e", hl.dsp.window.move({ out_of_group = true }))
+      ${moveIntoGroupBinds}
 
-      "SUPER, q, layoutmsg, togglesplit"
-      "SUPER, v, togglefloating,"
-      "SUPER, v, centerwindow,"
-      "SUPER, f, fullscreen,"
-      "SUPER_SHIFT, f, fullscreenstate, -1 2"
+      -- Media / screenshot
+      hl.bind("XF86AudioMute",    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
+      hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SOURCE@ toggle"))
+      hl.bind("XF86Calculator",   hl.dsp.exec_cmd("ghostty --title=popup -e calc"))
+      hl.bind("SUPER + SHIFT + s", hl.dsp.exec_cmd("grimblast copy area"))
 
-      # Groups
-      "SUPER_CTRL, g, togglegroup,"
-      "SUPER_CTRL, w, changegroupactive, f"
-      "SUPER_CTRL, e, moveoutofgroup,"
-      "SUPER_CTRL, left, moveintogroup, l"
-      "SUPER_CTRL, right, moveintogroup, r"
-      "SUPER_CTRL, up, moveintogroup, u"
-      "SUPER_CTRL, down, moveintogroup, d"
-      "SUPER_CTRL, h, moveintogroup, l"
-      "SUPER_CTRL, l, moveintogroup, r"
-      "SUPER_CTRL, k, moveintogroup, u"
-      "SUPER_CTRL, j, moveintogroup, d"
+      -- Mouse
+      hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 
-      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
-      ", XF86Calculator, exec, alacritty -t popup -e calc"
-      "SUPER_SHIFT, s, exec, grimblast copy area"
-    ]
-    ++ switch_workspace
-    ++ move_workspace;
+      -- Volume (repeating)
+      hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+"), { repeating = true })
+      hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"), { repeating = true })
 
-    workspace = [
-      "1,monitor:${config.monitors.center}"
-      "2,monitor:${config.monitors.center}"
-      "3,monitor:${config.monitors.center}"
+      -- Brightness (repeating, routed through caelestia so the OSD shows)
+      hl.bind("XF86MonBrightnessUp",   hl.dsp.global("caelestia:brightnessUp"),   { repeating = true })
+      hl.bind("XF86MonBrightnessDown", hl.dsp.global("caelestia:brightnessDown"), { repeating = true })
 
-      "8,monitor:${config.monitors.right}"
-      "9,monitor:${config.monitors.right}"
-    ];
-
-    bindm = [ "SUPER, mouse:272, movewindow" ];
-
-    binde = [
-      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.2 @DEFAULT_AUDIO_SINK@ 2%+"
-      ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-    ];
-
-    ecosystem.no_update_news = true;
+      ${workspaceBinds}
+    '';
   };
 }

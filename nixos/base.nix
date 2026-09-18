@@ -13,10 +13,7 @@
   ];
 
   nixpkgs = {
-    overlays = [
-      outputs.overlays.nixpkgs-stable
-    ]
-    ++ outputs.overlays.modifications;
+    overlays = builtins.attrValues outputs.overlays;
     config.allowUnfree = true;
   };
 
@@ -29,7 +26,10 @@
     options = "--delete-older-than 7d";
   };
   nix.settings = {
-    experimental-features = "nix-command flakes";
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
     sandbox = true;
   };
@@ -47,6 +47,7 @@
   };
 
   # Sound
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -54,7 +55,7 @@
     pulse.enable = true;
   };
 
-  environment.etc."/openal/alsoft.conf".text = ''
+  environment.etc."openal/alsoft.conf".text = ''
     drivers=pulse,alsa
   '';
 
@@ -71,6 +72,7 @@
   # virtualisation.docker.enable = true;
   environment.systemPackages = with pkgs; [
     vim
+    ethtool
   ];
 
   services.gnome.gnome-keyring.enable = true;
@@ -79,5 +81,5 @@
     ./eos.pem
   ];
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "26.11";
 }
