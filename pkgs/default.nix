@@ -2,28 +2,25 @@
   pkgs ? (import ../nixpkgs.nix) { },
 }:
 {
-  # Blocks until the pyroeis WireGuard tunnel is up (or 60s pass), then runs
-  # its arguments if any were given.
+  # Blocks until a host behind the pyroeis WireGuard tunnel is actually
+  # reachable (or 60s pass), then runs its arguments if any were given.
   wait-for-pyroeis = pkgs.writeShellApplication {
     name = "wait-for-pyroeis";
     runtimeInputs = [
       pkgs.coreutils
-      pkgs.networkmanager
+      pkgs.curl
     ];
     text = ''
-      vpn_up() {
-        [ "$(nmcli -g GENERAL.STATE connection show --active pyroeis 2>/dev/null)" = "activated" ]
-      }
+      probe_url="https://nextcloud.lndbl.de/status.php"
 
-      waited=0
-      while ! vpn_up && [ "$waited" -lt 60 ]; do
+      deadline=$(($(date +%s) + 60))
+      until curl -fs -o /dev/null --max-time 5 "$probe_url"; do
+        if [ "$(date +%s)" -ge "$deadline" ]; then
+          echo "pyroeis still unreachable after 60s, continuing anyway" >&2
+          break
+        fi
         sleep 1
-        waited=$((waited + 1))
       done
-
-      if ! vpn_up; then
-        echo "pyroeis still down after 60s, continuing anyway" >&2
-      fi
 
       if [ "$#" -gt 0 ]; then
         exec "$@"
