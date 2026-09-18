@@ -32,7 +32,6 @@
 
     # meetings
     discord
-    element-desktop
 
     # Notes
     trilium-desktop

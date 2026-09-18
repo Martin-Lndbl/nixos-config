@@ -6,6 +6,7 @@
     ./bash.nix
     ./calc.nix
     ./cava.nix
+    ./element.nix
     ./fcitx5.nix
     ./firefox.nix
     ./git.nix

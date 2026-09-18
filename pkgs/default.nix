@@ -30,4 +30,28 @@
       fi
     '';
   };
+
+  element-sink-mute = pkgs.writeShellApplication {
+    name = "element-sink-mute";
+    runtimeInputs = [
+      pkgs.jq
+      pkgs.pipewire
+      pkgs.wireplumber
+    ];
+    text = ''
+      if [ "$#" -ne 1 ]; then
+        echo "usage: element-sink-mute 1|0|toggle" >&2
+        exit 2
+      fi
+
+      id=$(pw-dump | jq -r 'first(.[] | select(.info.props."node.name" == "element") | .id) // empty')
+
+      if [ -z "$id" ]; then
+        echo "no element sink in the graph" >&2
+        exit 0
+      fi
+
+      wpctl set-mute "$id" "$1"
+    '';
+  };
 }
