@@ -30,10 +30,10 @@
     }
     {
       output = "";
-      mode = "3840x2160@25";
+      mode = "preferred";
       position = "auto";
       scale = 1;
-      mirror = "eDP-1";
+      mirror = config.monitors.center;
     }
   ];
 }
