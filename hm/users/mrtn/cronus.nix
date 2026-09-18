@@ -8,8 +8,6 @@
   # commits from this box are tagged with it, as on the other machines
   programs.git.settings.user.name = "Martin-Lindbuechl@cronus";
 
-  appearance.opacity = 0.95;
-
   appearance.fontSize = 16;
 
   monitors.center = "DP-2";
@@ -17,11 +15,6 @@
 
   # Only this host has more than one monitor.
   programs.caelestia.settings.bar.workspaces.perMonitorWorkspaces = true;
-
-  wayland.windowManager.hyprland.settings.workspace_rule = [
-    { workspace = "1"; monitor = config.monitors.center; default = true; }
-    { workspace = "9"; monitor = config.monitors.right; default = true; }
-  ];
 
   wayland.windowManager.hyprland.settings.monitor = [
     {

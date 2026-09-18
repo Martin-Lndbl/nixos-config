@@ -1,9 +1,9 @@
 { pkgs, ... }:
 {
+  # steam itself comes from programs.steam on the host, see ../../nixos/machines.
   home.packages = with pkgs; [
     vitetris
     gamescope
-    steam
     prismlauncher
   ];
 
@@ -13,5 +13,4 @@
       opacity = 1;
     }
   ];
-
 }

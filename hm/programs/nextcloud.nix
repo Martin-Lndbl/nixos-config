@@ -32,60 +32,50 @@ in
     "${pkgs.wait-for-pyroeis}/bin/wait-for-pyroeis"
   ];
 
-  xdg.configFile."Nextcloud/nextcloud.cfg" = {
-    force = true;
-    text = ''
-      [General]
-      clientVersion=${cfg.package.version}
-      confirmExternalStorage=true
-      desktopEnterpriseChannel=stable
-      isVfsEnabled=false
-      launchOnSystemStartup=false
-      monoIcons=false
-      moveToTrash=false
-      newBigFolderSizeLimit=500
-      notifyExistingFoldersOverLimit=false
-      optionalServerNotifications=true
-      promptDeleteAllFiles=false
-      showCallNotifications=true
-      showChatNotifications=true
-      showQuotaWarningNotifications=true
-      stopSyncingExistingFoldersOverLimit=false
-      updateChannel=stable
-      useNewBigFolderSizeLimit=true
+  # The client rewrites this on every settings change, see modules/hm.
+  xdg.mutableConfigFiles = [ "Nextcloud/nextcloud.cfg" ];
 
-      [Accounts]
-      version=13
-      ${account}version=13
-      ${account}authType=webflow
-      ${account}url=${serverUrl}
-      ${account}dav_user=${davUser}
-      ${account}webflow_user=${webflowUser}
-      ${folder}localPath=${wallpaperLocal}/
-      ${folder}targetPath=${wallpaperRemote}
-      ${folder}journalPath=.sync_${wallpaperAlias}.db
-      ${folder}paused=false
-      ${folder}ignoreHiddenFiles=true
-      ${folder}virtualFilesMode=off
-      ${folder}version=2
+  xdg.configFile."Nextcloud/nextcloud.cfg".text = ''
+    [General]
+    clientVersion=${cfg.package.version}
+    confirmExternalStorage=true
+    desktopEnterpriseChannel=stable
+    isVfsEnabled=false
+    launchOnSystemStartup=false
+    monoIcons=false
+    moveToTrash=false
+    newBigFolderSizeLimit=500
+    notifyExistingFoldersOverLimit=false
+    optionalServerNotifications=true
+    promptDeleteAllFiles=false
+    showCallNotifications=true
+    showChatNotifications=true
+    showQuotaWarningNotifications=true
+    stopSyncingExistingFoldersOverLimit=false
+    updateChannel=stable
+    useNewBigFolderSizeLimit=true
 
-      [Nextcloud]
-      autoUpdateCheck=true
-    '';
-  };
+    [Accounts]
+    version=13
+    ${account}version=13
+    ${account}authType=webflow
+    ${account}url=${serverUrl}
+    ${account}dav_user=${davUser}
+    ${account}webflow_user=${webflowUser}
+    ${folder}localPath=${wallpaperLocal}/
+    ${folder}targetPath=${wallpaperRemote}
+    ${folder}journalPath=.sync_${wallpaperAlias}.db
+    ${folder}paused=false
+    ${folder}ignoreHiddenFiles=true
+    ${folder}virtualFilesMode=off
+    ${folder}version=2
+
+    [Nextcloud]
+    autoUpdateCheck=true
+  '';
 
   home.activation.nextcloudWallpaperDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     run mkdir -p ${lib.escapeShellArg wallpaperLocal}
-  '';
-
-  home.activation.nextcloudMutableConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    f="$HOME/.config/Nextcloud/nextcloud.cfg"
-    if [ -L "$f" ]; then
-      target=$(readlink -f "$f")
-      run rm "$f"
-      run cp "$target" "$f"
-      run chmod u+w "$f"
-    fi
   '';
 
   home.activation.nextcloudDropXdgAutostart = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

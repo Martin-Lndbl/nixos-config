@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/release-24.11";
 
     # Home manager
     hm.url = "github:nix-community/home-manager";
@@ -36,15 +35,14 @@
           inherit specialArgs;
           modules = [
             ./nixos/base.nix
-            ./nixos/wireguard.nix
+            ./nixos/vpn.nix
             ./nixos/printer.nix
           ]
           ++ extra
           ++ [
             ./nixos/wm/hyprland.nix
             ./nixos/wm/autologin.nix
-          ]
-          ++ import ./modules/nixos;
+          ];
         };
 
       mkHome =

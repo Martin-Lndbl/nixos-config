@@ -3,14 +3,14 @@
   users.users.mrtn = {
     isNormalUser = true;
     initialPassword = "pwd";
+    # Groups that no enabled service creates are silently dropped by useradd,
+    # so only list ones something here actually defines.
     extraGroups = [
       "wheel"
       "video"
       "audio"
       "input"
-      "scanner"
       "networkmanager"
-      "docker"
       "dialout"
     ];
     openssh.authorizedKeys.keys = [

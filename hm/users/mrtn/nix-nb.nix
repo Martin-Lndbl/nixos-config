@@ -18,7 +18,6 @@
       [[sh -c 'pkill -x wvkbd-mobintl || wvkbd-mobintl -L 250 &']]))
   '';
 
-  appearance.opacity = 0.95;
   appearance.fontSize = 12;
   monitors.center = "eDP-1";
 

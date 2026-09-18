@@ -1,14 +1,15 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.neovim.plugins = [
     {
       plugin = pkgs.vimPlugins.base16-nvim;
       type = "lua";
+      # Written by caelestia's theme hook; absent on headless hosts, where the
+      # base16 fallback below stands in.
       config = ''
         vim.opt.termguicolors = true
-        local caelestia_path = vim.env.HOME .. "/.local/state/caelestia/theme/base16-nvim.lua"
-        local ok, colors = pcall(dofile, caelestia_path)
+        local ok, colors = pcall(dofile, "${config.xdg.stateHome}/caelestia/theme/base16-nvim.lua")
         if not ok then
           colors = {
             base00 = '#181818', base01 = '#282828', base02 = '#383838', base03 = '#585858',

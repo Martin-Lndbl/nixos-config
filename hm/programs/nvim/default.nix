@@ -41,10 +41,13 @@ in
       let mapleader = ","
     '';
 
+    # The servers for pyright/ts_ls/rust_analyzer/clangd/omnisharp, which
+    # plugins/lsp.nix also enables, are deliberately left to per-project
+    # devshells rather than pinned into every generation.
     extraPackages = with pkgs; [
       bash-language-server
       nixd
-      pkgs.nixfmt
+      nixfmt
       lua-language-server
       texlab
     ];
