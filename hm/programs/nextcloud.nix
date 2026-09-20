@@ -13,12 +13,36 @@ let
   davUser = "martin";
   webflowUser = davUser;
 
-  wallpaperAlias = "wallpaper";
-  wallpaperLocal = "${config.xdg.userDirs.pictures}/wallpaper";
-  wallpaperRemote = "/Wallpapers";
+  folders = {
+    wallpaper = {
+      local = "${config.xdg.userDirs.pictures}/wallpaper";
+      remote = "/Wallpapers";
+    };
+    garmin-music = {
+      local = "${config.xdg.userDirs.music}/garmin";
+      remote = "/Fitness/Garmin/Music";
+    };
+  };
 
   account = "${accountId}\\";
-  folder = "${account}Folders\\${wallpaperAlias}\\";
+
+  folderConfig = lib.concatStrings (
+    lib.mapAttrsToList (
+      alias: f:
+      let
+        folder = "${account}Folders\\${alias}\\";
+      in
+      ''
+        ${folder}localPath=${f.local}/
+        ${folder}targetPath=${f.remote}
+        ${folder}journalPath=.sync_${alias}.db
+        ${folder}paused=false
+        ${folder}ignoreHiddenFiles=true
+        ${folder}virtualFilesMode=off
+        ${folder}version=2
+      ''
+    ) folders
+  );
 in
 {
   home.packages = [ cfg.package ];
@@ -62,21 +86,17 @@ in
     ${account}url=${serverUrl}
     ${account}dav_user=${davUser}
     ${account}webflow_user=${webflowUser}
-    ${folder}localPath=${wallpaperLocal}/
-    ${folder}targetPath=${wallpaperRemote}
-    ${folder}journalPath=.sync_${wallpaperAlias}.db
-    ${folder}paused=false
-    ${folder}ignoreHiddenFiles=true
-    ${folder}virtualFilesMode=off
-    ${folder}version=2
+    ${folderConfig}
 
     [Nextcloud]
     autoUpdateCheck=true
   '';
 
-  home.activation.nextcloudWallpaperDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    run mkdir -p ${lib.escapeShellArg wallpaperLocal}
-  '';
+  home.activation.nextcloudSyncDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+    lib.concatMapStrings (f: ''
+      run mkdir -p ${lib.escapeShellArg f.local}
+    '') (lib.attrValues folders)
+  );
 
   home.activation.nextcloudDropXdgAutostart = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     run rm -f "$HOME/.config/autostart/Nextcloud.desktop"

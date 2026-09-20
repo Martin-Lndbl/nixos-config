@@ -2,7 +2,6 @@
 
 {
   programs.hyprland.enable = true;
-  programs.hyprland.withUWSM = true;
 
   programs.ssh.enableAskPassword = true;
   programs.ssh.askPassword = "${pkgs.gcr_4}/libexec/gcr4-ssh-askpass";

@@ -44,11 +44,16 @@ in
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/0d6b3afe-378c-40fe-811f-6bb7a68fa247";
     fsType = "ext4";
+    options = [ "noatime" ];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/C89E-0889";
     fsType = "vfat";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
   swapDevices = [
@@ -98,6 +103,9 @@ in
     # autosuspend USB and PCI devices
     ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
     ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"
+    # Garmin fenix 6 (091e:4cda): user access for MTP, and keep it awake --
+    # the blanket USB autosuspend rule above truncates long music transfers
+    SUBSYSTEM=="usb", ATTR{idVendor}=="091e", ATTR{idProduct}=="4cda", MODE="0660", GROUP="users", TAG+="uaccess", ATTR{power/control}="on"
     # disable Ethernet Wake-on-LAN
     ACTION=="add", SUBSYSTEM=="net", NAME=="enp*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol d"
   '';

@@ -23,15 +23,35 @@
   nix.gc = {
     automatic = true;
     dates = "weekly";
+    randomizedDelaySec = "45min";
     options = "--delete-older-than 7d";
+  };
+  nix.optimise = {
+    automatic = true;
+    dates = [ "weekly" ];
+    randomizedDelaySec = "45min";
+  };
+  systemd.services.nix-gc.serviceConfig = {
+    Nice = 19;
+    CPUSchedulingPolicy = "idle";
+    IOSchedulingClass = "idle";
+  };
+  systemd.services.nix-optimise.serviceConfig = {
+    Nice = 19;
+    CPUSchedulingPolicy = "idle";
+    IOSchedulingClass = "idle";
   };
   nix.settings = {
     experimental-features = [
       "nix-command"
       "flakes"
     ];
-    auto-optimise-store = true;
     sandbox = true;
+  };
+
+  services.journald.settings.Journal = {
+    SystemMaxUse = "512M";
+    SystemMaxFileSize = "64M";
   };
 
   networking.networkmanager.enable = true;
