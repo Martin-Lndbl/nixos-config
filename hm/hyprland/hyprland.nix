@@ -78,6 +78,10 @@ in
           border_size = 1;
           "col.active_border" = "rgba(6a9fb5ff)";
           "col.inactive_border" = "rgba(00000000)";
+
+          # Master switch only: nothing tears until a window also carries the
+          # `immediate` rule below. See the window_rule block.
+          allow_tearing = true;
         };
 
         decoration = {
@@ -110,6 +114,16 @@ in
       ];
 
       window_rule = [
+        {
+          # Rocket League. Tearing lets a finished frame reach the panel without
+          # waiting for the next refresh, which is the only way frames rendered
+          # above 60 buy anything on a 60 Hz panel. It engages only while the
+          # window is fullscreen and the game outruns the refresh rate, so it
+          # stays inert until the game's own VSync is off. Steam names Proton
+          # game windows steam_app_<appid>; widen this with one rule per game.
+          match.class = "steam_app_252950";
+          immediate = true;
+        }
         {
           match.tag = "code";
           opacity = 0.98;

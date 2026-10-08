@@ -31,7 +31,14 @@
     MOZ_ENABLE_WAYLAND = "1";
     QT_QPA_PLATFORM = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    SDL_VIDEODRIVER = "wayland";
+    # SDL_VIDEODRIVER is deliberately not set. Current SDL already selects the
+    # wayland backend on its own whenever WAYLAND_DISPLAY is set, so pinning it
+    # buys nothing here, and steam.sh rewrites a bare "wayland" to "wayland,x11"
+    # to restore the fallback it removes. SDL only learned to read that comma
+    # list in 2.26; a game carrying an older copy takes the whole string as one
+    # driver name, matches nothing and fails SDL_Init(SDL_INIT_VIDEO). ARK's
+    # native build (UE4 4.5) dies exactly there, with "PlatformInitMultimedia()
+    # failed, cannot initialize OpenGL". Unset, every SDL picks its own backend.
     XDG_SESSION_TYPE = "wayland";
     NIXOS_OZONE_WL = "1";
   };
