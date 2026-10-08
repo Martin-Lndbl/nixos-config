@@ -243,15 +243,9 @@ in
                 workingDirectory: entry.workingDirectory
             });'
 
+        # default do not disturb to on
         substituteInPlace services/Notifs.qml \
-          --replace-fail 'reloadableId: "notifs"' 'reloadableId: "notifs"
-
-                function syncElementMute(): void {
-                    Quickshell.execDetached(["${pkgs.element-sink-mute}/bin/element-sink-mute", dnd ? "1" : "0"]);
-                }
-
-                Component.onCompleted: syncElementMute()
-                onDndChanged: syncElementMute()'
+          --replace-fail 'property bool dnd' 'property bool dnd: true'
       '';
     });
     cli = {
