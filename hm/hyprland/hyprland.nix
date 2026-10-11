@@ -169,6 +169,7 @@ in
       hl.bind("SUPER + d", hl.dsp.global("caelestia:launcher"))
       hl.bind("SUPER + n", hl.dsp.global("caelestia:sidebar"))
       hl.bind("SUPER + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 firefox"))
+      hl.bind("SUPER + SHIFT + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 firefox-vpn"))
       hl.bind("SUPER + SHIFT + Q", hl.dsp.window.close())
       hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("caelestia-shell ipc call lock lock"))
       hl.bind("SUPER + ALT + S", hl.dsp.exec_cmd("(caelestia-shell ipc call lock lock & systemctl suspend -i)"))

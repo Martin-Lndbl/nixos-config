@@ -12,6 +12,7 @@ in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    ../airvpn.nix
   ];
 
   networking.hostName = "cronus";
