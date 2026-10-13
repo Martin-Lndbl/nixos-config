@@ -14,7 +14,7 @@
   monitors.right = "DP-1";
 
   # Only this host has more than one monitor.
-  programs.caelestia.settings.bar.workspaces.perMonitorWorkspaces = true;
+  programs.caelestia.settings.bar.workspaces.perMonitor = true;
 
   wayland.windowManager.hyprland.settings.monitor = [
     {

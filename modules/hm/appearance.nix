@@ -17,7 +17,7 @@ in
     opacity = mkOption {
       description = "Set the opacity for inactive hyprland clients";
       type = types.float;
-      default = 0.95;
+      default = 1.0;
     };
     profile.picture = mkOption {
       description = "Profile picture";

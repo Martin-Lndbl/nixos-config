@@ -73,6 +73,11 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    # Let the graph clock follow the stream rate instead of resampling every
+    # 44.1 kHz source (most music) to the 48 kHz default.
+    extraConfig.pipewire."10-rates"."context.properties" = {
+      "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+    };
   };
 
   environment.etc."openal/alsoft.conf".text = ''

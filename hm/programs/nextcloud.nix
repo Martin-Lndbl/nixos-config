@@ -22,6 +22,10 @@ let
       local = "${config.xdg.userDirs.music}/garmin";
       remote = "/Fitness/Garmin/Music";
     };
+    gadgetbridge-apks = {
+      local = "${config.home.homeDirectory}/dev/Gadgetbridge-apks";
+      remote = "/Fitness/Gadgetbridge/APKs";
+    };
   };
 
   account = "${accountId}\\";
