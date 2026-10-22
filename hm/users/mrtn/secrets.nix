@@ -16,5 +16,6 @@
     secrets.arproject = { };
     secrets.gemini = { };
     secrets.sharelatex_token = { };
+    secrets.trilium_etapi = { };
   };
 }
