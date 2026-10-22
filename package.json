@@ -1,0 +1,19 @@
+{
+  "name": "trilium",
+  "main": "main.cjs",
+  "version": "0.105.0",
+  "author": {
+    "name": "Trilium Notes Team",
+    "email": "contact@eliandoran.me",
+    "url": "https://triliumnotes.org"
+  },
+  "license": "AGPL-3.0-only",
+  "description": "Build your personal knowledge base with Trilium Notes",
+  "dependencies": {
+    "better-sqlite3": "13.0.3"
+  },
+  "devDependencies": {
+    "electron": "43.4.0"
+  },
+  "config": {}
+}

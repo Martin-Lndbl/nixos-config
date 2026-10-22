@@ -106,11 +106,29 @@ in
   # udev rules for controllers (hardware.steam-hardware), so steam is declared
   # here rather than in ../../hm/games. Remote Play and local network game
   # transfer stay off: both only work by opening ports, and neither is used.
+  #
+  # Shader Pre-Caching is switched off in the client itself (Settings >
+  # Downloads; "DisableShaderCache" "1" under ShaderCacheManager in
+  # config/config.vdf, which steam owns, so it is not set here). Valve
+  # republishes the aggregated Fossilize pipeline cache for Rocket League
+  # (~3 GB, one file) nearly every day, and each republish was a near-full
+  # re-download on every steam start. The NVIDIA driver keeps its own
+  # on-disk shader cache, so the pre-cache buys little here anyway.
   programs.steam.enable = true;
 
   programs.gamemode.enable = true;
   programs.coolercontrol.enable = true;
   services.hardware.openrgb.enable = true;
+
+  # The Kone Pure Ultra exposes a bare two-axis absolute device (ABS_X/ABS_Y,
+  # 0..32767, no buttons) on the same interface as its macro keyboard. The
+  # kernel binds joydev to it and Unity's embedded SDL opens it as a gamepad,
+  # mapping the resting value 0 to full stick deflection, so Unity games (Core
+  # Keeper) sit in controller mode and hide the mouse cursor. Nothing reads it;
+  # the pointer itself is a separate evdev node, so make this one root-only.
+  services.udev.extraRules = ''
+    SUBSYSTEM=="input", ATTRS{name}=="ROCCAT ROCCAT Kone Pure Ultra Mouse", MODE="0600", GROUP="root"
+  '';
 
   # No bluetooth radio in this box. Without also dropping wireplumber's bluez
   # monitor it retries the absent BlueZ service and logs about it on every
