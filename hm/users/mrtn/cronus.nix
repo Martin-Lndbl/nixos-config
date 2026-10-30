@@ -21,13 +21,21 @@
       output = config.monitors.center;
       mode = "3840x2160";
       position = "0x0";
-      scale = 1;
+      scale = 1.5;
     }
     {
       output = config.monitors.right;
       mode = "3840x2160";
-      position = "3840x0";
+      # 3840 / 1.5, the center monitor's logical width
+      position = "2560x0";
       scale = 1;
+    }
+    {
+      output = "HDMI-A-1";
+      mode = "3840x2160@60";
+      position = "auto";
+      scale = 1;
+      mirror = config.monitors.center;
     }
     {
       output = "HDMI-A-2";
