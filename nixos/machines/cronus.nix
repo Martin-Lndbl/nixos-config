@@ -31,6 +31,15 @@ in
   ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
+
+  # Builds the Raspberry Pi (gapi) image and closures under qemu. The vendor
+  # kernel would take hours emulated, so its cache is trusted as well; listing
+  # it in trusted-substituters lets the gapi flake's nixConfig enable it.
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  nix.settings.trusted-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
+  nix.settings.trusted-public-keys = [
+    "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+  ];
   boot.kernelParams = [
     "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
