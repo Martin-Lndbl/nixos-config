@@ -43,9 +43,7 @@ rec {
     ];
     text = ''
       netns=airvpn
-      unit=wireguard-wg-air.target
-      key=/var/lib/wireguard/wg-air.key
-      psk=/var/lib/wireguard/wg-air.psk
+      unit=airvpn.service
 
       if [ "$#" -eq 0 ]; then
         echo "usage: airvpn-run <command> [args...]" >&2
@@ -58,11 +56,6 @@ rec {
 
       if [ -z "''${SUDO_USER:-}" ] || [ "$SUDO_USER" = root ]; then
         echo "airvpn-run: must be started by a regular user via sudo" >&2
-        exit 1
-      fi
-
-      if [ ! -r "$key" ] || [ ! -r "$psk" ]; then
-        echo "airvpn-run: $key or $psk is missing; export them from the NetworkManager profile first" >&2
         exit 1
       fi
 
