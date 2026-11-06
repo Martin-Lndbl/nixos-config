@@ -6,7 +6,7 @@ let
   waitForVpnCmd = "${pkgs.wait-for-pyroeis}/bin/wait-for-pyroeis";
 
   workspaceBinds = lib.concatMapStrings (ws: ''
-    hl.bind("SUPER + ${ws}", hl.dsp.focus({ workspace = "${ws}" }))
+    hl.bind("SUPER + ${ws}", function() focusWorkspace("${ws}") end)
     hl.bind("SUPER + SHIFT + ${ws}", hl.dsp.window.move({ workspace = "${ws}" }))
   '') config.workspaces;
 
@@ -57,6 +57,11 @@ let
       monitor = config.monitors.right;
       workspaces = [ "8" "9" ];
       default = "9";
+    }
+    {
+      monitor = config.monitors.tv;
+      workspaces = [ "7" ];
+      default = "7";
     }
   ];
 in
@@ -169,6 +174,7 @@ in
       hl.bind("SUPER + d", hl.dsp.global("caelestia:launcher"))
       hl.bind("SUPER + n", hl.dsp.global("caelestia:sidebar"))
       hl.bind("SUPER + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 firefox"))
+      hl.bind("SUPER + SHIFT + g", hl.dsp.exec_cmd("MOZ_ENABLE_WAYLAND=1 firefox-vpn"))
       hl.bind("SUPER + SHIFT + Q", hl.dsp.window.close())
       hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("caelestia-shell ipc call lock lock"))
       hl.bind("SUPER + ALT + S", hl.dsp.exec_cmd("(caelestia-shell ipc call lock lock & systemctl suspend -i)"))
@@ -209,6 +215,29 @@ in
       -- Brightness (repeating, routed through caelestia so the OSD shows)
       hl.bind("XF86MonBrightnessUp",   hl.dsp.global("caelestia:brightnessUp"),   { repeating = true })
       hl.bind("XF86MonBrightnessDown", hl.dsp.global("caelestia:brightnessDown"), { repeating = true })
+
+      -- The TV shows whatever it is asked for: a workspace already up on
+      -- another monitor swaps over to it instead of focus jumping there. The
+      -- same goes the other way for a workspace sitting on the TV, so the desk
+      -- pulls it back rather than sending focus and cursor to the other room.
+      local tvOutput = "${config.monitors.tv}"
+      local function onTv(monitor)
+        return tvOutput ~= "" and monitor ~= nil and monitor.name == tvOutput
+      end
+      local function focusWorkspace(ws)
+        local target = hl.get_workspace(ws)
+        local swap = onTv(hl.get_active_monitor()) or (target ~= nil and onTv(target.monitor))
+        hl.dispatch(hl.dsp.focus({ workspace = ws, on_current_monitor = swap }))
+      end
+
+      -- To the TV and back, for when the cursor is not already over there.
+      hl.bind("SUPER + t", function()
+        if onTv(hl.get_active_monitor()) then
+          hl.dispatch(hl.dsp.focus({ monitor = "${config.monitors.center}" }))
+        elseif tvOutput ~= "" and hl.get_monitor(tvOutput) then
+          hl.dispatch(hl.dsp.focus({ monitor = tvOutput }))
+        end
+      end)
 
       ${workspaceBinds}
     '';

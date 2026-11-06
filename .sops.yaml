@@ -9,3 +9,8 @@ creation_rules:
       - *mrtn-nix_nb
       - *mrtn-nix_gt
       - *mrtn-cronus
+  - path_regex: nixos/secrets/[^/]+$
+    key_groups:
+    - age:
+      - *mrtn-nix_nb
+      - *mrtn-cronus

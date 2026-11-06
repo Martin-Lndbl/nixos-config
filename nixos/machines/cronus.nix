@@ -7,11 +7,12 @@
 }:
 
 let
-  inherit (import ../alsa-rules.nix) hideCard hideNode renameNode;
+  inherit (import ../alsa-rules.nix) hideNode renameNode;
 in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    ../airvpn.nix
   ];
 
   networking.hostName = "cronus";
@@ -30,6 +31,15 @@ in
   ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
+
+  # Builds the Raspberry Pi (gapi) image and closures under qemu. The vendor
+  # kernel would take hours emulated, so its cache is trusted as well; listing
+  # it in trusted-substituters lets the gapi flake's nixConfig enable it.
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  nix.settings.trusted-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
+  nix.settings.trusted-public-keys = [
+    "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+  ];
   boot.kernelParams = [
     "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
@@ -78,10 +88,15 @@ in
         matches = [ { "device.name" = "~alsa_card\\..*"; } ];
         actions.update-props."api.alsa.use-ucm" = false;
       }
-      # The monitor claims audio over DP, so ELD never marks it unavailable.
-      # Hide the whole card: the node name follows the active HDMI profile
-      # (hdmi-stereo, -extra1, -extra2), so matching one name would not hold.
-      (hideCard "alsa_card.pci-0000_01_00.1")
+      # The Denon AVR sits on the first HDMI/DP pin (ELD "DENON-AVR"); the
+      # monitors claim audio over DP on the others, so ELD never marks them
+      # unavailable and they have to be hidden by name. The pin order follows
+      # the GPU port the cable is in - recheck /proc/asound/card*/eld* after
+      # moving cables.
+      (renameNode "alsa_output.pci-0000_01_00.1.hdmi-stereo" "AVR")
+      (hideNode "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra1")
+      (hideNode "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2")
+      (hideNode "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra3")
       (renameNode "alsa_output.usb-Generic_USB_Audio-00.analog-stereo" "Speakers")
       (renameNode "alsa_input.usb-Generic_USB_Audio-00.analog-stereo" "Mic")
       # "Analog In" (really capture device 0 - the card has no digital capture).
@@ -105,11 +120,29 @@ in
   # udev rules for controllers (hardware.steam-hardware), so steam is declared
   # here rather than in ../../hm/games. Remote Play and local network game
   # transfer stay off: both only work by opening ports, and neither is used.
+  #
+  # Shader Pre-Caching is switched off in the client itself (Settings >
+  # Downloads; "DisableShaderCache" "1" under ShaderCacheManager in
+  # config/config.vdf, which steam owns, so it is not set here). Valve
+  # republishes the aggregated Fossilize pipeline cache for Rocket League
+  # (~3 GB, one file) nearly every day, and each republish was a near-full
+  # re-download on every steam start. The NVIDIA driver keeps its own
+  # on-disk shader cache, so the pre-cache buys little here anyway.
   programs.steam.enable = true;
 
   programs.gamemode.enable = true;
   programs.coolercontrol.enable = true;
   services.hardware.openrgb.enable = true;
+
+  # The Kone Pure Ultra exposes a bare two-axis absolute device (ABS_X/ABS_Y,
+  # 0..32767, no buttons) on the same interface as its macro keyboard. The
+  # kernel binds joydev to it and Unity's embedded SDL opens it as a gamepad,
+  # mapping the resting value 0 to full stick deflection, so Unity games (Core
+  # Keeper) sit in controller mode and hide the mouse cursor. Nothing reads it;
+  # the pointer itself is a separate evdev node, so make this one root-only.
+  services.udev.extraRules = ''
+    SUBSYSTEM=="input", ATTRS{name}=="ROCCAT ROCCAT Kone Pure Ultra Mouse", MODE="0600", GROUP="root"
+  '';
 
   # No bluetooth radio in this box. Without also dropping wireplumber's bluez
   # monitor it retries the absent BlueZ service and logs about it on every

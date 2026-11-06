@@ -39,10 +39,7 @@
             ./nixos/printer.nix
           ]
           ++ extra
-          ++ [
-            ./nixos/wm/hyprland.nix
-            ./nixos/wm/autologin.nix
-          ];
+          ++ [ ./nixos/wm/hyprland.nix ];
         };
 
       mkHome =
@@ -80,8 +77,13 @@
         nix-nb = mkNixos [
           ./nixos/container/template.nix
           ./nixos/machines/nix-nb.nix
+          ./nixos/wm/autologin.nix
         ];
-        cronus = mkNixos [ ./nixos/machines/cronus.nix ];
+        cronus = mkNixos [
+          ./nixos/machines/cronus.nix
+          ./nixos/wm/regreet.nix
+          ./nixos/guest.nix
+        ];
       };
 
       homeConfigurations = {

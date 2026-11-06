@@ -1,8 +1,292 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+let
+  # Trilium integration. "Open externally" on a PDF note or a .xopp note both
+  # end up in xopp-open, which finds the note by content hash (Trilium's
+  # blobId; titles aren't unique) and edits tmp/<xoppNoteId>.xopp, uploading
+  # every save via ETAPI. A PDF without a .xopp child gets one created, with
+  # the PDF as background at tmp/trilium-bg/<pdfNoteId>.pdf. Working copies
+  # sit next to Trilium's own exports so relative background paths resolve
+  # the same either way.
+  etapiLib = ''
+    api="http://localhost:''${TRILIUM_PORT:-37840}/etapi"
+    token_file="${config.xdg.configHome}/sops-nix/secrets/trilium_etapi"
+    tmp_dir="''${TRILIUM_DATA_DIR:-$HOME/.local/share/trilium-data}/tmp"
+
+    etapi() {
+      local token="''${TRILIUM_ETAPI_TOKEN:-}"
+      if [[ -z $token ]]; then
+        [[ -r $token_file ]] || { echo "no ETAPI token at $token_file" >&2; return 1; }
+        token=$(<"$token_file")
+      fi
+      curl -fsS --max-time 30 -H "Authorization: $token" "$@"
+    }
+
+    # Same id Trilium derives from the content.
+    blob_id() {
+      openssl dgst -sha512 -binary "$1" | base64 -w0 | tr '+/' 'XY' | cut -c1-20
+    }
+
+    stamp_of() {
+      cat "$1.stamp" 2>/dev/null || true
+    }
+
+    # fetch_bg <noteId|attachmentId> <dest>: refresh dest when the blob changed;
+    # keep a cached copy if Trilium is unreachable.
+    fetch_bg() {
+      local id=$1 dest=$2 kind=notes meta stamp
+      if ! meta=$(etapi "$api/notes/$id" 2>/dev/null); then
+        if meta=$(etapi "$api/attachments/$id" 2>/dev/null); then
+          kind=attachments
+        elif [[ -f $dest ]]; then
+          return 0
+        else
+          echo "cannot fetch $id from Trilium" >&2
+          return 1
+        fi
+      fi
+      stamp=$(jq -r '.blobId // .utcDateModified' <<<"$meta")
+      if [[ -f $dest && $(stamp_of "$dest") == "$stamp" ]]; then
+        return 0
+      fi
+      mkdir -p "$(dirname "$dest")"
+      etapi -o "$dest.part" "$api/$kind/$id/content" || return 1
+      mv "$dest.part" "$dest"
+      printf '%s' "$stamp" >"$dest.stamp"
+    }
+  '';
+
+  runtimeInputs = with pkgs; [
+    curl
+    jq
+    gzip
+    gnugrep
+    gnused
+    coreutils
+  ];
+
+  xopp-open = pkgs.writeShellApplication {
+    name = "xopp-open";
+    runtimeInputs =
+      runtimeInputs
+      ++ (with pkgs; [
+        xournalpp
+        openssl
+        gawk
+        poppler-utils
+        inotify-tools
+        libnotify
+      ]);
+    text = etapiLib + ''
+      notify() {
+        echo "$1" >&2
+        notify-send -a xopp-open Xournal++ "$1" 2>/dev/null || true
+      }
+
+      # search_blob <query> <blobId>: noteId of the matching note with that content
+      search_blob() {
+        etapi -G --data-urlencode "search=$1" --data-urlencode includeArchivedNotes=true "$api/notes" \
+          | jq -r --arg b "$2" '[.results[] | select(.blobId == $b)][0].noteId // empty'
+      }
+
+      # Download every trilium-bg/<id>.pdf the xopp references, relative to it.
+      fetch_bgs() {
+        local dir ref id dest
+        dir=$(dirname "$(realpath "$1")")
+        while IFS= read -r ref; do
+          id=$(sed -E 's#.*trilium-bg/([A-Za-z0-9_]+)\.pdf$#\1#' <<<"$ref")
+          case $ref in
+            /*) dest=$ref ;;
+            *) dest=$dir/$ref ;;
+          esac
+          fetch_bg "$id" "$dest" || true
+        done < <(zcat -f "$1" 2>/dev/null \
+          | grep -oE 'filename="[^"]*trilium-bg/[A-Za-z0-9_]+\.pdf"' \
+          | sed -E 's/^filename="(.*)"$/\1/' | sort -u)
+      }
+
+      # new_xopp <pdf> <background ref> <out>: one page per PDF page
+      new_xopp() {
+        pdfinfo -f 1 -l 1000000 "$1" | awk -v ref="$2" '
+          /^Page +[0-9]+ size:/ { w[$2] = $4; h[$2] = $6; if ($2 > n) n = $2 }
+          /^Page +[0-9]+ rot:/ { r[$2] = $4 }
+          END {
+            print "<?xml version=\"1.0\" standalone=\"no\"?>"
+            print "<xournal creator=\"xopp-open\" fileversion=\"4\">"
+            print "<title>Xournal++ document - see https://xournalpp.github.io/</title>"
+            for (i = 1; i <= n; i++) {
+              pw = w[i]; ph = h[i]
+              if (r[i] % 180 == 90) { t = pw; pw = ph; ph = t }
+              printf "<page width=\"%s\" height=\"%s\">\n", pw, ph
+              if (i == 1) printf "<background type=\"pdf\" domain=\"absolute\" filename=\"%s\" pageno=\"1\"/>\n", ref
+              else printf "<background type=\"pdf\" pageno=\"%d\"/>\n", i
+              print "<layer/>"
+              print "</page>"
+            }
+            print "</xournal>"
+          }' | gzip >"$3"
+        [[ -s $3 ]]
+      }
+
+      upload() {
+        etapi -X PUT -H 'Content-Type: application/octet-stream' \
+          --data-binary @"$2" "$api/notes/$1/content" || return 1
+        blob_id "$2" >"$2.stamp"
+      }
+
+      sync_up() {
+        if [[ -f $2 && $(blob_id "$2") != "$(stamp_of "$2")" ]]; then
+          upload "$1" "$2" || notify "uploading $(basename "$2") to Trilium failed"
+        fi
+      }
+
+      # PDF export -> id of its .xopp child note, created on first open.
+      pdf_to_xopp() {
+        local pdf_id meta child title xopp_id f
+        pdf_id=$(search_blob "note.mime = 'application/pdf'" "$(blob_id "$1")") || return 1
+        [[ -n $pdf_id ]] || return 1
+        meta=$(etapi "$api/notes/$pdf_id") || return 1
+        for child in $(jq -r '.childNoteIds[]' <<<"$meta"); do
+          if etapi "$api/notes/$child" | jq -e '.title | endswith(".xopp")' >/dev/null; then
+            echo "$child"
+            return 0
+          fi
+        done
+
+        fetch_bg "$pdf_id" "$tmp_dir/trilium-bg/$pdf_id.pdf" || return 1
+        title=$(jq -r '(.title | sub("\\.pdf$"; ""; "i")) + ".xopp"' <<<"$meta")
+        xopp_id=$(jq -n --arg p "$pdf_id" --arg t "$title" \
+          '{parentNoteId: $p, title: $t, type: "file", mime: "application/x-xopp", content: ""}' \
+          | etapi -X POST -H 'Content-Type: application/json' --data-binary @- "$api/create-note" \
+          | jq -r '.note.noteId // empty') || return 1
+        [[ -n $xopp_id ]] || return 1
+        f=$tmp_dir/$xopp_id.xopp
+        new_xopp "$tmp_dir/trilium-bg/$pdf_id.pdf" "trilium-bg/$pdf_id.pdf" "$f" || return 1
+        upload "$xopp_id" "$f" || return 1
+        echo "$xopp_id"
+      }
+
+      # Bring tmp/<id>.xopp up to date with the note; never drop unsynced edits.
+      checkout() {
+        local id=$1 f=$tmp_dir/$1.xopp remote
+        remote=$(etapi "$api/notes/$id" | jq -r '.blobId') || return 1
+        if [[ -f $f && -f $f.stamp && $(blob_id "$f") != "$(stamp_of "$f")" ]]; then
+          if [[ $remote == "$(stamp_of "$f")" ]]; then
+            upload "$id" "$f"
+            return
+          fi
+          cp "$f" "$f.conflict-$(date +%Y%m%d-%H%M%S)"
+          notify "$(basename "$f") changed both locally and in Trilium; kept local copy as .conflict"
+        fi
+        if [[ ! -f $f || $(blob_id "$f") != "$remote" ]]; then
+          etapi -o "$f.part" "$api/notes/$id/content" || return 1
+          mv "$f.part" "$f"
+        fi
+        printf '%s' "$remote" >"$f.stamp"
+      }
+
+      edit() {
+        local id=$1 f=$2 pid
+        xournalpp "$f" &
+        pid=$!
+        while kill -0 "$pid" 2>/dev/null; do
+          inotifywait -qq -t 10 -e close_write -e moved_to "$(dirname "$f")" || true
+          sync_up "$id" "$f"
+        done
+        sync_up "$id" "$f"
+      }
+
+      [[ $# -ge 1 && -f $1 ]] || exec xournalpp "$@"
+      file=$(realpath "$1")
+      case ''${file,,} in
+        *.pdf) kind=pdf ;;
+        *) kind=xopp ;;
+      esac
+
+      # Only Trilium's own exports (tmp-<pid>-<rand>-<title>) are notes.
+      if [[ $file == "$(realpath -m "$tmp_dir")"/tmp-* ]]; then
+        id=""
+        if [[ $kind == pdf ]]; then
+          id=$(pdf_to_xopp "$file") || id=""
+        else
+          id=$(search_blob "note.title *= '.xopp'" "$(blob_id "$file")") || id=""
+        fi
+        if [[ -n $id ]] && checkout "$id"; then
+          fetch_bgs "$tmp_dir/$id.xopp"
+          edit "$id" "$tmp_dir/$id.xopp"
+          exit 0
+        fi
+        notify "Couldn't resolve the Trilium note, opening $(basename "$file") directly"
+      fi
+
+      if [[ $kind == pdf ]]; then
+        exec ${config.programs.firefox.finalPackage}/bin/firefox "$file"
+      fi
+      fetch_bgs "$file"
+      exec xournalpp "$file"
+    '';
+  };
+
+  trilium-bg = pkgs.writeShellApplication {
+    name = "trilium-bg";
+    runtimeInputs = runtimeInputs ++ [ pkgs.wl-clipboard ];
+    text = etapiLib + ''
+      if [[ $# -ne 1 ]]; then
+        echo "usage: trilium-bg <noteId|attachmentId|title>" >&2
+        echo "fetches the PDF into Trilium's tmp/trilium-bg and prints/copies its path" >&2
+        exit 1
+      fi
+      q=$1
+
+      if [[ $q =~ ^[A-Za-z0-9_]+$ ]] \
+        && { etapi "$api/notes/$q" >/dev/null 2>&1 || etapi "$api/attachments/$q" >/dev/null 2>&1; }; then
+        id=$q
+      else
+        title=''${q//\'/}
+        search="note.mime = 'application/pdf' AND note.title *=* '$title'"
+        res=$(etapi -G --data-urlencode "search=$search" "$api/notes")
+        case $(jq '.results | length' <<<"$res") in
+          0)
+            echo "no PDF note matching '$q'" >&2
+            exit 1
+            ;;
+          1) id=$(jq -r '.results[0].noteId' <<<"$res") ;;
+          *)
+            echo "several PDF notes match '$q':" >&2
+            jq -r '.results[] | "  \(.noteId)  \(.title)"' <<<"$res" >&2
+            exit 1
+            ;;
+        esac
+      fi
+
+      dest="$tmp_dir/trilium-bg/$id.pdf"
+      fetch_bg "$id" "$dest"
+      echo "$dest"
+      [[ -n ''${WAYLAND_DISPLAY:-} ]] && wl-copy -n "$dest"
+    '';
+  };
+in
 {
   home.packages = with pkgs; [
     xournalpp
+    xopp-open
+    trilium-bg
   ];
+
+  # Default handler for .xopp and PDFs (see mime.nix); PDFs not exported by
+  # Trilium go straight on to firefox.
+  xdg.desktopEntries.xopp-open = {
+    name = "Xournal++ (Trilium)";
+    exec = "xopp-open %f";
+    icon = "com.github.xournalpp.xournalpp";
+    terminal = false;
+    noDisplay = true;
+    mimeType = [
+      "application/x-xopp"
+      "application/x-xojpp"
+      "application/pdf"
+    ];
+  };
+
 
   # xournalpp rewrites this whenever a tool or window setting changes, so the
   # rendered file is only ever the starting point; see modules/hm.

@@ -46,13 +46,13 @@
         user = "mrtn";
         proxyJump = "tunnel@login.dos.cit.tum.de";
       };
-      "xavier" = {
-        hostname = "xavier.dos.cit.tum.de";
+      "steve" = {
+        hostname = "steve.dos.cit.tum.de";
         user = "mrtn";
         proxyJump = "tunnel@login.dos.cit.tum.de";
       };
-      "polly" = {
-        hostname = "polly.dos.cit.tum.de";
+      "clockwork" = {
+        hostname = "clockwork.dos.cit.tum.de";
         user = "mrtn";
         proxyJump = "tunnel@login.dos.cit.tum.de";
       };

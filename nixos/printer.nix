@@ -1,19 +1,24 @@
 { pkgs, ... }:
+let
+  # The CLX-3170 rejects splix's QPDL ("please use the proper driver"); it
+  # needs Samsung's own SPL-C filter. nixpkgs bakes the filter's store path
+  # into the PPDs, which turns stale once the path is garbage collected, so
+  # keep the plain `pstosplc` name: cups resolves it via ServerBin, where
+  # every driver's filters are linked.
+  samsungDriver = pkgs.samsung-unified-linux-driver.overrideAttrs { ppdFileCommands = [ ]; };
+in
 {
   services.printing = {
     enable = true;
-    # CLX-3170 speaks SPL-C; the samsung blob's filter paths get baked into
-    # /etc/cups/ppd and break on the next garbage collection.
-    drivers = with pkgs; [ splix ];
+    drivers = [ samsungDriver ];
   };
 
-  # splix ships no CLX-3170 model; the 3160 is the same SPL-C family
   hardware.printers.ensurePrinters = [
     {
       name = "Samsung_CLX-3170";
       description = "Samsung CLX-3170";
       deviceUri = "dnssd://Samsung%20CLX-3170%20Series%20(Farblaser)._printer._tcp.local/";
-      model = "samsung/clx3160.ppd";
+      model = "samsung/CLX-3170.ppd";
     }
   ];
   hardware.printers.ensureDefaultPrinter = "Samsung_CLX-3170";

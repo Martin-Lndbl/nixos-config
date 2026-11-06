@@ -14,6 +14,7 @@ in
   options.monitors = {
     center = monitor "center";
     right = monitor "right";
+    tv = monitor "TV";
   };
 
   options.workspaces = mkOption {
