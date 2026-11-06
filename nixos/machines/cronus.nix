@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (import ../alsa-rules.nix) hideCard hideNode renameNode;
+  inherit (import ../alsa-rules.nix) hideNode renameNode;
 in
 {
   imports = [
@@ -88,10 +88,15 @@ in
         matches = [ { "device.name" = "~alsa_card\\..*"; } ];
         actions.update-props."api.alsa.use-ucm" = false;
       }
-      # The monitor claims audio over DP, so ELD never marks it unavailable.
-      # Hide the whole card: the node name follows the active HDMI profile
-      # (hdmi-stereo, -extra1, -extra2), so matching one name would not hold.
-      (hideCard "alsa_card.pci-0000_01_00.1")
+      # The Denon AVR sits on the first HDMI/DP pin (ELD "DENON-AVR"); the
+      # monitors claim audio over DP on the others, so ELD never marks them
+      # unavailable and they have to be hidden by name. The pin order follows
+      # the GPU port the cable is in - recheck /proc/asound/card*/eld* after
+      # moving cables.
+      (renameNode "alsa_output.pci-0000_01_00.1.hdmi-stereo" "AVR")
+      (hideNode "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra1")
+      (hideNode "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2")
+      (hideNode "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra3")
       (renameNode "alsa_output.usb-Generic_USB_Audio-00.analog-stereo" "Speakers")
       (renameNode "alsa_input.usb-Generic_USB_Audio-00.analog-stereo" "Mic")
       # "Analog In" (really capture device 0 - the card has no digital capture).

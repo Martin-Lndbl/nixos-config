@@ -13,7 +13,7 @@
 let
   netns = "airvpn";
   dev = "wg-air";
-  endpointHost = "europe3.vpn.airdns.org";
+  endpointHost = "no3.vpn.airdns.org";
   endpointPort = 1637;
   peerKey = "PyLCXAQT8KkM4T+dUsOQfn+Ub3pGxfGlxkIApuig+hk=";
 in
