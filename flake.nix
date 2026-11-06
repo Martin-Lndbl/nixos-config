@@ -92,13 +92,16 @@
         ];
 
         "mrtn@irene" = mkHeadless ./hm/users/mrtn/irene.nix;
-        "mrtn@eliza" = mkHeadless ./hm/users/mrtn/eliza.nix;
         "mrtn@pyroeis" = mkHeadless ./hm/users/mrtn/pyroeis.nix;
         "ubuntu@aws" = mkHeadless ./hm/users/ubuntu/aws.nix;
 
         "mrtn@eos" = mkHome {
           system = "aarch64-linux";
           modules = [ ./hm/users/mrtn/eos.nix ];
+        };
+        "mrtn@eliza" = mkHome {
+          system = "aarch64-linux";
+          modules = [ ./hm/users/mrtn/eliza.nix ];
         };
       };
     };
