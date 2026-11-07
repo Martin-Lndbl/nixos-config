@@ -1,4 +1,0 @@
-{ ... }:
-{
-  imports = [ ./dos-cluster.nix ];
-}

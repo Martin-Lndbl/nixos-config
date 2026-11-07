@@ -67,6 +67,23 @@
 
       # Headless remote: just the one host file, which pulls in the shared base.
       mkHeadless = file: mkHome { modules = [ file ]; };
+
+      # TUM DOS cluster nodes. Every node runs the very same home, differing
+      # only in architecture. Nothing generated is allowed into the shared NFS
+      # $HOME, which is what lets all of these generations be valid at the same
+      # time -- see hm/users/mrtn/dos-cluster.nix.
+      dosCluster = {
+        irene = "x86_64-linux";
+        eliza = "aarch64-linux";
+        steve = "x86_64-linux";
+      };
+
+      mkCluster =
+        hostname: system:
+        lib.nameValuePair "mrtn@${hostname}" (mkHome {
+          inherit system;
+          modules = [ ./hm/users/mrtn/dos-cluster.nix ];
+        });
     in
     {
       packages = forAllSystems (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; });
@@ -93,7 +110,6 @@
           ./hm/users/mrtn/cronus.nix
         ];
 
-        "mrtn@irene" = mkHeadless ./hm/users/mrtn/irene.nix;
         "mrtn@pyroeis" = mkHeadless ./hm/users/mrtn/pyroeis.nix;
         "ubuntu@aws" = mkHeadless ./hm/users/ubuntu/aws.nix;
 
@@ -101,10 +117,7 @@
           system = "aarch64-linux";
           modules = [ ./hm/users/mrtn/eos.nix ];
         };
-        "mrtn@eliza" = mkHome {
-          system = "aarch64-linux";
-          modules = [ ./hm/users/mrtn/eliza.nix ];
-        };
-      };
+      }
+      // lib.mapAttrs' mkCluster dosCluster;
     };
 }
